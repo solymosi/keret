@@ -2,6 +2,9 @@
 
 	require_once("include/all.php");
 	
+	// Ha az URI nem tartalmazza az index.php-t, akkor átirányítunk oda (a .htaccess korlátozások miatt szükséges)
+	Helpers::ensureCorrectBaseUri();
+	
 	// Kimeneti gyorsítótár engedélyezése (nem küldi ki azonnal a print-elt szövegeket a böngészőnek, hanem csak akkor, amikor mi mondjuk neki)
 	ob_start();
 	
