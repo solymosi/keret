@@ -13,5 +13,10 @@
 	define("SESSION_COOKIE_EXPIRES", 3600 * 24 * 7);
 	define("SESSION_COOKIE_DOMAIN", "");
 	define("SESSION_COOKIE_SECURE", true);
+	define("FACEBOOK_APP_SECRET", "YOUR_APP_SECRET");
+	
+	// UI beállítások
+	
+	define("ASSETS_URL", dirname(Helpers::getBaseUri()) . "/assets");
 
 ?>

@@ -1,0 +1,15 @@
+# General settings
+
+RewriteEngine On
+DirectoryIndex index.php
+Options +FollowSymLinks -Indexes
+
+# Allow access to index.php and the assets folder
+
+RewriteRule ^$ - [L]
+RewriteRule ^index\.php(\/.*)?$ - [L]
+RewriteRule ^assets\/.*$ - [L]
+
+# Disallow access to everything else
+
+RewriteRule .* - [F,L]
