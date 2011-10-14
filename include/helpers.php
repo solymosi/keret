@@ -96,6 +96,23 @@
 				exit;
 			}
 		}
+		
+		public static function render($module, $args = array())
+		{
+			$content = self::getContent("modules/" . $module . ".php", $args);
+			print self::getContent("modules/layout.php", array_merge($args, array("content" => $content)));
+			exit;
+		}
+		
+		public static function getContent($file, $args = array())
+		{
+			extract($args);
+			ob_start();
+			require_once($file);
+			$content = ob_get_contents();
+			ob_clean();
+			return $content;
+		}
 	}
 
 ?>
