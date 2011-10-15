@@ -8,6 +8,5 @@
 	require_once("database.php");
 	require_once("session.php");
 	require_once("validation.php");
-	require_once("routing.php");
 
 ?>

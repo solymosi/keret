@@ -99,8 +99,8 @@
 		
 		public static function render($module, $args = array())
 		{
-			$content = self::getContent("modules/" . $module . ".php", $args);
-			print self::getContent("modules/layout.php", array_merge($args, array("content" => $content)));
+			$content = self::getContent("templates/" . $module . ".php", $args);
+			print self::getContent("templates/layout.php", array_merge($args, array("content" => $content)));
 			exit;
 		}
 		
@@ -108,7 +108,7 @@
 		{
 			extract($args);
 			ob_start();
-			require_once($file);
+			include($file);
 			$content = ob_get_contents();
 			ob_clean();
 			return $content;

@@ -16,7 +16,9 @@
 		
 		<p><strong>The system encountered a fatal error.</strong></p>
 		
-		<p><small><?= Helpers::h($e->getMessage()) ?></small></p>
+		<?php if(ini_get("display_errors") == true): ?>
+			<p><small><?= Helpers::h($e->getMessage()) ?></small></p>
+		<?php endif; ?>
 		
 	</body>
 </html>

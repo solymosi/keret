@@ -23,7 +23,7 @@
 		ob_clean();
 		
 		// Megjelenítjük a hiba oldalt
-		require_once("include/modules/errorMessage.php");
+		require_once("include/templates/errorMessage.php");
 	}
 	
 	// Most már kiküldhetjük a gyorsítótárban összegyűlt tartalmat a böngészőnek

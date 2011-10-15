@@ -1,4 +1,7 @@
 <?php
+	
+	// Biztonsági okok miatt letiltjuk a PHP hibaüzenetek megjelenítését a böngészoben
+	// ini_set("display_errors", 0);
 
 	// Adatbázis konfiguráció
 
@@ -13,7 +16,7 @@
 	define("SESSION_COOKIE_EXPIRES", 3600 * 24 * 7);
 	define("SESSION_COOKIE_DOMAIN", "");
 	define("SESSION_COOKIE_SECURE", true);
-	define("FACEBOOK_APP_SECRET", "YOUR_APP_SECRET");
+	
 	
 	// UI beállítások
 	
