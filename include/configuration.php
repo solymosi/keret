@@ -13,7 +13,7 @@
 	// Session süti beállításai
 	
 	define("SESSION_COOKIE_NAME", "app_session");
-	define("SESSION_COOKIE_EXPIRES", 3600 * 24 * 7);
+	define("SESSION_COOKIE_EXPIRES", 0);
 	define("SESSION_COOKIE_DOMAIN", "");
 	define("SESSION_COOKIE_SECURE", true);
 	

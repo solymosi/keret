@@ -10,6 +10,7 @@
 			ini_set("session.cookie_httponly", true);
 			ini_set("session.cookie_secure", SESSION_COOKIE_SECURE);
 			session_start();
+			session_regenerate_id();
 		}
 		
 		public static function get($key)
@@ -27,6 +28,29 @@
 		{
 			unset($_SESSION[$key]);
 			return true;
+		}
+		
+		public static function reset()
+		{
+			$_SESSION = array();
+		}
+		
+		public static function generateCSRFToken()
+		{
+			self::set("csrf_token", sha1(uniqid(srand(), true)));
+		}
+		
+		public static function verifyCSRFToken($token)
+		{
+			if(self::CSRFToken() !== $token)
+			{
+				throw new Exception("Invalid CSRF token");
+			}
+		}
+		
+		public static function CSRFToken()
+		{
+			return self::get("csrf_token");
 		}
 	}
 
