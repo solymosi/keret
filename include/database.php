@@ -37,7 +37,7 @@
 			$sql = self::prepare($sql, $params);
 			if(!$result = @mysql_query($sql, self::$link))
 			{
-				throw new Exception("MySQL error: " . mysql_error() . ". The query was: " . $sql, "db:select");
+				throw new Exception("MySQL error: " . mysql_error() . ". The query was: " . $sql);
 			}
 			return $result;
 		}
