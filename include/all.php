@@ -1,7 +1,5 @@
 <?php
 
-	// Minden megosztott fájlt betöltünk
-	
 	require_once("helpers.php");
 	require_once("error.php");
 	require_once("configuration.php");
