@@ -5,21 +5,21 @@
 		// Az aktív adatbáziskapcsolat
 		public static $link;
 
-		// Kapcsolódik az adatbázishoz és beállítja a karakterkódolást
+		// Kapcsolódik az adatbázishoz és beállítja az UTF-8-as karakterkódolást
 		public static function connect()
 		{
 			if(!self::$link = @mysql_connect(DB_HOST, DB_USER, DB_PASSWORD))
 			{
-				throw new Exception("MySQL error: " . mysql_error());
+				throw new Exception("MySQL error: " . self::lastError());
 			}
 			if(!@mysql_select_db(DB_DATABASE, self::$link))
 			{
-				throw new Exception("MySQL error: " . mysql_error());
+				throw new Exception("MySQL error: " . self::lastError());
 			}
 			DB::query("set names utf8");
 		}
 		
-		// Előkészít egy lekérdezést a futtatáshoz (escapeli a megadott paramétereket és beszúrja őket a megfelelő helyre)
+		// Előkészít egy paraméterezett lekérdezést a futtatáshoz (escapeli a megadott paramétereket és beszúrja őket a megfelelő helyre)
 		public static function prepare($sql, $params = array())
 		{
 			$params = array_merge(array($sql), array_map("mysql_real_escape_string", $params));
@@ -37,12 +37,12 @@
 			$sql = self::prepare($sql, $params);
 			if(!$result = @mysql_query($sql, self::$link))
 			{
-				throw new Exception("MySQL error: " . mysql_error() . ". The query was: " . $sql);
+				throw new Exception("MySQL error: " . self::lastError() . ". The query was: " . $sql);
 			}
 			return $result;
 		}
 		
-		// Lekéri egy lekérdezési eredményben a sorok számát
+		// Lekéri a megadott lekérdezési eredményben lévő sorok számát
 		public static function rows($result)
 		{
 			return @mysql_num_rows($result);
