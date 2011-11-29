@@ -1,6 +1,7 @@
 <?php
 
-	class DB {
+	class DB
+	{
 		
 		public static $link;
 		

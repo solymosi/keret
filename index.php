@@ -16,6 +16,13 @@
 		
 		// Inicializáljuk a session-t
 		Session::initialize();
+		
+		// Ha egyikkel sem egyezett, az oldal nem található...
+		Helpers::render("notFound");
+	}
+	catch(ProcessingFinished $e)
+	{
+		// A futtatott controller befejezte a futását, így kilépünk mindenből
 	}
 	catch(Exception $e)
 	{
@@ -25,7 +32,7 @@
 		// Megjelenítjük a hiba oldalt
 		require_once("include/templates/errorMessage.php");
 	}
-	
+
 	// Most már kiküldhetjük a gyorsítótárban összegyűlt tartalmat a böngészőnek
 	ob_end_flush();
 

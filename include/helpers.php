@@ -31,31 +31,7 @@
 		{
 			if ($reload || is_null(self::$uri))
 			{
-				$uri = '';
-				if(!empty($_SERVER['PATH_INFO']))
-				{
-					$uri = $_SERVER['PATH_INFO'];
-				}
-				else
-				{
-					if(isset($_SERVER['REQUEST_URI']))
-					{
-						$uri = parse_url(self::getScheme() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], PHP_URL_PATH);
-					}
-					else if(isset($_SERVER['PHP_SELF']))
-					{
-						$uri = $_SERVER['PHP_SELF'];
-					}
-					else
-					{
-						throw new Exception('Unable to detect request URI');
-					}
-				}
-				if(self::getBaseUri() !== '' && strpos($uri, self::getBaseUri()) === 0)
-				{
-					$uri = substr($uri, strlen(self::getBaseUri()));
-				}
-				self::$uri = '/' . ltrim($uri, '/');
+				self::$uri = '/' . ltrim(isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "", '/');
 			}
 			return self::$uri;
 		}
