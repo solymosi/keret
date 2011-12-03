@@ -1,6 +1,7 @@
 <?php
 
 	require_once("helpers.php");
+	require_once("view.php");
 	require_once("error.php");
 	require_once("configuration.php");
 	require_once("database.php");

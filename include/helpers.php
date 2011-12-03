@@ -72,22 +72,6 @@
 				exit;
 			}
 		}
-		
-		public static function render($module, $args = array())
-		{
-			$content = self::getContent("templates/" . $module . ".php", $args, $vars);
-			print self::getContent("templates/layout.php", array_merge($args, $vars, array("content" => $content)));
-		}
-		
-		public static function getContent($file, $args = array(), &$vars = array())
-		{
-			extract($args);
-			ob_start();
-			include($file);
-			$content = ob_get_contents();
-			ob_clean();
-			return $content;
-		}
 	}
 
 ?>

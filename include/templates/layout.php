@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<?= $content ?>
+		<?= $this->content ?>
 	</body>
 	
 </html>
