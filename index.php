@@ -18,7 +18,7 @@
 		Session::initialize();
 		
 		// Ha egyikkel sem egyezett, az oldal nem található...
-		Helpers::render("notFound");
+		View::render("notFound");
 	}
 	catch(ProcessingFinished $e)
 	{
