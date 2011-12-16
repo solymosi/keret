@@ -41,14 +41,14 @@
 			return self::getBaseUri() . $uri;
 		}
 		
-		public static function redirect($uri)
+		public static function redirect($uri, $permanent = false)
 		{
-			self::externalRedirect(self::link($uri));
+			self::externalRedirect(self::link($uri), $permanent);
 		}
 		
-		public static function externalRedirect($url)
+		public static function externalRedirect($url, $permanent = false)
 		{
-			ob_end_clean();
+			Helpers::clearOutput();
 			Helpers::setStatusCode($permanent ? "301 Moved Permanently" : "302 Found");
 			header("Location: " . $url);
 			print('You are being redirected <a href="' . $url . '">here</a>.');
@@ -73,6 +73,14 @@
 		public static function h($content)
 		{
 			return htmlentities($content, ENT_QUOTES, "UTF-8");
+		}
+		
+		public static function clearOutput()
+		{
+			while(ob_get_level() > 0)
+			{
+				ob_end_clean();
+			}
 		}
 		
 		public static function ensureCorrectBaseUri()

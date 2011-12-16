@@ -38,7 +38,7 @@
 	catch(Exception $e)
 	{
 		// Valamilyen hiba történt, elvetünk minden eddigi kiprintelt tartalmat
-		ob_clean();
+		Helpers::clearOutput();
 		
 		// Beállítjuk a HTTP 500-as állapotot
 		Helpers::setStatusCode("500 Internal Server Error");

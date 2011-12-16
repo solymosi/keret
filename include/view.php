@@ -80,7 +80,7 @@
 			ob_start();
 			include("templates/" . $this->file . ".php");
 			$content = ob_get_contents();
-			ob_clean();
+			ob_end_clean();
 			return $content;
 		}
 		
@@ -92,7 +92,7 @@
 		//                                          => elérhető paraméterek a tablazat-on belül: rows = 2, title = "Főoldal"
 		public function insert($file, $params = array())
 		{
-			self::render($file, array_merge($this->params, $params));
+			self::renderWithoutLayout($file, array_merge($this->params, $params));
 		}
 		
 		//=================
