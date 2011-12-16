@@ -27,7 +27,7 @@
 	catch(NotFoundException $e)
 	{
 		// Valami nem található, elvetünk minden eddigi kiprintelt tartalmat
-		ob_clean();
+		Helpers::clearOutput();
 		
 		// Beállítjuk a HTTP 404-es állapotot
 		Helpers::setStatusCode("404 Not Found");
