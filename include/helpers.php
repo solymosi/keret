@@ -52,6 +52,7 @@
 			Helpers::setStatusCode($permanent ? "301 Moved Permanently" : "302 Found");
 			header("Location: " . $url);
 			print('You are being redirected <a href="' . $url . '">here</a>.');
+			ob_end_flush();
 			exit;
 		}
 		
@@ -81,6 +82,8 @@
 			{
 				ob_end_clean();
 			}
+			
+			ob_start();
 		}
 		
 		public static function ensureCorrectBaseUri()
