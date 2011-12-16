@@ -18,16 +18,30 @@
 		Session::initialize();
 		
 		// Ha egyikkel sem egyezett, az oldal nem található...
-		View::render("notFound");
+		Helpers::notFound();
 	}
 	catch(ProcessingFinished $e)
 	{
 		// A futtatott controller befejezte a futását, így kilépünk mindenből
 	}
+	catch(NotFoundException $e)
+	{
+		// Valami nem található, elvetünk minden eddigi kiprintelt tartalmat
+		ob_clean();
+		
+		// Beállítjuk a HTTP 404-es állapotot
+		Helpers::setStatusCode("404 Not Found");
+		
+		// Megjelenítjük a 404-es hibaoldalt
+		View::render("notFound");
+	}
 	catch(Exception $e)
 	{
 		// Valamilyen hiba történt, elvetünk minden eddigi kiprintelt tartalmat
 		ob_clean();
+		
+		// Beállítjuk a HTTP 500-as állapotot
+		Helpers::setStatusCode("500 Internal Server Error");
 		
 		// Megjelenítjük a hiba oldalt
 		require_once("include/templates/errorMessage.php");

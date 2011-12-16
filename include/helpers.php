@@ -49,9 +49,20 @@
 		public static function externalRedirect($url)
 		{
 			ob_end_clean();
+			Helpers::setStatusCode($permanent ? "301 Moved Permanently" : "302 Found");
 			header("Location: " . $url);
 			print('You are being redirected <a href="' . $url . '">here</a>.');
 			exit;
+		}
+		
+		public static function notFound($message = "The requested resource was not found")
+		{
+			throw new NotFoundException($message);
+		}
+		
+		public static function setStatusCode($code)
+		{
+			header($_SERVER["SERVER_PROTOCOL"] . " " . $code);
 		}
 		
 		public static function asset($name)
@@ -73,5 +84,7 @@
 			}
 		}
 	}
+	
+	class NotFoundException extends Exception { }
 
 ?>
