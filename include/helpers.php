@@ -78,9 +78,9 @@
 		
 		public static function clearOutput()
 		{
-			while(ob_get_level() > 0)
+			if(ob_get_level())
 			{
-				ob_end_clean();
+				while(@ob_end_clean());
 			}
 			
 			ob_start();
