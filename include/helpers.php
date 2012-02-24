@@ -56,6 +56,16 @@
 			exit;
 		}
 		
+		private static $sendingMail = false;
+		
+		public static function sendMail($to, $subject, $body, $additionalHeaders = "")
+		{
+			if(self::$sendingMail) { return; }
+			self::$sendingMail = true;
+			mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nFrom: " . MAIL_FROM . "\r\n" . $additionalHeaders);
+			self::$sendingMail = false;
+		}
+		
 		public static function notFound($message = "The requested resource was not found")
 		{
 			throw new NotFoundException($message);
@@ -76,9 +86,14 @@
 			return htmlentities($content, ENT_QUOTES, "UTF-8");
 		}
 		
+		public static function formatPrice($price, $includeCurrency = true)
+		{
+			return number_format($price, 0, "", ",") . ($includeCurrency ? " HUF" : "");
+		}
+		
 		public static function clearOutput()
 		{
-			if(ob_get_level())
+			if(@ob_get_level())
 			{
 				while(@ob_end_clean());
 			}
@@ -90,8 +105,7 @@
 		{
 			if(!preg_match("/^.*\/index\.php$/", self::getBaseUri()))
 			{
-				header("Location: " . self::getBaseUri() . "/index.php" . self::getUri());
-				exit;
+				self::externalRedirect(self::getBaseUri() . "/index.php" . self::getUri(), true);
 			}
 		}
 	}

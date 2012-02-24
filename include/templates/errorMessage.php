@@ -14,7 +14,11 @@
 		
 		<h1>EPIC FAIL :(</h1>
 		
-		<p><strong>The system encountered a fatal error.</strong></p>
+		<p><strong>An unexpected error occured while loading this page.</strong></p>
+		
+		<p>We have been notified about the error and will attempt to fix it as soon as possible.<br />Please return to the <a href="javascript:window.history.back()">previous page</a>.</p>
+		
+		<p><strong>We are very sorry for the trouble!</strong></p>
 		
 		<?php if(ini_get("display_errors") == true): ?>
 			<p><small><?= Helpers::h($e->getMessage()) ?></small></p>

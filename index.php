@@ -1,9 +1,9 @@
 <?php
-
+	
 	require_once("include/all.php");
 	
 	// Ha az URI nem tartalmazza az index.php-t, akkor átirányítunk oda (a .htaccess korlátozások miatt szükséges)
-	Helpers::ensureCorrectBaseUri();
+	// Helpers::ensureCorrectBaseUri();
 	
 	// Kimeneti gyorsítótár engedélyezése (nem küldi ki azonnal a print-elt szövegeket a böngészőnek, hanem csak akkor, amikor mi mondjuk neki)
 	ob_start();
@@ -42,6 +42,12 @@
 		
 		// Beállítjuk a HTTP 500-as állapotot
 		Helpers::setStatusCode("500 Internal Server Error");
+		
+		if(MAIL_EXCEPTIONS)
+		{
+			// Értesítést küldünk emailben
+			Helpers::sendMail(ADMIN_EMAIL, "[LCB] " . $e->getMessage(), "An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" . $e->getMessage() . "\r\nRequest URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" . print_r(@$_POST, true));
+		}
 		
 		// Megjelenítjük a hiba oldalt
 		require_once("include/templates/errorMessage.php");

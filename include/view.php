@@ -95,6 +95,17 @@
 			self::renderWithoutLayout($file, array_merge($this->params, $params));
 		}
 		
+		public function title()
+		{
+			$title = "";
+			if(!is_null($this->title))
+			{
+				$title .= $this->title . " - ";
+			}
+			$title .= "Let's Cook Budapest";
+			return $title;
+		}
+		
 		//=================
 		// Statikus elemek
 		//=================

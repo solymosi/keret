@@ -4,12 +4,13 @@ RewriteEngine On
 DirectoryIndex index.php
 Options +FollowSymLinks -Indexes
 
-# Allow access to index.php and the assets folder
+# Set RewriteBase to the relative URL path of the current folder
 
-RewriteRule ^$ - [L]
+RewriteBase /
+
 RewriteRule ^index\.php(\/.*)?$ - [L]
 RewriteRule ^assets\/.*$ - [L]
 
-# Disallow access to everything else
+# Rewrite URLs to include index.php
 
-RewriteRule .* - [F,L]
+RewriteRule ^(.*)$ index.php/$1 [QSA,L]
