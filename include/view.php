@@ -111,7 +111,7 @@
 		//=================
 		
 		// Betölti a megadott template fájlt, lefuttatja a megadott paraméterekkel, kidekorálja a layout-tal, és visszaadja az eredményt
-		public static function render($file, $params = array())
+		public static function render($file, $params = array(), $layout = "layout")
 		{
 			// Kirendereljük a template-t a $content változóba
 			$template = new View($file, $params);
@@ -121,7 +121,7 @@
 			$params = $template->getParams();
 			
 			// Kirendereljük a layout-ot a template paramétereivel és kirenderelt kódjával, majd kiírjuk az eredményt
-			$layout = new View("layout", array_merge($params, array("content" => $content)));
+			$layout = new View($layout, array_merge($params, array("content" => $content)));
 			print $layout->getContent();
 		}
 		
