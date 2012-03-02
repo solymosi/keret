@@ -11,6 +11,11 @@
 			ini_set("session.cookie_secure", SESSION_COOKIE_SECURE);
 			session_start();
 			session_regenerate_id();
+			
+			if(is_null(self::CSRFToken()))
+			{
+				self::generateCSRFToken();
+			}
 		}
 		
 		public static function get($key)
