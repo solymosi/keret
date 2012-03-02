@@ -72,8 +72,14 @@
 			return $rows;
 		}
 		
-		// Futtatja a megadott lekérdezést és visszaadja az összes sort (DB::query és DB::fetchAll együtt)
+		// Futtatja a megadott lekérdezést és visszaadja az első sort (DB::query és DB::fetch együtt)
 		public static function get()
+		{
+			return self::fetch(call_user_func_array(array("self", "query"), func_get_args()));
+		}
+		
+		// Futtatja a megadott lekérdezést és visszaadja az összes sort (DB::query és DB::fetchAll együtt)
+		public static function getAll()
 		{
 			return self::fetchAll(call_user_func_array(array("self", "query"), func_get_args()));
 		}
