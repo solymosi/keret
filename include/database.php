@@ -84,6 +84,13 @@
 			return self::fetchAll(call_user_func_array(array("self", "query"), func_get_args()));
 		}
 		
+		// Visszaadja a legutóbb beszúrt sor ID-jét
+		public static function lastID()
+		{
+			$row = self::get("select last_insert_id() as id");
+			return $row["id"];
+		}
+		
 		// Visszaadja a legutóbbi MySQL hibaüzenetet
 		public static function lastError()
 		{
