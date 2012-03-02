@@ -121,14 +121,14 @@
 			$params = $template->getParams();
 			
 			// Kirendereljük a layout-ot a template paramétereivel és kirenderelt kódjával, majd kiírjuk az eredményt
-			$layout = new View($layout, array_merge($params, array("content" => $content)));
+			$layout = new self($layout, array_merge($params, array("content" => $content)));
 			print $layout->getContent();
 		}
 		
 		public static function renderWithoutLayout($file, $params = array())
 		{
 			// Kirendereljük a megadott template-t, majd kiírjuk az eredményt
-			$template = new View($file, $params);
+			$template = new self($file, $params);
 			print $template->getContent();
 		}
 	}
