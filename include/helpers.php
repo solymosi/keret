@@ -45,6 +45,13 @@
 			return self::$uri;
 		}
 		
+		// Lekéri az aktuális oldallekérés method-ját
+		// Lehetséges értékek: GET, POST, PUT, HEAD, DELETE, PATCH, stb.
+		public static function getMethod()
+		{
+			return $_SERVER["REQUEST_METHOD"];
+		}
+		
 		// A megadott rendszeren belüli URI-t abszolút linkké konvertálja
 		// Példa: /login  =>  https://apro.kozgaz.net/index.php/login
 		public static function link($uri)
