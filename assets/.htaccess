@@ -1,0 +1,3 @@
+# Disable script execution
+
+SetHandler default-handler
