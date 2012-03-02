@@ -55,10 +55,27 @@
 			return @mysql_num_rows($result);
 		}
 		
-		// Visszaadja a soron következő elemet a lekérdezés eredményében, vagy false-t, ha nincs több
+		// Visszaadja a soron következő sort a lekérdezés eredményében, vagy false-t, ha nincs több
 		public static function fetch($result)
 		{
 			return @mysql_fetch_assoc($result);
+		}
+		
+		// Visszaadja az összes sort a lekérdezés eredményéből egy tömbben
+		public static function fetchAll($result)
+		{
+			$rows = array();
+			while($row = self::fetch($result))
+			{
+				$rows[] = $row;
+			}
+			return $rows;
+		}
+		
+		// Futtatja a megadott lekérdezést és visszaadja az összes sort (DB::query és DB::fetchAll együtt)
+		public static function get()
+		{
+			return self::fetchAll(call_user_func_array(array("self", "query"), func_get_args()));
 		}
 		
 		// Visszaadja a legutóbbi MySQL hibaüzenetet
