@@ -49,7 +49,13 @@
 		// Lehetséges értékek: GET, POST, PUT, HEAD, DELETE, PATCH, stb.
 		public static function getMethod()
 		{
-			return $_SERVER["REQUEST_METHOD"];
+			return strtolower($_SERVER["REQUEST_METHOD"]);
+		}
+		
+		// Igazat ad vissza, ha az aktuális oldallekérés method-ja megegyezik a megadottal
+		public static function isMethod($method)
+		{
+			return strtolower($method) == self::getMethod();
 		}
 		
 		// A megadott rendszeren belüli URI-t abszolút linkké konvertálja
