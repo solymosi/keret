@@ -162,10 +162,16 @@
 		}
 		
 		public static function getFileExtension($fileName)
-		{		
-			preg_match('/([^.]+)$/', $fileName, $matches);
-			return $matches[0];
+		{
+			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
+			return $matches[1];
 		}
+		
+		public static function randomToken() 
+		{
+			return sha1(microtime(true) . mt_rand(10000, 90000));
+		}
+		
 	}
 	
 	
