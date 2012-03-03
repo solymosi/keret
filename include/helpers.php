@@ -146,7 +146,28 @@
 				self::externalRedirect(self::getBaseUri() . "/index.php" . self::getUri(), true);
 			}
 		}
+		
+		public static function validateExtension($fileName, $extensions)
+		{
+			$fileExt = self::getFileExtension($fileName);
+			
+			foreach($extensions as $ext)
+			{
+				if($ext == $fileExt)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public static function getFileExtension($fileName)
+		{		
+			preg_match('/([^.]+)$/', $fileName, $matches);
+			return $matches[0];
+		}
 	}
+	
 	
 	class NotFoundException extends Exception { }
 
