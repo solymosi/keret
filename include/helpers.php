@@ -120,11 +120,6 @@
 			return htmlentities($content, ENT_QUOTES, "UTF-8");
 		}
 		
-		public static function formatPrice($price, $includeCurrency = true)
-		{
-			return number_format($price, 0, "", ",") . ($includeCurrency ? " HUF" : "");
-		}
-		
 		// Töröl minden eddig kiprintelt tartalmat a kimeneti gyorsítótárból
 		public static function clearOutput()
 		{
