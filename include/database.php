@@ -33,6 +33,12 @@
 			return mysql_real_escape_string($text);
 		}
 		
+		// Idézőjelek közé veszi és escapeli a megadott sztringet
+		public static function quote($text)
+		{
+			return "'" . DB::escape($text) . "'";
+		}
+		
 		// Futtat egy lekérdezést. Az SQL sztring után még paramétereket is meg lehet adni. Ezek automatikusan escapelve lesznek, és be lesznek szúrva az SQL sztringbe az %s-sel megjelölt helyekre.
 		public static function query($sql)
 		{
