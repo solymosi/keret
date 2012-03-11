@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	
 	//=================
 	// PHP beállítások
@@ -52,7 +52,7 @@
 	define("MAIL_FROM", "SolymosiNet <system@solymosi.eu>");
 	
 	// Hibaüzenetek automatikus elküldése emailben
-	define("MAIL_EXCEPTIONS", false); //true);
+	define("MAIL_EXCEPTIONS", true);
 	
 	// A tulajdonos email címe
 	define("OWNER_EMAIL", "");
