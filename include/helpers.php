@@ -159,7 +159,7 @@
 		public static function getFileExtension($fileName)
 		{
 			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
-			return $matches[1];
+			return count($matches) > 0 ? $matches[1] : null;
 		}
 		
 		public static function randomToken() 
@@ -168,7 +168,6 @@
 		}
 		
 	}
-	
 	
 	class NotFoundException extends Exception { }
 
