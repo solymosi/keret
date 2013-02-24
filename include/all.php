@@ -10,6 +10,7 @@
 	
 	// Megjelenítés-kezelő
 	require_once("view.php");
+	require_once("template.php");
 	
 	// Hibakezelő
 	require_once("error.php");
