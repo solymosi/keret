@@ -25,13 +25,13 @@
 		}
 		
 		// Visszaadja az összes paramétert
-		public function getParams()
+		static public function getParams()
 		{
 			return self::$params;
 		}
 		
 		// Betölti a megadott template fájlt, lefuttatja a megadott paraméterekkel, kidekorálja a layout-tal, és visszaadja az eredményt
-		public static function render($file, $params = array(), $layout = "layout")
+		static public function render($file, $params = array(), $layout = "layout")
 		{
 			// Kirendereljük a template-t a $content változóba
 			$template = new Template($file, array_merge(self::$params, $params));
@@ -45,7 +45,7 @@
 			print $layout->getContent();
 		}
 		
-		public static function renderWithoutLayout($file, $params = array())
+		static public function renderWithoutLayout($file, $params = array())
 		{
 			// Kirendereljük a megadott template-t, majd kiírjuk az eredményt
 			$template = new Template($file, array_merge(self::$params, $params));
