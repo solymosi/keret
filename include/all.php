@@ -26,5 +26,8 @@
 	
 	// Route kezelő
 	require_once("routing.php");
+	
+	// Form építő
+	require_once("form/all.php");
 
 ?>
