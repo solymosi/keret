@@ -46,7 +46,7 @@
 		if(MAIL_EXCEPTIONS)
 		{
 			// Értesítést küldünk emailben
-			Helpers::sendMail(ADMIN_EMAIL, "[LCB] " . $e->getMessage(), "An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" . $e->getMessage() . "\r\nRequest URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" . print_r(@$_POST, true));
+			Helpers::sendMail(ADMIN_EMAIL, "[Exception] " . $e->getMessage(), "An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" . $e->getMessage() . "\r\nRequest URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" . print_r(@$_POST, true));
 		}
 		
 		// Megjelenítjük a hiba oldalt
