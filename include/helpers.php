@@ -142,20 +142,6 @@
 			}
 		}
 		
-		public static function validateExtension($fileName, $extensions)
-		{
-			$fileExt = self::getFileExtension($fileName);
-			
-			foreach($extensions as $ext)
-			{
-				if($ext == $fileExt)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		
 		public static function getFileExtension($fileName)
 		{
 			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
