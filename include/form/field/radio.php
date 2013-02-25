@@ -18,7 +18,7 @@
 		{
 			foreach($this->getItems() as $id => $item)
 			{
-				$this->item($id)->select($item->getValue() == $value);
+				$this->item($id)->select($id == $value);
 			}
 			return $this;
 		}
@@ -88,7 +88,7 @@
 		
 		public function render()
 		{
-			$this->selected = $this->selected() ? "selected" : null;
+			$this->selected() ? $this->set("checked", "checked") : $this->clear("checked");
 			return '<div class="radio">' . parent::render() . $this->label->render() . '</div>';
 		}
 	}

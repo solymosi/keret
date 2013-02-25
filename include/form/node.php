@@ -43,6 +43,15 @@
 			return isset($this->params[$key]);
 		}
 		
+		public function clear($key)
+		{
+			if(isset($this->params[$key]))
+			{
+				unset($this->params[$key]);
+			}
+			return $this;
+		}
+		
 		public function setParams($params)
 		{
 			if(!is_array($params))
