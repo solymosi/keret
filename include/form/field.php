@@ -2,27 +2,27 @@
 	
 	abstract class Field extends Node
 	{
-		protected $error = null;
+		protected $errors = array();
 		
-		public function setError($error)
+		public function addError($error)
 		{
-			$this->error = $error;
+			$this->errors[] = $error;
 			return $this;
 		}
 		
-		public function getError()
+		public function getErrors()
 		{
-			return $this->error;
+			return $this->errors;
 		}
 		
-		public function hasError()
+		public function hasErrors()
 		{
-			return !is_null($this->error);
+			return count($this->errors) != 0;
 		}
 		
-		public function clearError()
+		public function clearErrors()
 		{
-			$this->error = null;
+			$this->errors = array();
 			return $this;
 		}
 	}

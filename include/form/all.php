@@ -9,7 +9,7 @@
 	require_once("label.php");
 	require_once("field.php");
 	require_once("error.php");
-	//require_once("help.php");
+	require_once("help.php");
 	
 	require_once("inputField.php");
 	

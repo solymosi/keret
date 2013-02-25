@@ -6,6 +6,7 @@
 		protected $single = false;
 		protected $items = array();
 		protected $params = array();
+		protected $order = array();
 		
 		public function __construct($tag, $params = array(), $items = array())
 		{
@@ -59,13 +60,20 @@
 		
 		/* CHILD ITEMS */
 		
-		public function add($id, $item)
+		public function add($id, $item, $top = false)
 		{
 			if(!($item instanceof Node))
 			{
 				throw new Exception("The variable passed to add() must be an instance of Node");
 			}
-			$this->items[$id] = $item;
+			if($top)
+			{
+				array_unshift($this->items, $item);
+			}
+			else
+			{
+				$this->items[$id] = $item;
+			}
 			return $this;
 		}
 		
@@ -103,6 +111,19 @@
 			return $this;
 		}
 		
+		protected function sortItems()
+		{
+			foreach(array_reverse($this->order) as $id)
+			{
+				if($this->has($id))
+				{
+					$item = $this->item($id);
+					$this->remove($id);
+					$this->add($id, $item, true);
+				}
+			}
+		}
+		
 		public function render()
 		{
 			$result = "<" . strtolower($this->tag);
@@ -119,6 +140,7 @@
 			{
 				$result .= ">";
 				
+				$this->sortItems();
 				foreach($this->items as $item)
 				{
 					$result .= $item->render();

@@ -2,50 +2,60 @@
 
 	class Row extends Node
 	{
-		protected $help = null;
-		
-		public function __construct($label, $field, $params = array())
+		public function __construct($label, $field, $help = null, $params = array())
 		{
+			$this->order = array("label", "field", "error", "help");
+			
 			if(is_string($label))
 			{
 				$label = new Label($label, $field);
 			}
+			
+			if(is_string($help))
+			{
+				$help = new Help($help);
+			}
+			
 			parent::__construct("div", array_merge(array("class" => "row"), $params));
 			$this->add("label", $label);
 			$this->add("field", $field);
+			
+			if(!is_null($help))
+			{
+				$this->add("help", $help);
+			}
 		}
 		
-		public function getHelp()
+		public function setError($error)
 		{
-			return $this->help;
-		}
-		
-		public function setHelp($help)
-		{
-			$this->help = $help;
+			$this->error = $error;
 			return $this;
 		}
 		
-		public function hasHelp()
+		public function getError()
 		{
-			return !is_null($this->help);
+			return $this->error;
+		}
+		
+		public function hasError()
+		{
+			return !is_null($this->error);
+		}
+		
+		public function clearError()
+		{
+			$this->error = null;
+			return $this;
 		}
 		
 		public function render()
 		{
-			$result = parent::render();
-			
-			if(!is_null($this->item("field")) && ($this->item("field") instanceof Field) && $this->item("field")->hasError())
+			if(!is_null($this->item("field")) && ($this->item("field") instanceof Field) && $this->item("field")->hasErrors())
 			{
-				$result .= (new Error($this->item("field")->getError()))->render();
+				$this->add("error", new Error(implode("<br />", $this->item("field")->getErrors())));
 			}
 			
-			if($this->hasHelp())
-			{
-				$result .= $this->getHelp()->render();
-			}
-			
-			return $result;
+			return parent::render();
 		}
 	}
 
