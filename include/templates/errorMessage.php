@@ -21,7 +21,12 @@
 		<p><strong>We are very sorry for the trouble!</strong></p>
 		
 		<?php if(ini_get("display_errors") == true): ?>
-			<p><small><?= Helpers::h($e->getMessage()) ?></small></p>
+			<p>
+				<small>
+					<strong><?= Helpers::h($e->getMessage()) ?></strong><br />
+					<?= nl2br(Helpers::h($e->getTraceAsString())) ?>
+				</small>
+			</p>
 		<?php endif; ?>
 		
 	</body>
