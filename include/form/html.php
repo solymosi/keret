@@ -1,6 +1,6 @@
 <?php
 
-	class HtmlNode extends Node
+	class Html extends Node
 	{
 		public function __construct($html)
 		{

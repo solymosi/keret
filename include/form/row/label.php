@@ -8,7 +8,7 @@
 		{
 			$this->field = $field;
 			parent::__construct("label", array_merge(array("for" => $field->id), $params));
-			$this->add("content", new HtmlNode($content));
+			$this->add("content", new Html($content));
 		}
 	}
 	
