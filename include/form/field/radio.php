@@ -54,7 +54,7 @@
 		
 		public function __construct($name, $value, $label, $selected = false, $params = array())
 		{
-			$this->selected = $selected;
+			$this->select($selected);
 			$this->prefix = $name . "_" . $value;
 			parent::__construct("radio", $name, $value, $params);
 			

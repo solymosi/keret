@@ -3,15 +3,27 @@
 	class Checkbox extends InputField
 	{
 		protected $label = null;
+		protected $selected = false;
 		
-		public function __construct($name, $label, $checked = false, $params = array())
+		public function __construct($name, $label, $selected = false, $params = array())
 		{
-			parent::__construct("checkbox", $name, $checked, $params);
+			parent::__construct("checkbox", $name, $selected, $params);
 			
 			if(is_string($label))
 			{
 				$this->label = new Label($label, $this);
 			}
+		}
+		
+		public function setValue($value)
+		{
+			$this->selected = $value;
+			return $this;
+		}
+		
+		public function getValue()
+		{
+			return $this->selected;
 		}
 		
 		public function getLabel()
@@ -27,7 +39,8 @@
 		
 		public function render()
 		{
-			$this->set("value", $this->value ? "1" : "0");
+			$this->getValue() ? $this->set("checked", "checked") : $this->clear("checked");
+			$this->value = "1";
 			return '<div class="checkbox">' . parent::render() . $this->label->render() . '</div>';
 		}
 	}
