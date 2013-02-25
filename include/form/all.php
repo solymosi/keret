@@ -19,11 +19,11 @@
 	require_once("field/checkbox.php");
 	require_once("field/radio.php");
 	
-	/*require_once("field/button.php");
+	require_once("field/button.php");
 	require_once("field/submit.php");
 	require_once("field/reset.php");
 	
-	require_once("field/textarea.php");
+	/*require_once("field/textarea.php");
 	require_once("field/select.php");*/
 	
 ?>

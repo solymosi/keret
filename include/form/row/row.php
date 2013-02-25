@@ -17,7 +17,12 @@
 			}
 			
 			parent::__construct("div", array_merge(array("class" => "row"), $params));
-			$this->add("label", $label);
+			
+			if(!is_null($label))
+			{
+				$this->add("label", $label);
+			}
+			
 			$this->add("field", $field);
 			
 			if(!is_null($help))
