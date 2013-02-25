@@ -26,25 +26,47 @@
 			}
 		}
 		
-		public function setError($error)
+		public function getValue()
 		{
-			$this->error = $error;
+			return $this->item("field")->getValue();
+		}
+		
+		public function setValue($value)
+		{
+			$this->item("field")->setValue($value);
 			return $this;
 		}
 		
-		public function getError()
+		public function hasValue()
 		{
-			return $this->error;
+			return $this->item("field")->hasValue();
 		}
 		
-		public function hasError()
+		public function clearValue()
 		{
-			return !is_null($this->error);
+			$this->item("field")->clearValue();
+			return $this;
 		}
 		
-		public function clearError()
+		public function addError($error)
 		{
-			$this->error = null;
+			$this->item("field")->addError($error);
+			return $this;
+		}
+		
+		public function getErrors()
+		{
+			return $this->item("field")->getErrors();
+		}
+		
+		public function hasErrors()
+		{
+			return $this->item("field")->hasErrors();
+		}
+		
+		public function clearErrors()
+		{
+			$this->item("field")->clearErrors();
 			return $this;
 		}
 		
