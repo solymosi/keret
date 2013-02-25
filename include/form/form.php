@@ -11,7 +11,7 @@
 		{
 			foreach($values as $id => $value)
 			{
-				if($this->has($id) && $this->item($id) instanceof Row)
+				if($this->has($id) && ($this->item($id) instanceof Row || $this->item($id) instanceof Field))
 				{
 					$this->item($id)->setValue($value);
 				}
@@ -24,7 +24,7 @@
 			$data = array();
 			foreach($this->items as $id => $item)
 			{
-				if($this->item($id) instanceof Row)
+				if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
 				{
 					$data[$id] = $item->getValue();
 				}
@@ -34,7 +34,7 @@
 		
 		public function error($id, $error)
 		{
-			if($this->item($id) instanceof Row)
+			if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
 			{
 				$this->item($id)->addError($error);
 			}
@@ -46,7 +46,7 @@
 			$errors = array();
 			foreach($this->items as $id => $item)
 			{
-				if($this->item($id) instanceof Row)
+				if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
 				{
 					$errors[$id] = $item->getErrors();
 				}

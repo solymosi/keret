@@ -129,7 +129,7 @@
 			$result = "<" . strtolower($this->tag);
 			foreach($this->params as $key => $value)
 			{
-				$result .= " " . $key . "=\"" . ($value ? Helpers::h($value) : "") . "\"";
+				$result .= " " . $key . '="' . ($value ? Helpers::h($value) : "") . '"';
 			}
 			
 			if($this->single)

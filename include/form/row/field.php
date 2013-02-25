@@ -4,10 +4,12 @@
 	{
 		protected $value = null;
 		protected $errors = array();
+		protected $prefix = null;
 		
-		public function __construct($tag, $value = null, $params = array(), $items = array())
+		public function __construct($tag, $name, $value = null, $params = array(), $items = array())
 		{
-			parent::__construct($tag, $params, $items);
+			$this->id = (is_null($this->prefix) ? $name : $this->prefix) . "_" . substr(Helpers::randomToken(), 0, 8);
+			parent::__construct($tag, array_merge(array("name" => $name), $params), $items);
 			$this->setValue($value);
 		}
 		

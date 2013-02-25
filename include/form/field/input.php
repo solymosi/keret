@@ -4,9 +4,8 @@
 	{
 		public function __construct($type, $name, $value = null, $params = array())
 		{
-			$this->id = $name . "_" . substr(Helpers::randomToken(), 0, 8);
 			$this->single = true;
-			parent::__construct("input", $value, array_merge(array("type" => $type, "name" => $name), $params));
+			parent::__construct("input", $name, $value, array_merge(array("type" => $type), $params));
 		}
 		
 		public function render()
