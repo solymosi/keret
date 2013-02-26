@@ -11,7 +11,7 @@
 		public function __construct($tag, $params = array(), $items = array())
 		{
 			$this->tag = $tag;
-			$this->setParams(array_merge($this->params, $params));
+			$this->setParams(self::mergeParams($this->params, $params));
 			$this->setItems(array_merge($this->items, $items));
 		}
 		
@@ -165,6 +165,26 @@
 			}
 			
 			return $result;
+		}
+		
+		static public function mergeParams($first, $second)
+		{
+			$classes = array();
+			foreach(array_merge(isset($first["class"]) ? explode(" ", $first["class"]) : array(), isset($second["class"]) ? explode(" ", $second["class"]) : array()) as $class)
+			{
+				if(trim($class) != "")
+				{
+					if(substr($class, 0, 1) == "-" && in_array($class, $classes))
+					{
+						$classes = array_diff($classes, substr($class, 1));
+					}
+					elseif(!in_array($class, $classes))
+					{
+						$classes[] = substr($class, substr($class, 0, 1) == "+" ? 1 : 0);
+					}
+				}
+			}
+			return array_merge($first, $second, count($classes) > 0 ? array("class" => implode(" ", $classes)) : array());
 		}
 		
 	}

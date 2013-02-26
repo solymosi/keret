@@ -7,7 +7,7 @@
 		public function __construct($content, $field, $params = array())
 		{
 			$this->field = $field;
-			parent::__construct("label", array_merge(array("for" => $field->id), $params));
+			parent::__construct("label", self::mergeParams(array("for" => $field->id), $params));
 			$this->add("content", new Html($content));
 		}
 	}

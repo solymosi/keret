@@ -5,7 +5,7 @@
 		public function __construct($type, $name, $value = null, $params = array())
 		{
 			$this->single = true;
-			parent::__construct("input", $name, $value, array_merge(array("type" => $type), $params));
+			parent::__construct("input", $name, $value, self::mergeParams(array("type" => $type), $params));
 		}
 		
 		public function render()

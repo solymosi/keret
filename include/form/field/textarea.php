@@ -4,7 +4,7 @@
 	{
 		public function __construct($name, $value = null, $params = array())
 		{
-			parent::__construct("textarea", $name, $value, array_merge(array("rows" => 5), $params));
+			parent::__construct("textarea", $name, $value, self::mergeParams(array("rows" => 5), $params));
 		}
 		
 		public function render()
