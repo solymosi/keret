@@ -23,7 +23,7 @@
 	require_once("field/submit.php");
 	require_once("field/reset.php");
 	
-	/*require_once("field/textarea.php");
-	require_once("field/select.php");*/
+	require_once("field/textarea.php");
+	require_once("field/select.php");
 	
 ?>

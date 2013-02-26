@@ -95,6 +95,12 @@
 			return $this;
 		}
 		
+		public function removeAll()
+		{
+			$this->items = array();
+			return $this;
+		}
+		
 		public function item($id)
 		{
 			return $this->has($id) ? $this->items[$id] : null;
