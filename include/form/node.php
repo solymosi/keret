@@ -170,13 +170,14 @@
 		static public function mergeParams($first, $second)
 		{
 			$classes = array();
+			
 			foreach(array_merge(isset($first["class"]) ? explode(" ", $first["class"]) : array(), isset($second["class"]) ? explode(" ", $second["class"]) : array()) as $class)
 			{
 				if(trim($class) != "")
 				{
-					if(substr($class, 0, 1) == "-" && in_array($class, $classes))
+					if(substr($class, 0, 1) == "-")
 					{
-						$classes = array_diff($classes, substr($class, 1));
+						$classes = array_diff($classes, array(substr($class, 1)));
 					}
 					elseif(!in_array($class, $classes))
 					{
@@ -184,6 +185,10 @@
 					}
 				}
 			}
+			
+			unset($first["class"]);
+			unset($second["class"]);
+			
 			return array_merge($first, $second, count($classes) > 0 ? array("class" => implode(" ", $classes)) : array());
 		}
 		
