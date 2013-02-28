@@ -9,7 +9,7 @@
 		
 		public function render()
 		{
-			$this->add("content", new Html($this->value));
+			$this->addChild("content", new Html($this->value));
 			return parent::render();
 		}
 	}

@@ -4,8 +4,9 @@
 	{
 		public function __construct($content, $params = array())
 		{
-			parent::__construct("div", self::mergeParams($params, array("class" => "+help")));
-			$this->add("content", new Html($content));
+			$this->addChild("content", new Html($content));
+			$this->addParams(array("class" => "help"));
+			parent::__construct("div", $params);
 		}
 	}
 	

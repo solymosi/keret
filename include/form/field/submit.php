@@ -5,7 +5,7 @@
 		public function __construct($label, $name = null, $params = array())
 		{
 			parent::__construct($label, $name, $params);
-			$this->type = "submit";
+			$this->setParam("type", "submit");
 		}
 	}
 	

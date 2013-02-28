@@ -8,7 +8,7 @@
 			
 			if(is_string($label))
 			{
-				$label = new Label($label, $field);
+				$label = new Label($label, $field instanceof Field ? $field : null);
 			}
 			
 			if(is_string($help))
@@ -20,66 +20,66 @@
 			
 			if(!is_null($label))
 			{
-				$this->add("label", $label);
+				$this->addChild("label", $label);
 			}
 			
-			$this->add("field", $field);
+			$this->addChild("field", $field);
 			
 			if(!is_null($help))
 			{
-				$this->add("help", $help);
+				$this->addChild("help", $help);
 			}
 		}
 		
 		public function getValue()
 		{
-			return $this->item("field")->getValue();
+			return $this->getChild("field")->getValue();
 		}
 		
 		public function setValue($value)
 		{
-			$this->item("field")->setValue($value);
+			$this->getChild("field")->setValue($value);
 			return $this;
 		}
 		
 		public function hasValue()
 		{
-			return $this->item("field")->hasValue();
+			return $this->getChild("field")->hasValue();
 		}
 		
 		public function clearValue()
 		{
-			$this->item("field")->clearValue();
+			$this->getChild("field")->clearValue();
 			return $this;
 		}
 		
 		public function addError($error)
 		{
-			$this->item("field")->addError($error);
+			$this->getChild("field")->addError($error);
 			return $this;
 		}
 		
 		public function getErrors()
 		{
-			return $this->item("field")->getErrors();
+			return $this->getChild("field")->getErrors();
 		}
 		
 		public function hasErrors()
 		{
-			return $this->item("field")->hasErrors();
+			return $this->getChild("field")->hasErrors();
 		}
 		
 		public function clearErrors()
 		{
-			$this->item("field")->clearErrors();
+			$this->getChild("field")->clearErrors();
 			return $this;
 		}
 		
 		public function render()
 		{
-			if(!is_null($this->item("field")) && ($this->item("field") instanceof Field) && $this->item("field")->hasErrors())
+			if(!is_null($this->getChild("field")) && ($this->getChild("field") instanceof Field) && $this->getChild("field")->hasErrors())
 			{
-				$this->add("error", new Error(implode("<br />", $this->item("field")->getErrors())));
+				$this->addChild("error", new Error(implode("<br />", $this->getChild("field")->getErrors())));
 			}
 			
 			return parent::render();

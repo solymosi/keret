@@ -10,7 +10,7 @@
 		
 		public function render()
 		{
-			$this->set("value", $this->value);
+			$this->setParam("value", $this->value);
 			return parent::render();
 		}
 	}

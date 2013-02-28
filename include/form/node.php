@@ -3,62 +3,54 @@
 	class Node
 	{
 		protected $tag = null;
+		protected $parent = null;
 		protected $single = false;
-		protected $items = array();
 		protected $params = array();
+		protected $children = array();
 		protected $order = array();
 		
-		public function __construct($tag, $params = array(), $items = array())
+		public function __construct($tag, $params = array(), $children = array())
 		{
+			self::whenNot(is_string($tag), "The tag name must be a string.");
+			
 			$this->tag = $tag;
+			$this->addParams($params);
+			$this->addChildren($children);
+		}
+		
+		public function setParam($name, $value)
+		{
+			self::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			$this->params[$name] = $value;
+			
+			return $this;
+		}
+		
+		public function getParam($name)
+		{
+			self::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			return isset($this->params[$name]) ? $this->params[$name] : null;
+		}
+		
+		public function clearParam($name)
+		{
+			self::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			if(isset($this->params[$name]))
+			{
+				unset($this->params[$name]);
+			}
+			
+			return $this;
+		}
+		
+		public function addParams($params)
+		{
+			self::whenNot(is_array($params), "The parameter list must be an array.");
+			
 			$this->setParams(self::mergeParams($this->params, $params));
-			$this->setItems(array_merge($this->items, $items));
-		}
-		
-		/* PARAMETERS */
-		
-		public function set($key, $value)
-		{
-			$this->params[$key] = $value;
-			return $this;
-		}
-		
-		public function __set($key, $value)
-		{
-			return $this->set($key, $value);
-		}
-		
-		public function get($key)
-		{
-			return isset($this->params[$key]) ? $this->params[$key] : null;
-		}
-		
-		public function __get($key)
-		{
-			return $this->get($key);
-		}
-		
-		public function __isset($key)
-		{
-			return isset($this->params[$key]);
-		}
-		
-		public function clear($key)
-		{
-			if(isset($this->params[$key]))
-			{
-				unset($this->params[$key]);
-			}
-			return $this;
-		}
-		
-		public function setParams($params)
-		{
-			if(!is_array($params))
-			{
-				throw new Exception("The variable passed to setParams() must be an array");
-			}
-			$this->params = $params;
 			return $this;
 		}
 		
@@ -67,84 +59,171 @@
 			return $this->params;
 		}
 		
-		/* CHILD ITEMS */
-		
-		public function add($id, $item, $top = false)
+		public function setParams($params)
 		{
-			if(!($item instanceof Node))
+			self::whenNot(is_array($params), "The parameter list must be an array.");
+			
+			$this->clearParams();
+			
+			foreach($params as $name => $value)
 			{
-				throw new Exception("The variable passed to add() must be an instance of Node");
+				$this->setParam($name, $value);
 			}
-			if($top)
-			{
-				array_unshift($this->items, $item);
-			}
-			else
-			{
-				$this->items[$id] = $item;
-			}
+			
 			return $this;
 		}
 		
-		public function remove($id)
+		public function clearParams()
 		{
-			if($this->has($id))
+			$this->params = array();
+			return $this;
+		}
+		
+		public function addChild($name, $child, $top = false)
+		{
+			self::whenNot(is_string($name), "The name of the child node must be a string.");
+			self::whenNot($child instanceof Node, "An instance of Node is required.");
+			
+			$this->children[$name] = $child;
+			$child->setParent($this);
+			
+			return $this;
+		}
+		
+		public function addChildren($children)
+		{
+			self::whenNot(is_array($children), "The child list must be an array.");
+			
+			foreach($children as $name => $child)
 			{
-				unset($this->items[$id]);
+				$this->addChild($name, $child);
 			}
+			
 			return $this;
 		}
 		
-		public function removeAll()
+		public function removeChild($name)
 		{
-			$this->items = array();
-			return $this;
-		}
-		
-		public function item($id)
-		{
-			return $this->has($id) ? $this->items[$id] : null;
-		}
-		
-		public function has($id)
-		{
-			return isset($this->items[$id]);
-		}
-		
-		public function getItems()
-		{
-			return $this->items;
-		}
-		
-		public function setItems($items)
-		{
-			if(!is_array($items))
+			self::whenNot(is_string($name), "The name of the child node must be a string.");
+			
+			if($this->hasChild($name))
 			{
-				throw new Exception("The variable passed to setItems() must be an array");
+				unset($this->children[$name]);
 			}
-			$this->items = $items;
+			
+			$child->clearParent();
+			
 			return $this;
 		}
 		
-		protected function sortItems()
+		public function getChild($name)
 		{
-			foreach(array_reverse($this->order) as $id)
+			self::whenNot(is_string($name), "The name of the child node must be a string.");
+			
+			return $this->hasChild($name) ? $this->children[$name] : null;
+		}
+		
+		public function hasChild($name)
+		{
+			self::whenNot(is_string($name), "The name of the child node must be a string.");
+			
+			return isset($this->children[$name]);
+		}
+		
+		public function getChildren()
+		{
+			return $this->children;
+		}
+		
+		public function setChildren($children)
+		{
+			self::whenNot(is_array($children), "The child list must be an array.");
+			
+			$this->clearChildren();
+			$this->addChildren($children);
+			
+			return $this;
+		}
+		
+		public function clearChildren()
+		{
+			$this->children = array();
+			return $this;
+		}
+		
+		protected function getParent()
+		{
+			return $this->parent;
+		}
+		
+		protected function hasParent()
+		{
+			return $this->parent != null;
+		}
+		
+		protected function setParent($parent)
+		{
+			self::whenNot($parent instanceof Node, "An instance of Node is required.");
+			
+			foreach($parent->getChildren() as $child)
 			{
-				if($this->has($id))
+				if($child == $this)
 				{
-					$item = $this->item($id);
-					$this->remove($id);
-					$this->add($id, $item, true);
+					$this->parent = $parent;
+					return $this;
 				}
 			}
+			
+			throw new Exception("Node is not child of the specified parent.");
+		}
+		
+		protected function clearParent()
+		{
+			foreach($parent->getChildren() as $child)
+			{
+				self::when($child == $this, "Node is still a child of its parent.");
+			}
+			
+			$this->parent = null;
+			return $this;
+		}
+		
+		protected function getOrderedChildren()
+		{
+			$children = array();
+			
+			foreach($this->order as $name)
+			{
+				if($this->hasChild($name))
+				{
+					$children[$name] = $this->getChild($name);
+				}
+			}
+			
+			foreach($this->getChildren() as $name => $child)
+			{
+				if(!in_array($name, $this->order))
+				{
+					$children[$name] = $child;
+				}
+			}
+			
+			return $children;
+		}
+		
+		protected function getPath()
+		{
+			$parent = $this->hasParent() ? $this->getParent()->getPath() : array();
+			return isset($this->name) ? array_merge($parent, array($this->name)) : $parent;
 		}
 		
 		public function render()
 		{
-			$result = "<" . strtolower($this->tag);
-			foreach($this->params as $key => $value)
+			$result = "<" . mb_strtolower($this->tag);
+			
+			foreach($this->params as $name => $value)
 			{
-				$result .= " " . $key . '="' . ($value ? Helpers::h($value) : "") . '"';
+				$result .= " " . $name . '="' . ($value ? Helpers::h($value) : "") . '"';
 			}
 			
 			if($this->single)
@@ -155,20 +234,35 @@
 			{
 				$result .= ">";
 				
-				$this->sortItems();
-				foreach($this->items as $item)
+				foreach($this->getOrderedChildren() as $child)
 				{
-					$result .= $item->render();
+					$result .= $child->render();
 				}
 				
-				$result .= "</" . $this->tag . ">";
+				$result .= "</" . mb_strtolower($this->tag) . ">";
 			}
 			
 			return $result;
 		}
 		
+		static public function when($expression, $message)
+		{
+			if($expression)
+			{
+				throw new Exception($message);
+			}
+		}
+		
+		static public function whenNot($expression, $message)
+		{
+			self::when(!$expression, $message);
+		}
+		
 		static public function mergeParams($first, $second)
 		{
+			self::whenNot(is_array($first), "The first parameter list must be an array.");
+			self::whenNot(is_array($second), "The second parameter list must be an array.");
+			
 			$classes = array();
 			
 			foreach(array_merge(isset($first["class"]) ? explode(" ", $first["class"]) : array(), isset($second["class"]) ? explode(" ", $second["class"]) : array()) as $class)

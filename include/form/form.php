@@ -1,56 +1,73 @@
 <?php
 	
-	class Form extends Node
+	class Form extends Field
 	{
-		public function __construct($action = "", $method = "post", $params = array(), $items = array())
+		public function __construct($name = "form", $action = "", $method = "post", $params = array(), $children = array())
 		{
-			parent::__construct("form", self::mergeParams($params, array("action" => $action, "method" => $method, "class" => "+default")), $items);
+			self::whenNot(is_string($name), "The form name must be a string.");
+			self::whenNot(is_string($action), "The form action must be a string.");
+			self::whenNot(is_string($method), "The form method must be a string.");
+			
+			parent::__construct("form", $name, null, $params, $children);
+			$this->addParams(array("action" => $action, "method" => $method, "class" => "default"));
 		}
 		
-		public function bind($values)
+		public function setValues($values)
 		{
-			foreach($values as $id => $value)
+			self::whenNot(is_array($values), "The value list must be an array.");
+			
+			foreach($values as $name => $value)
 			{
-				if($this->has($id) && ($this->item($id) instanceof Row || $this->item($id) instanceof Field))
+				if($this->hasChild($name) && ($this->getChild($name) instanceof Row || $this->getChild($name) instanceof Field))
 				{
-					$this->item($id)->setValue($value);
+					$this->getChild($name)->setValue($value);
 				}
 			}
+			
 			return $this;
 		}
 		
-		public function data()
+		public function getValues()
 		{
-			$data = array();
-			foreach($this->items as $id => $item)
+			$values = array();
+			
+			foreach($this->getChildren() as $name => $child)
 			{
-				if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
+				if($child instanceof Row || $child instanceof Field)
 				{
-					$data[$id] = $item->getValue();
+					$values[$name] = $child->getValue();
 				}
 			}
-			return $data;
+			
+			return $values;
 		}
 		
-		public function error($id, $error)
+		public function getValue() { }
+		
+		public function setValue($value) { }
+		
+		public function addError($field, $message = null)
 		{
-			if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
-			{
-				$this->item($id)->addError($error);
-			}
+			self::when(is_null($message), "The error message is required.");
+			self::whenNot($this->getChild($field) instanceof Row || $this->getChild($field) instanceof Field, "The specified field does not exist or is not a row or a field.");
+			
+			$this->getChild($field)->addError($message);
+			
 			return $this;
 		}
 		
-		public function errors()
+		public function getErrors()
 		{
 			$errors = array();
-			foreach($this->items as $id => $item)
+			
+			foreach($this->getChildren() as $name => $child)
 			{
-				if($this->item($id) instanceof Row || $this->item($id) instanceof Field)
+				if($child instanceof Row || $child instanceof Field)
 				{
-					$errors[$id] = $item->getErrors();
+					$errors[$name] = $child->getErrors();
 				}
 			}
+			
 			return $errors;
 		}
 	}

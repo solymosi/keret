@@ -5,7 +5,7 @@
 		public function __construct($label, $name = null, $params = array())
 		{
 			parent::__construct($label, $name, $params);
-			$this->type = "reset";
+			$this->setParam("type", "reset");
 		}
 	}
 	

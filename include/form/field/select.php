@@ -12,10 +12,10 @@
 		
 		public function render()
 		{
-			$this->removeAll();
+			$this->clearChildren();
 			foreach($this->options as $value => $label)
 			{
-				$this->add($value, new SelectOption($value, $label, $this->getValue() == $value));
+				$this->addChild($value, new SelectOption($value, $label, $this->getValue() == $value));
 			}
 			return parent::render();
 		}
@@ -27,11 +27,11 @@
 		{
 			parent::__construct("option", array("value" => $value));
 			
-			$this->add("content", new Html($label));
+			$this->addChild("content", new Html($label));
 			
 			if($selected)
 			{
-				$this->set("selected", "selected");
+				$this->setParam("selected", "selected");
 			}
 		}
 	}

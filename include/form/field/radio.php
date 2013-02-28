@@ -4,11 +4,11 @@
 	{
 		public function __construct($name, $items = array(), $value = null, $params = array())
 		{
-			parent::__construct("div", array("class" => "radiogroup"));
+			parent::__construct("div", array("class" => "group"));
 			
 			foreach($items as $v => $label)
 			{
-				$this->add($v, new RadioButton($name, $v, $label, false, $params));
+				$this->addChild($v, new RadioButton($name, $v, $label, false, $params));
 			}
 			
 			$this->setValue($value);
@@ -16,18 +16,18 @@
 		
 		public function setValue($value)
 		{
-			foreach($this->getItems() as $id => $item)
+			foreach($this->getChildren() as $id => $item)
 			{
-				$this->item($id)->select($id == $value);
+				$this->getChild($id)->select($id == $value);
 			}
 			return $this;
 		}
 		
 		public function getValue()
 		{
-			foreach($this->getItems() as $id => $item)
+			foreach($this->getChildren() as $id => $item)
 			{
-				if($this->item($id)->selected())
+				if($this->getChild($id)->selected())
 				{
 					return $id;
 				}
@@ -55,7 +55,7 @@
 		public function __construct($name, $value, $label, $selected = false, $params = array())
 		{
 			$this->select($selected);
-			$this->prefix = $name . "_" . $value;
+			
 			parent::__construct("radio", $name, $value, self::mergeParams($params, array("class" => "+inline")));
 			
 			if(is_string($label))
@@ -88,8 +88,8 @@
 		
 		public function render()
 		{
-			$this->selected() ? $this->set("checked", "checked") : $this->clear("checked");
-			return '<div class="radio">' . parent::render() . $this->label->render() . '</div>';
+			$this->selected() ? $this->setParam("checked", "checked") : $this->clearParam("checked");
+			return '<div class="field">' . parent::render() . $this->label->render() . '</div>';
 		}
 	}
 	
