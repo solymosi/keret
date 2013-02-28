@@ -2,11 +2,14 @@
 	
 	class Help extends Node
 	{
-		public function __construct($content, $params = array())
+		public function __construct($message, $params = array())
 		{
-			$this->addChild("content", new Html($content));
-			$this->addParams(array("class" => "help"));
+			self::whenNot(is_string($message), "Help message must be a string.");
+			
 			parent::__construct("div", $params);
+			
+			$this->addParams(array("class" => "help"));
+			$this->addChild("message", new Html($message));
 		}
 	}
 	

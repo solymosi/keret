@@ -16,7 +16,9 @@
 				$help = new Help($help);
 			}
 			
-			parent::__construct("div", self::mergeParams($params, array("class" => "+row")));
+			parent::__construct("div", $params);
+			
+			$this->addParams(array("class" => "row"));
 			
 			if(!is_null($label))
 			{
@@ -53,9 +55,9 @@
 			return $this;
 		}
 		
-		public function addError($error)
+		public function addError($message)
 		{
-			$this->getChild("field")->addError($error);
+			$this->getChild("field")->addError($message);
 			return $this;
 		}
 		

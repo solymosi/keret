@@ -4,6 +4,8 @@
 	{
 		public function __construct($html)
 		{
+			self::whenNot(is_string($html), "HTML content must be a string.");
+			
 			$this->html = $html;
 		}
 		

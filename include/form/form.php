@@ -9,7 +9,7 @@
 			self::whenNot(is_string($method), "The form method must be a string.");
 			
 			parent::__construct("form", $name, null, $params, $children);
-			$this->addParams(array("action" => $action, "method" => $method, "class" => "default"));
+			$this->addParams(array("action" => $action, "method" => $method, "class" => "-field default " . $name));
 		}
 		
 		public function setValues($values)

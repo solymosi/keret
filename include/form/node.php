@@ -214,7 +214,7 @@
 		protected function getPath()
 		{
 			$parent = $this->hasParent() ? $this->getParent()->getPath() : array();
-			return isset($this->name) ? array_merge($parent, array($this->name)) : $parent;
+			return isset($this->name) && !is_null($this->name) ? array_merge($parent, array($this->name)) : $parent;
 		}
 		
 		public function render()

@@ -6,10 +6,12 @@
 		{
 			if(is_null($name))
 			{
-				$name = "button_" . substr(Helpers::randomToken(), 0, 8);
+				$name = "button" . rand(100000, 999999);
 			}
 			
-			parent::__construct("button", $name, $label, self::mergeParams($params, array("class" => "+button")));
+			parent::__construct("button", $name, $label, $params);
+			
+			$this->addParams(array("class" => "button"));
 		}
 	}
 	

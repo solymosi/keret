@@ -2,10 +2,14 @@
 	
 	class Error extends Node
 	{
-		public function __construct($content, $params = array())
+		public function __construct($message, $params = array())
 		{
-			parent::__construct("div", self::mergeParams($params, array("class" => "+error")));
-			$this->addChild("content", new Html($content));
+			self::whenNot(is_string($message), "Error message must be a string.");
+			
+			parent::__construct("div", $params);
+			
+			$this->addParams(array("class" => "error"));
+			$this->addChild("message", new Html($message));
 		}
 	}
 	

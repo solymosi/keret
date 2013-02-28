@@ -4,15 +4,20 @@
 	{
 		protected $name = null;
 		protected $value = null;
+		protected $group = false;
 		protected $errors = array();
 		
-		public function __construct($tag, $name, $value = null, $params = array(), $children = array())
+		public function __construct($tag, $name = null, $value = null, $params = array(), $children = array())
 		{
-			self::whenNot(is_string($name), "Name must be a string.");
+			self::whenNot(($this->group && is_null($name)) || is_string($name), "Name must be a string.");
 			$this->name = $name;
 			
 			parent::__construct($tag, $params, $children);
-			$this->addParams(array("name" => $name, "class" => "field"));
+			
+			if(!$this->group)
+			{
+				$this->addParams(array("name" => $name, "class" => "field"));
+			}
 			
 			$this->setValue($value);
 		}
@@ -65,21 +70,25 @@
 			return $this;
 		}
 		
-		public function getFullName()
+		public function getName()
 		{
 			$path = $this->getPath();
 			return $path[0] . (count($path) > 1 ? ("[" . implode("][", array_slice($path, 1)) . "]") : "");
 		}
 		
-		public function getFullID()
+		public function getID()
 		{
 			return implode("_", $this->getPath());
 		}
 		
 		public function render()
 		{
-			$this->setParam("name", $this->getFullName());
-			$this->setParam("id", $this->getFullID());
+			if(!$this->group)
+			{
+				$this->setParam("name", $this->getName());
+				$this->setParam("id", $this->getID());
+			}
+			
 			$this->addParams(array("class" => ($this->hasErrors() ? "+" : "-") . "has-error"));
 			
 			return parent::render();

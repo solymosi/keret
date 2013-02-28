@@ -1,78 +1,33 @@
 <?php
 	
-	class RadioGroup extends Node
+	class RadioGroup extends Field
 	{
 		public function __construct($name, $items = array(), $value = null, $params = array())
 		{
-			parent::__construct("div", array("class" => "group"));
+			$this->group = true;
 			
-			foreach($items as $v => $label)
+			parent::__construct("div", null, $value, array("class" => "group"));
+			
+			foreach($items as $id => $label)
 			{
-				$this->addChild($v, new RadioButton($name, $v, $label, false, $params));
+				$this->addChild($id, new RadioButton($name, $id, $label, $params));
 			}
 			
 			$this->setValue($value);
-		}
-		
-		public function setValue($value)
-		{
-			foreach($this->getChildren() as $id => $item)
-			{
-				$this->getChild($id)->select($id == $value);
-			}
-			return $this;
-		}
-		
-		public function getValue()
-		{
-			foreach($this->getChildren() as $id => $item)
-			{
-				if($this->getChild($id)->selected())
-				{
-					return $id;
-				}
-			}
-			return null;
-		}
-		
-		public function hasValue()
-		{
-			return !is_null($this->getValue());
-		}
-		
-		public function clearValue()
-		{
-			$this->setValue(null);
-			return $this;
 		}
 	}
 	
 	class RadioButton extends InputField
 	{
 		protected $label = null;
-		protected $selected = false;
+		protected $suffix = null;
 		
-		public function __construct($name, $value, $label, $selected = false, $params = array())
+		public function __construct($name, $value, $label, $params = array())
 		{
-			$this->select($selected);
+			parent::__construct("radio", $name, $value, self::mergeParams($params, array("class" => "inline")));
 			
-			parent::__construct("radio", $name, $value, self::mergeParams($params, array("class" => "+inline")));
-			
-			if(is_string($label))
-			{
-				$this->label = new Label($label, $this, array("class" => "+inline"));
-			}
-		}
-		
-		public function select($selected)
-		{
-			$this->selected = $selected;
-			return $this;
-		}
-		
-		public function selected()
-		{
-			return $this->selected;
+			$this->suffix = rand(100000, 999999);
+			$this->setLabel($label);
 		}
 		
 		public function getLabel()
@@ -82,13 +37,26 @@
 		
 		public function setLabel($label)
 		{
+			if(is_string($label))
+			{
+				$label = new Label($label, $this, array("class" => "inline"));
+			}
+			
+			self::whenNot($label instanceof Label, "The label must be a string.");
+			
 			$this->label = $label;
+			
 			return $this;
+		}
+		
+		public function getID()
+		{
+			return parent::getID() . "_" . $this->suffix;
 		}
 		
 		public function render()
 		{
-			$this->selected() ? $this->setParam("checked", "checked") : $this->clearParam("checked");
+			$this->getParent()->getValue() == $this->getValue() ? $this->setParam("checked", "checked") : $this->clearParam("checked");
 			return '<div class="field">' . parent::render() . $this->label->render() . '</div>';
 		}
 	}
