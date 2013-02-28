@@ -7,11 +7,11 @@
 		
 		public function __construct($name, $label, $selected = false, $params = array())
 		{
-			parent::__construct("checkbox", $name, $selected, $params);
+			parent::__construct("checkbox", $name, $selected, self::mergeParams($params, array("class" => "+inline")));
 			
 			if(is_string($label))
 			{
-				$this->label = new Label($label, $this);
+				$this->label = new Label($label, $this, array("class" => "+inline"));
 			}
 		}
 		

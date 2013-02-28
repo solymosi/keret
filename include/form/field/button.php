@@ -9,7 +9,7 @@
 				$name = "button_" . substr(Helpers::randomToken(), 0, 8);
 			}
 			
-			parent::__construct("button", $name, $label, $params);
+			parent::__construct("button", $name, $label, self::mergeParams($params, array("class" => "+button")));
 		}
 	}
 	

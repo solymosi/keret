@@ -56,6 +56,12 @@
 			$this->errors = array();
 			return $this;
 		}
+		
+		public function render()
+		{
+			$this->setParams(self::mergeParams($this->getParams(), array("class" => ($this->hasErrors() ? "+" : "-") . "has-error")));
+			return parent::render();
+		}
 	}
 	
 ?>

@@ -56,11 +56,11 @@
 		{
 			$this->select($selected);
 			$this->prefix = $name . "_" . $value;
-			parent::__construct("radio", $name, $value, $params);
+			parent::__construct("radio", $name, $value, self::mergeParams($params, array("class" => "+inline")));
 			
 			if(is_string($label))
 			{
-				$this->label = new Label($label, $this);
+				$this->label = new Label($label, $this, array("class" => "+inline"));
 			}
 		}
 		
