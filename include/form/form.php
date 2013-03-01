@@ -48,10 +48,15 @@
 		
 		public function addError($field, $message = null)
 		{
-			self::when(is_null($message), "The error message is required.");
-			self::whenNot($this->getChild($field) instanceof Row || $this->getChild($field) instanceof Field, "The specified field does not exist or is not a row or a field.");
-			
-			$this->getChild($field)->addError($message);
+			if(is_null($message))
+			{
+				parent::addError($field);
+			}
+			else
+			{
+				self::whenNot($this->getChild($field) instanceof Row || $this->getChild($field) instanceof Field, "The specified field does not exist or is not a row or a field.");
+				$this->getChild($field)->addError($message);
+			}
 			
 			return $this;
 		}
@@ -69,6 +74,11 @@
 			}
 			
 			return $errors;
+		}
+		
+		public function getFormErrors()
+		{
+			return parent::getErrors();
 		}
 	}
 	

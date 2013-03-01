@@ -15,7 +15,9 @@
 		public function __construct($file, $params = array())
 		{
 			$this->file = $file;
-			$this->setParams($params);
+			$this->stylesheets = array();
+			$this->classes = array();
+			$this->setParams(array_merge($this->getParams(), $params));
 		}
 		
 		// Beállít egy paramétert
@@ -90,6 +92,46 @@
 		public function insert($file, $params = array())
 		{
 			View::renderWithoutLayout($file, array_merge($this->params, $params));
+		}
+		
+		public function title()
+		{
+			$title = "";
+			if(!is_null($this->title))
+			{
+				$title .= $this->title . " - ";
+			}
+			$title .= "Application";
+			return $title;
+		}
+		
+		// Hozzáad egy template-specifikus CSS fájlt a layout-hoz
+		// Példa (a template-ben): $this->addCSS("loginScreen");
+		//   => a layout-hoz hozzáadja az alábbi CSS linket: [assets]/css/loginScreen.css
+		public function addCSS($file)
+		{
+			$this->stylesheets = !in_array($file, $this->stylesheets) ? array_merge($this->stylesheets, array($file)) : $this->stylesheets;
+		}
+		
+		// Layout segédfüggvény az addCSS függvénnyel beállított template-specifikus CSS linkek kiíratásához
+		public function templateStylesheets()
+		{
+			$html = "";
+			foreach($this->stylesheets as $file)
+			{
+				$html .= '<link rel="stylesheet" type="text/css" href="' . Helpers::asset("css/" . $file . ".css") . '" />' . "\r\n";
+			}
+			return $html;
+		}
+		
+		public function addClass($class)
+		{
+			$this->classes = !in_array($class, $this->classes) ? array_merge($this->classes, array($class)) : $this->classes;
+		}
+		
+		public function bodyClasses()
+		{
+			return implode(" ", $this->classes);
 		}
 	}
 
