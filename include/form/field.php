@@ -6,6 +6,7 @@
 		protected $value = null;
 		protected $group = false;
 		protected $errors = array();
+		protected $validators = array();
 		
 		public function __construct($tag, $name = null, $value = null, $params = array(), $children = array())
 		{
@@ -68,6 +69,63 @@
 		{
 			$this->errors = array();
 			return $this;
+		}
+		
+		public function addValidator($validator)
+		{
+			self::whenNot($validator instanceof Validator, "The validator must be a Validator instance.");
+			
+			$this->validators[] = $validator;
+			
+			return $this;
+		}
+		
+		public function addValidators($validators)
+		{
+			self::whenNot(is_array($validators), "The validator list must be an array.");
+			
+			foreach($validators as $validator)
+			{
+				$this->addValidator($validator);
+			}
+			
+			return $this;
+		}
+		
+		public function hasValidators()
+		{
+			return count($this->validators) > 0;
+		}
+		
+		public function getValidators()
+		{
+			return $this->validators;
+		}
+		
+		public function setValidators($validators)
+		{
+			self::whenNot(is_array($validators), "The validator list must be an array.");
+			
+			$this->clearValidators();
+			$this->addValidators($validators);
+			
+			return $this;
+		}
+		
+		public function clearValidators()
+		{
+			$this->validators = array();
+			return $this;
+		}
+		
+		public function isValid()
+		{
+			foreach($this->getValidators() as $validator)
+			{
+				$validator->validate($this);
+			}
+			
+			return $this->hasErrors();
 		}
 		
 		public function getName()

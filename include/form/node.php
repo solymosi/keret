@@ -108,10 +108,10 @@
 			
 			if($this->hasChild($name))
 			{
+				$child = $this->getChild($name);
 				unset($this->children[$name]);
+				$child->clearParent();
 			}
-			
-			$child->clearParent();
 			
 			return $this;
 		}

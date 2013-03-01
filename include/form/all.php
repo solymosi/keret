@@ -26,4 +26,8 @@
 	require_once("field/textarea.php");
 	require_once("field/select.php");
 	
+	require_once("validator.php");
+	
+	require_once("validator/presence.php");
+	
 ?>

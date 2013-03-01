@@ -10,6 +10,7 @@
 			
 			parent::__construct("form", $name, null, $params, $children);
 			$this->addParams(array("action" => $action, "method" => $method, "class" => "-field default " . $name));
+			$this->order = array("errors");
 		}
 		
 		public function setValues($values)
@@ -79,6 +80,37 @@
 		public function getFormErrors()
 		{
 			return parent::getErrors();
+		}
+		
+		public function isValid()
+		{
+			$valid = parent::isValid();
+			
+			foreach($this->getChildren() as $name => $child)
+			{
+				if($child instanceof Row || $child instanceof Field)
+				{
+					$valid = $child->isValid() ? $valid : false;
+				}
+			}
+			
+			return $valid;
+		}
+		
+		public function render()
+		{
+			$errors = $this->getFormErrors();
+			
+			if(count($errors) > 0)
+			{
+				$this->addChild("errors", new Error(implode("<br />", $errors), array("class" => "errors")));
+			}
+			else
+			{
+				$this->removeChild("errors");
+			}
+			
+			return parent::render();
 		}
 	}
 	

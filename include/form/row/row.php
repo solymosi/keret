@@ -77,6 +77,45 @@
 			return $this;
 		}
 		
+		public function addValidator($validator)
+		{
+			$this->getChild("field")->addValidator($validator);
+			return $this;
+		}
+		
+		public function addValidators($validators)
+		{
+			$this->getChild("field")->addValidators($validators);
+			return $this;
+		}
+		
+		public function hasValidators()
+		{
+			return $this->getChild("field")->hasValidators();
+		}
+		
+		public function getValidators()
+		{
+			return $this->getChild("field")->getValidators();
+		}
+		
+		public function setValidators($validators)
+		{
+			$this->getChild("field")->setValidators($validators);
+			return $this;
+		}
+		
+		public function clearValidators()
+		{
+			$this->getChild("field")->clearValidators();
+			return $this;
+		}
+		
+		public function isValid()
+		{
+			return $this->getChild("field")->isValid();
+		}
+		
 		public function render()
 		{
 			if(!is_null($this->getChild("field")) && ($this->getChild("field") instanceof Field) && $this->getChild("field")->hasErrors())
