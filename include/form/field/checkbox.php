@@ -77,9 +77,7 @@
 		
 		public function setValue($value)
 		{
-			self::whenNot(is_bool($value), "The value parameter must be either true or false.");
-			
-			$this->selected = $value;
+			$this->selected = !!$value;
 			
 			return $this;
 		}

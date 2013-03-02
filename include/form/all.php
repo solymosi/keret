@@ -29,6 +29,9 @@
 	require_once("validator.php");
 	
 	require_once("validator/presence.php");
+	require_once("validator/equality.php");
+	require_once("validator/fieldEquality.php");
 	require_once("validator/length.php");
+	require_once("validator/email.php");
 	
 ?>

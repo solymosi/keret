@@ -18,16 +18,22 @@
 		
 		protected function perform($field)
 		{
-			$value = $field->getValue();
+			$value = strval($field->getValue());
 			
-			$field->addError($this->getMessage("minimum"));
-			$field->addError($this->getMessage("maximum"));
+			if(!is_null($this->minimum) && mb_strlen($value) < $this->minimum)
+			{
+				$field->addError($this->getMessage("minimum"));
+			}
+			
+			if(!is_null($this->maximum) && mb_strlen($value) > $this->maximum)
+			{
+				$field->addError($this->getMessage("maximum"));
+			}
 		}
 		
 		protected function initializeMessages()
 		{
 			return array(
-				"blank" => "Kötelező kitölteni ezt a mezőt.",
 				"minimum" => "A megadott érték rövidebb #{minimum} karakternél.",
 				"maximum" => "A megadott érték hosszabb #{maximum} karakternél."
 			);
