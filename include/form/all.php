@@ -33,5 +33,6 @@
 	require_once("validator/fieldEquality.php");
 	require_once("validator/length.php");
 	require_once("validator/email.php");
+	require_once("validator/custom.php");
 	
 ?>

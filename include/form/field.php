@@ -62,7 +62,7 @@
 		
 		public function hasErrors()
 		{
-			return count($this->errors) != 0;
+			return count($this->errors) > 0;
 		}
 		
 		public function clearErrors()
@@ -120,12 +120,14 @@
 		
 		public function isValid()
 		{
+			$this->clearErrors();
+			
 			foreach($this->getValidators() as $validator)
 			{
 				$validator->validate($this);
 			}
 			
-			return $this->hasErrors();
+			return !$this->hasErrors();
 		}
 		
 		public function getName()
