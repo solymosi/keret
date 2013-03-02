@@ -83,14 +83,16 @@
 		}
 		
 		// Végtelen ciklus megakadályozása az exception értesítéseknél, ha az exception az üzenet küldése közben keletkezett
-		private static $sendingMail = false;
+		private static $sending = false;
 		
 		public static function sendMail($to, $subject, $body, $additionalHeaders = "")
 		{
-			if(self::$sendingMail) { return; }
-			self::$sendingMail = true;
-			mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nFrom: " . MAIL_FROM . "\r\n" . $additionalHeaders);
-			self::$sendingMail = false;
+			if(!self::$sending)
+			{
+				self::$sending = true;
+				mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nFrom: " . MAIL_FROM . "\r\n" . $additionalHeaders);
+				self::$sending = false;
+			}
 		}
 		
 		// Megjeleníti a 404-es hibaüzenetet, és leállítja a program futását

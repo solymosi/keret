@@ -48,6 +48,7 @@
 		public static function regenerate()
 		{
 			session_regenerate_id();
+			self::generateCSRFToken();
 		}
 		
 		// Generál egy CSRF tokent, és eltárolja a session-ben
