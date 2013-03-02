@@ -8,11 +8,11 @@
 			
 			if(!$value || (is_string($value) && !trim($value)))
 			{
-				$field->addError($this->messages["blank"]);
+				$field->addError($this->getMessage("blank"));
 			}
 		}
 		
-		protected function defaultMessages()
+		protected function initializeMessages()
 		{
 			return array(
 				"blank" => "Kötelező kitölteni ezt a mezőt."

@@ -29,5 +29,6 @@
 	require_once("validator.php");
 	
 	require_once("validator/presence.php");
+	require_once("validator/length.php");
 	
 ?>
