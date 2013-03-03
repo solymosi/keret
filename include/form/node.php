@@ -179,9 +179,9 @@
 		
 		protected function clearParent()
 		{
-			foreach($parent->getChildren() as $child)
+			foreach($this->getParent()->getChildren() as $child)
 			{
-				self::when($child == $this, "Node is still a child of its parent.");
+				self::when($child === $this, "Node is still a child of its parent.");
 			}
 			
 			$this->parent = null;
