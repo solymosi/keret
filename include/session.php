@@ -2,6 +2,8 @@
 
 	class Session
 	{
+		protected static $flash = array();
+		
 		// Megváltoztatjuk a PHP session-beállításait, és elindítjuk a session-kezelőt
 		public static function initialize()
 		{
@@ -13,16 +15,28 @@
 			
 			session_start();
 			
+			if(self::has("flash"))
+			{
+				self::$flash = self::get("flash");
+			}
+			
+			self::set("flash", array());
+			
 			if(is_null(self::CSRFToken()))
 			{
 				self::generateCSRFToken();
 			}
 		}
 		
+		public static function has($key)
+		{
+			return isset($_SESSION[$key]);
+		}
+		
 		// Lekéri a megadott session-bejegyzést. Kényelmi funkció azzal az extrával, hogy nem dob notice-t, ha a key nem létezik.
 		public static function get($key)
 		{
-			return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+			return self::has($key) ? $_SESSION[$key] : null;
 		}
 		
 		// Beállítja a megadott session-bejegyzést. Kényelmi funkció.
@@ -36,6 +50,28 @@
 		public static function delete($key)
 		{
 			unset($_SESSION[$key]);
+			return true;
+		}
+		
+		public static function hasFlash($key)
+		{
+			return isset(self::$flash[$key]);
+		}
+		
+		public static function getFlash($key)
+		{
+			return self::hasFlash($key) ? self::$flash[$key] : null;
+		}
+		
+		public static function setFlash($key, $value)
+		{
+			$_SESSION["flash"][$key] = $value;
+			return true;
+		}
+		
+		public static function deleteFlash($key)
+		{
+			unset($_SESSION["flash"][$key]);
 			return true;
 		}
 		
