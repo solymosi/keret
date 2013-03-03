@@ -82,8 +82,25 @@
 			return parent::getErrors();
 		}
 		
+		public function clearFormErrors()
+		{
+			$this->clearErrors();
+			
+			foreach($this->getChildren() as $name => $child)
+			{
+				if($child instanceof Row || $child instanceof Field)
+				{
+					$child->clearErrors();
+				}
+			}
+			
+			return $this;
+		}
+		
 		public function isValid()
 		{
+			$this->clearFormErrors();
+			
 			$valid = parent::isValid();
 			
 			foreach($this->getChildren() as $name => $child)

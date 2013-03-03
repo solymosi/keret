@@ -120,8 +120,6 @@
 		
 		public function isValid()
 		{
-			$this->clearErrors();
-			
 			foreach($this->getValidators() as $validator)
 			{
 				$validator->validate($this);
