@@ -9,7 +9,13 @@
 			self::whenNot(is_string($method), "The form method must be a string.");
 			
 			parent::__construct("form", $name, null, $params, $children);
-			$this->addParams(array("action" => $action, "method" => $method, "class" => "-field default " . $name));
+			$this->addParams(array("action" => $action, "method" => mb_strtolower($method), "class" => "-field default " . $name));
+			
+			if($this->getParam("method") == "post")
+			{
+				$this->addCSRFField();
+			}
+			
 			$this->order = array("errors");
 		}
 		
@@ -112,6 +118,19 @@
 			}
 			
 			return $valid;
+		}
+		
+		public function addCSRFField()
+		{
+			$this->addChild("csrf_field", new HiddenField("csrf_field", Session::CSRFToken()));
+			$this->getChild("csrf_field")->addValidator(new CustomValidator(function($field) {
+				Session::verifyCSRFToken($field->getValue());
+			}));
+		}
+		
+		public function removeCSRFField()
+		{
+			$this->removeChild("csrf_field");
 		}
 		
 		public function render()

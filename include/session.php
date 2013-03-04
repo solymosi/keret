@@ -98,7 +98,7 @@
 		{
 			if(self::CSRFToken() !== $token)
 			{
-				throw new Exception("Invalid CSRF token");
+				throw new Exception("Invalid CSRF token.");
 			}
 		}
 		
