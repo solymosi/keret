@@ -139,6 +139,16 @@
 			return implode("_", $this->getPath());
 		}
 		
+		public function getForm()
+		{
+			$node = $this;
+			while(!($node instanceof Form) && $node->hasParent())
+			{
+				$node = $node->getParent();
+			}
+			return $node;
+		}
+		
 		public function render()
 		{
 			if(!$this->group)
