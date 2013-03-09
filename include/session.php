@@ -63,9 +63,16 @@
 			return self::hasFlash($key) ? self::$flash[$key] : null;
 		}
 		
-		public static function setFlash($key, $value)
+		public static function setFlash($key, $value, $now = false)
 		{
-			$_SESSION["flash"][$key] = $value;
+			if($now)
+			{
+				self::$flash[$key] = $value;
+			}
+			else
+			{
+				$_SESSION["flash"][$key] = $value;
+			}
 			return true;
 		}
 		
