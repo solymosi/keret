@@ -15,7 +15,7 @@
 		
 		protected function perform($field)
 		{
-			if(!in_array($field->getValue(), count(array_filter(array_keys($this->list), "is_string")) > 0 ? array_keys($this->list) : $this->list))
+			if(!in_array($field->getValue(), Helpers::isAssoc($this->list) ? array_keys($this->list) : $this->list))
 			{
 				$field->addError($this->getMessage("invalid"));
 			}

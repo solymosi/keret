@@ -144,6 +144,11 @@
 			}
 		}
 		
+		public static function isAssoc($array)
+		{
+			return count(array_filter(array_keys($array), "is_string")) > 0;
+		}
+		
 		public static function getFileExtension($fileName)
 		{
 			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
