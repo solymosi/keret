@@ -33,87 +33,124 @@
 			}
 		}
 		
+		public function isField()
+		{
+			return $this->getChild("field") instanceof Field;
+		}
+		
 		public function getValue()
 		{
-			return $this->getChild("field")->getValue();
+			return $this->isField() ? $this->getChild("field")->getValue() : null;
 		}
 		
 		public function setValue($value)
 		{
-			$this->getChild("field")->setValue($value);
+			if($this->isField())
+			{
+				$this->getChild("field")->setValue($value);
+			}
+			
 			return $this;
 		}
 		
 		public function hasValue()
 		{
-			return $this->getChild("field")->hasValue();
+			return $this->isField() ? $this->getChild("field")->hasValue() : false;
 		}
 		
 		public function clearValue()
 		{
-			$this->getChild("field")->clearValue();
+			if($this->isField())
+			{
+				$this->getChild("field")->clearValue();
+			}
+			
 			return $this;
 		}
 		
 		public function addError($message)
 		{
-			$this->getChild("field")->addError($message);
+			if($this->isField())
+			{
+				$this->getChild("field")->addError($message);
+			}
+			
 			return $this;
 		}
 		
 		public function getErrors()
 		{
-			return $this->getChild("field")->getErrors();
+			return $this->isField() ? $this->getChild("field")->getErrors() : array();
 		}
 		
 		public function hasErrors()
 		{
-			return $this->getChild("field")->hasErrors();
+			return $this->isField() ? $this->getChild("field")->hasErrors() : false;
 		}
 		
 		public function clearErrors()
 		{
-			$this->getChild("field")->clearErrors();
+			if($this->isField())
+			{
+				$this->getChild("field")->clearErrors();
+			}
+			
 			return $this;
 		}
 		
 		public function addValidator($validator)
 		{
-			$this->getChild("field")->addValidator($validator);
+			if($this->isField())
+			{
+				$this->getChild("field")->addValidator($validator);
+			}
+			
 			return $this;
 		}
 		
 		public function addValidators($validators)
 		{
-			$this->getChild("field")->addValidators($validators);
+			if($this->isField())
+			{
+				$this->getChild("field")->addValidators($validators);
+			}
+			
 			return $this;
 		}
 		
 		public function hasValidators()
 		{
-			return $this->getChild("field")->hasValidators();
+			return $this->isField() ? $this->getChild("field")->hasValidators() : false;
 		}
 		
 		public function getValidators()
 		{
-			return $this->getChild("field")->getValidators();
+			return $this->isField() ? $this->getChild("field")->getValidators() : array();
 		}
 		
 		public function setValidators($validators)
 		{
-			$this->getChild("field")->setValidators($validators);
+			if($this->isField())
+			{
+				$this->getChild("field")->setValidators($validators);
+			}
+			
 			return $this;
 		}
 		
 		public function clearValidators()
 		{
-			$this->getChild("field")->clearValidators();
+			if($this->isField())
+			{
+				$this->getChild("field")->clearValidators();
+			}
+			
 			return $this;
 		}
 		
 		public function isValid()
 		{
-			return $this->getChild("field")->isValid();
+			return $this->isField() ? $this->getChild("field")->isValid() : true;
 		}
 		
 		public function render()

@@ -34,8 +34,8 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"minimum" => "A megadott érték rövidebb #{minimum} karakternél.",
-				"maximum" => "A megadott érték hosszabb #{maximum} karakternél."
+				"minimum" => "A megadott érték nem lehet rövidebb #{minimum} karakternél.",
+				"maximum" => "A megadott érték nem lehet hosszabb #{maximum} karakternél."
 			);
 		}
 		
