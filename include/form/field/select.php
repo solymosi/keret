@@ -7,8 +7,9 @@
 		public function __construct($name, $options = array(), $value = null, $params = array())
 		{
 			self::whenNot(is_array($options), "The select options must be an array.");
+			
 			$this->options = Helpers::isAssoc($options) ? $options : array_combine($options, array_map("strval", $options));
-			var_dump($this->options);
+			
 			parent::__construct("select", $name, $value, $params);
 			
 			$this->addParams(array("class" => "text"));
