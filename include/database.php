@@ -92,6 +92,22 @@
 			return self::fetchAll(call_user_func_array(array("self", "query"), $fga));
 		}
 		
+		public static function buildAssignment($data, $filter = null)
+		{
+			if(!is_null($filter))
+			{
+				$data = array_intersect_key($data, array_flip($filter));
+			}
+			
+			$parts = array();
+			foreach($data as $field => $value)
+			{
+				$parts[] = $field . " = " . (is_null($value) ? "null" : "'" . self::escape($value) . "'");
+			}
+			
+			return implode(", ", $parts);
+		}
+		
 		// Visszaadja a legutóbb beszúrt sor ID-jét
 		public static function lastID()
 		{
