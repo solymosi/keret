@@ -71,6 +71,11 @@
 			self::externalRedirect(self::link($uri), $permanent);
 		}
 		
+		public static function returnsJavascript()
+		{
+			header("Content-Type: text/javascript");
+		}
+		
 		// Átirányítja a user böngészőjét egy tetszőleges URL-re, és megszakítja a program futását
 		public static function externalRedirect($url, $permanent = false)
 		{

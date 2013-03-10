@@ -91,7 +91,7 @@
 		//                                          => elérhető paraméterek a tablazat-on belül: rows = 2, title = "Főoldal"
 		public function insert($file, $params = array())
 		{
-			View::renderWithoutLayout($file, array_merge($this->params, $params));
+			return View::getContent($file, array_merge($this->params, $params), null);
 		}
 		
 		public function title()
