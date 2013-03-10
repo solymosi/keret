@@ -14,6 +14,7 @@
 	require_once("field/input.php");
 	
 	require_once("field/text.php");
+	require_once("field/date.php");
 	require_once("field/password.php");
 	require_once("field/hidden.php");
 	require_once("field/checkbox.php");
@@ -36,6 +37,7 @@
 	require_once("validator/range.php");
 	require_once("validator/email.php");
 	require_once("validator/regex.php");
+	require_once("validator/date.php");
 	require_once("validator/custom.php");
 	
 ?>
