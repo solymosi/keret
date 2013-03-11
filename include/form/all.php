@@ -34,7 +34,7 @@
 	require_once("validator/fieldEquality.php");
 	require_once("validator/inclusion.php");
 	require_once("validator/length.php");
-	require_once("validator/range.php");
+	require_once("validator/number.php");
 	require_once("validator/email.php");
 	require_once("validator/regex.php");
 	require_once("validator/date.php");
