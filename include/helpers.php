@@ -154,6 +154,11 @@
 			return count(array_filter(array_keys($array), "is_string")) > 0;
 		}
 		
+		public static function s($what, $from)
+		{
+			return isset($from[$what]) ? $from[$what] : null;
+		}
+		
 		public static function getFileExtension($fileName)
 		{
 			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
