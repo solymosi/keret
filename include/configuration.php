@@ -67,5 +67,12 @@
 	// Ezt a Helpers::asset() függvény használja, hogy tudja, mit fűzzön a megadott útvonal elé.
 	// Példa az értékére: https://apro.kozgaz.net/assets
 	define("ASSETS_URL", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
+	
+	//==========================
+	// Fájlfeltöltés beállításai
+	//==========================
+	
+	// Maximális fájlméret, MB
+	define("MAX_FILE_SIZE", 10);
 
 ?>
