@@ -161,7 +161,7 @@
 		
 		public static function getFileExtension($fileName)
 		{
-			preg_match("/^.*\.([a-zA-Z0-9]+)$/", $fileName, $matches);
+			preg_match("/^.+\.([^.]+)$/", $fileName, $matches);
 			return count($matches) > 0 ? $matches[1] : null;
 		}
 		
