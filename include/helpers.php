@@ -62,7 +62,7 @@
 		// Példa: /login  =>  https://apro.kozgaz.net/index.php/login
 		public static function link($uri)
 		{
-			return self::getBaseUri() . $uri;
+			return self::getBaseUri() . Helpers::h($uri);
 		}
 		
 		// Átirányítja a user böngészőjét egy rendszeren belüli URI-ra
@@ -116,7 +116,7 @@
 		// Példa: img/logo.png  =>  https://apro.kozgaz.net/assets/img/logo.png
 		public static function asset($name)
 		{
-			return ASSETS_URL . "/" . $name;
+			return ASSETS_URL . "/" . Helpers::h($name);
 		}
 		
 		// Escapeli a megadott szövegben lévő HTML-specifikus karaktereket (XSS védelem)
