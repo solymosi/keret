@@ -55,7 +55,8 @@
 		{
 			return array(
 				"minimum" => round($this->minimum, 10),
-				"maximum" => round($this->maximum, 10)
+				"maximum" => round($this->maximum, 10),
+				"decimals" => $this->decimals ? $this->decimals : "0",
 			);
 		}
 	}
