@@ -159,6 +159,11 @@
 			return isset($from[$what]) ? $from[$what] : null;
 		}
 		
+		public static function truncateText($input, $length, $ellipses = true)
+		{
+			return mb_strlen($input) <= $length ? $input : (mb_substr($input, 0, mb_strrpos(mb_substr($input, 0, $length), " ")) . ($ellipses ? "..." : ""));
+		}
+		
 		public static function getFileExtension($fileName)
 		{
 			preg_match("/^.+\.([^.]+)$/", $fileName, $matches);
