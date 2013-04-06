@@ -5,6 +5,7 @@
 		protected $name = null;
 		protected $value = null;
 		protected $group = false;
+		protected $disabled = false;
 		protected $errors = array();
 		protected $validators = array();
 		
@@ -128,6 +129,25 @@
 			return !$this->hasErrors();
 		}
 		
+		public function setDisabled($disabled)
+		{
+			$this->disabled = $disabled;
+		}
+		
+		public function isDisabled()
+		{
+			if($this->hasParent())
+			{
+				$node = $this;
+				do
+				{
+					$node = $node->getParent();
+				} while(!($node instanceof Field) && $node->hasParent());
+			}
+			
+			return $this->disabled || (isset($node) && $node instanceof Field && $node->isDisabled());
+		}
+		
 		public function getName()
 		{
 			$path = $this->getPath();
@@ -158,6 +178,11 @@
 			}
 			
 			$this->addParams(array("class" => ($this->hasErrors() ? "+" : "-") . "has-error"));
+			
+			if($this->isDisabled())
+			{
+				$this->setParam("disabled", "disabled");
+			}
 			
 			return parent::render();
 		}

@@ -153,6 +153,16 @@
 			return $this->isField() ? $this->getChild("field")->isValid() : true;
 		}
 		
+		public function setDisabled($disabled)
+		{
+			$this->getChild("field")->setDisabled($disabled);
+		}
+		
+		public function isDisabled()
+		{
+			return $this->getChild("field")->isDisabled();
+		}
+		
 		public function render()
 		{
 			if(!is_null($this->getChild("field")) && ($this->getChild("field") instanceof Field) && $this->getChild("field")->hasErrors())
