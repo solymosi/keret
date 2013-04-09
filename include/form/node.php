@@ -188,11 +188,25 @@
 			return $this;
 		}
 		
+		public function getOrder()
+		{
+			return $this->order;
+		}
+		
+		public function setOrder($order)
+		{
+			self::whenNot(is_array($order), "The order list must be an array.");
+			
+			$this->order = $order;
+			
+			return $this;
+		}
+		
 		protected function getOrderedChildren()
 		{
 			$children = array();
 			
-			foreach($this->order as $name)
+			foreach($this->getOrder() as $name)
 			{
 				if($this->hasChild($name))
 				{
@@ -202,7 +216,7 @@
 			
 			foreach($this->getChildren() as $name => $child)
 			{
-				if(!in_array($name, $this->order))
+				if(!in_array($name, $this->getOrder()))
 				{
 					$children[$name] = $child;
 				}
