@@ -237,7 +237,7 @@
 			
 			foreach($this->params as $name => $value)
 			{
-				$result .= " " . $name . '="' . ($value ? Helpers::h($value) : "") . '"';
+				$result .= " " . $name . '="' . Helpers::h($value) . '"';
 			}
 			
 			if($this->single)
