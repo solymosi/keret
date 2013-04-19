@@ -154,9 +154,9 @@
 			return count(array_filter(array_keys($array), "is_string")) > 0;
 		}
 		
-		public static function s($what, $from)
+		public static function s($what, $from, $default = null)
 		{
-			return isset($from[$what]) ? $from[$what] : null;
+			return isset($from[$what]) ? $from[$what] : $default;
 		}
 		
 		public static function truncateText($input, $length, $ellipses = true)
