@@ -40,7 +40,7 @@
 		{
 			if ($reload || is_null(self::$uri))
 			{
-				self::$uri = '/' . ltrim(isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "", '/');
+				self::$uri = '/' . ltrim(isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : (isset($_SERVER["ORIG_PATH_INFO"]) ? $_SERVER["ORIG_PATH_INFO"] : ""), '/');
 			}
 			return self::$uri;
 		}
