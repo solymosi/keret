@@ -167,7 +167,7 @@
 			
 			foreach($parent->getChildren() as $child)
 			{
-				if($child == $this)
+				if($child === $this)
 				{
 					$this->parent = $parent;
 					return $this;
