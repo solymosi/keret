@@ -20,8 +20,8 @@
 		
 		protected function getMessage($id)
 		{
-			return preg_replace_callback('/\#\{([a-zA-Z0-9]+)\}/', function($matches) {
-				$params = $this->initializeParams();
+			$params = $this->initializeParams();
+			return preg_replace_callback('/\#\{([a-zA-Z0-9]+)\}/', function($matches) use($params) {
 				return $params[$matches[1]];
 			}, $this->messages[$id]);
 		}
