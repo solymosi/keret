@@ -102,7 +102,7 @@
 			$parts = array();
 			foreach($data as $field => $value)
 			{
-				$parts[] = $field . " = " . (is_null($value) ? "null" : "'" . self::escape($value) . "'");
+				$parts[] = $field . " = " . (is_null($value) ? "null" : "'" . str_replace("%", "%%", self::escape($value)) . "'");
 			}
 			
 			return implode(", ", $parts);
