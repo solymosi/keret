@@ -42,23 +42,20 @@
 	define("SESSION_COOKIE_DOMAIN", "");
 	
 	// A süti csak HTTPS kapcsolaton működik (biztonsági feature)
-	define("SESSION_COOKIE_SECURE", true);
+	define("SESSION_COOKIE_SECURE", false);
 	
 	//===================
 	// Email beállítások
 	//===================
 	
 	// Erről az email címről mennek az automatikus üzenetek
-	define("MAIL_FROM", "SolymosiNet <system@solymosi.eu>");
+	define("MAIL_FROM", "Application <application@example.org>");
 	
 	// Hibaüzenetek automatikus elküldése emailben
 	define("MAIL_EXCEPTIONS", true);
 	
-	// A tulajdonos email címe
-	define("OWNER_EMAIL", "");
-	
 	// Az üzemeltető email címe
-	define("ADMIN_EMAIL", "Solymosi Máté <mate@solymo.si>");
+	define("ADMIN_EMAIL", "Administrator <admin@example.org>");
 	
 	//================
 	// UI beállítások
