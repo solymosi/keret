@@ -2,7 +2,6 @@
 
 RewriteEngine On
 DirectoryIndex index.php
-Options +FollowSymLinks -Indexes
 
 # Set RewriteBase to the relative URL path of the current folder
 
