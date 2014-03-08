@@ -9,6 +9,7 @@
 		
 		<link rel="stylesheet" type="text/css" media="all" href="<?= Helpers::asset("css/all.css") ?>" />
 		<link rel="shortcut icon" href="<?= Helpers::asset("images/favicon.ico") ?>" />
+		<?= $this->templateStylesheets() ?>
 		
 		<script type="text/javascript" src="<?= Helpers::asset("js/all.js") ?>"></script>
 		
@@ -16,7 +17,7 @@
 		
 	</head>
 	
-	<body>
+	<body class="<?= $this->bodyClasses() ?>">
 		
 		<?= $this->content ?>
 		
