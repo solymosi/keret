@@ -14,7 +14,6 @@
 			return isset(self::$params[$key]) ? self::$params[$key] : null;
 		}
 		
-		// Lecseréli a paramétereket a megadott tömbre
 		static public function setParams($params)
 		{
 			if(!is_array($params))
@@ -24,7 +23,6 @@
 			self::$params = $params;
 		}
 		
-		// Visszaadja az összes paramétert
 		static public function getParams()
 		{
 			return self::$params;
@@ -32,7 +30,6 @@
 		
 		static public function getContent($file, $params = array(), $layout = "layout")
 		{
-			// Kirendereljük a template-t a $content változóba
 			$template = new Template($file, array_merge(self::$params, $params));
 			$content = $template->getContent();
 			
@@ -42,10 +39,8 @@
 			}
 			else
 			{
-				// A render után lekérjük a template paramétereit (ugyanis lehet, hogy a getContent() alatt néhány új hozzá lett adva)
 				$params = $template->getParams();
 				
-				// Kirendereljük a layout-ot a template paramétereivel és kirenderelt kódjával, majd kiírjuk az eredményt
 				$layout = new Template($layout, array_merge($params, array("content" => $content)));
 				return $layout->getContent();
 			}
