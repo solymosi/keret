@@ -65,6 +65,9 @@
 	// Példa az értékére: https://apro.kozgaz.net/assets
 	define("ASSETS_URL", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 	
+	// Alkalmazás neve
+	define("APP_NAME", "Application");
+	
 	//==========================
 	// Fájlfeltöltés beállításai
 	//==========================

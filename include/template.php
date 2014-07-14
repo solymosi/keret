@@ -101,7 +101,7 @@
 			{
 				$title .= $this->title . " - ";
 			}
-			$title .= "Application";
+			$title .= APP_NAME;
 			return $title;
 		}
 		
