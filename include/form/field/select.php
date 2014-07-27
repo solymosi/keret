@@ -21,7 +21,7 @@
 			
 			foreach($this->options as $value => $label)
 			{
-				$this->addChild("_" . $value, new SelectOption($value, $label, false));
+				$this->addChild("_" . $value, new SelectOption($value, $label));
 			}
 			
 			$this->addValidator(new InclusionValidator($this->options));
@@ -32,10 +32,9 @@
 	{
 		protected $value = null;
 		
-		public function __construct($value, $label, $selected = false, $params = array())
+		public function __construct($value, $label, $params = array())
 		{
 			self::whenNot(is_string($label), "The select option label must be a string.");
-			self::whenNot(is_bool($selected), "The selected parameter must be either true of false.");
 			
 			$this->value = $value;
 			
