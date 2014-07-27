@@ -26,6 +26,8 @@
 	
 	require_once("field/textarea.php");
 	require_once("field/select.php");
+	require_once("field/time.php");
+	require_once("field/datetime.php");
 	
 	require_once("validator.php");
 	
@@ -38,6 +40,7 @@
 	require_once("validator/email.php");
 	require_once("validator/regex.php");
 	require_once("validator/date.php");
+	require_once("validator/datetime.php");
 	require_once("validator/custom.php");
 	
 ?>
