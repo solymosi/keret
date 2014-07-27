@@ -13,7 +13,7 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"invalid" => "A megadott email cím nem megfelelő."
+				"invalid" => "The specified email address is invalid."
 			);
 		}
 	}

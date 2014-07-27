@@ -33,7 +33,7 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"invalid" => "A két mező értéke nem egyezik meg."
+				"invalid" => "The values of the two fields do not match."
 			);
 		}
 	}

@@ -15,7 +15,7 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"blank" => "Kötelező kitölteni ezt a mezőt."
+				"blank" => "This field is required."
 			);
 		}
 	}

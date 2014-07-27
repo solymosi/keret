@@ -24,7 +24,7 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"invalid" => "A megadott érték nem megfelelő."
+				"invalid" => "The specified value is invalid."
 			);
 		}
 		

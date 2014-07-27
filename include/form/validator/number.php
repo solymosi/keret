@@ -45,9 +45,9 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"invalid" => "A megadott szám nem megfelelő.",
-				"minimum" => "A megadott szám nem lehet kisebb ennél: #{minimum}",
-				"maximum" => "A megadott szám nem lehet nagyobb ennél: #{maximum}"
+				"invalid" => "The specified number is invalid.",
+				"minimum" => "The specified number must be at least #{minimum}",
+				"maximum" => "The specified number must not be more than #{maximum}"
 			);
 		}
 		

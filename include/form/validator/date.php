@@ -64,10 +64,10 @@
 		protected function initializeMessages()
 		{
 			return array(
-				"minimum" => "A megadott dátum nem lehet #{minimum} előtti.",
-				"maximum" => "A megadott dátum nem lehet #{maximum} utáni.",
-				"format" => "A megadott dátum nem felel meg az ÉÉÉÉ-HH-NN formátumnak.",
-				"invalid" => "A megadott dátum nem megfelelő."
+				"minimum" => "The specified date cannot be earlier than #{minimum}.",
+				"maximum" => "The specified date cannot be later than #{maximum}.",
+				"format" => "The specified date is not in the required YYYY-MM-DD format.",
+				"invalid" => "The specified date is invalid."
 			);
 		}
 		
