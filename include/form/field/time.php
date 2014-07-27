@@ -10,7 +10,7 @@
 				foreach(array(0, 15, 30, 45) as $minute)
 				{
 					$ts = strtotime("2000-01-01 " . $hour . ":" . $minute);
-					$options[date("H:i", $ts)] = date("g:i A", $ts);
+					$options[date("H:i:00", $ts)] = date("g:i A", $ts);
 				}
 			}
 			
