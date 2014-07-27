@@ -131,6 +131,11 @@
 			return isset($from[$what]) ? $from[$what] : $default;
 		}
 		
+		public static function plural($num, $zero, $one, $more)
+		{
+			return $num == 0 ? $zero : ($num == 1 ? $one : $more);
+		}
+		
 		public static function truncateText($input, $length, $ellipses = true)
 		{
 			return mb_strlen($input) <= $length ? $input : (mb_substr($input, 0, mb_strrpos(mb_substr($input, 0, $length), " ")) . ($ellipses ? "..." : ""));
