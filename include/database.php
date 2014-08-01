@@ -15,6 +15,7 @@
 				throw new Exception("MySQL error: " . self::lastError());
 			}
 			DB::query("set names utf8");
+			DB::query("set time_zone = '%s'", date_default_timezone_get());
 		}
 		
 		public static function prepare($sql, $params = array())
