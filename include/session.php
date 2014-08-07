@@ -7,6 +7,10 @@
 		public static function initialize()
 		{
 			ini_set("session.name", SESSION_COOKIE_NAME);
+			
+			ini_set("session.save_path", ROOT_PATH . "/session");
+			ini_set("session.gc_maxlifetime", SESSION_COOKIE_EXPIRES ? SESSION_COOKIE_EXPIRES : 3600);
+			
 			ini_set("session.cookie_lifetime", SESSION_COOKIE_EXPIRES);
 			ini_set("session.cookie_domain", SESSION_COOKIE_DOMAIN);
 			ini_set("session.cookie_httponly", true);
