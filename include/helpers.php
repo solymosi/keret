@@ -73,12 +73,12 @@
 		
 		private static $sending = false;
 		
-		public static function sendMail($to, $subject, $body, $additionalHeaders = "")
+		public static function sendMail($to, $subject, $body, $contentType = "text/plain", $additionalHeaders = "")
 		{
 			if(!self::$sending)
 			{
 				self::$sending = true;
-				mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nFrom: " . MAIL_FROM . "\r\n" . $additionalHeaders);
+				mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, "MIME-Version: 1.0\r\nContent-Type: " . $contentType . "; charset=UTF-8\r\nFrom: " . MAIL_FROM . "\r\n" . $additionalHeaders);
 				self::$sending = false;
 			}
 		}
