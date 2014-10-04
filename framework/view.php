@@ -75,5 +75,5 @@
 			print self::getContent($file, $params, $layout);
 		}
 	}
-
+	
 ?>
