@@ -7,6 +7,7 @@
 		public static function initialize()
 		{
 			ini_set("session.name", Config::get("session.cookie_name"));
+			ini_set("session.save_path", Application::root() . "/sessions");
 			ini_set("session.cookie_lifetime", Config::get("session.cookie_expires"));
 			ini_set("session.gc_maxlifetime", Config::get("session.cookie_expires") ? Config::get("session.cookie_expires") : 24 * 3600);
 			ini_set("session.cookie_domain", Config::get("session.cookie_domain"));

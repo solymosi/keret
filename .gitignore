@@ -1,4 +1,3 @@
-
 .sass-cache
-assets/uploads
-session/*
+/app/assets/uploads/*/
+/app/sessions/*
