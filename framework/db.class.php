@@ -6,10 +6,15 @@
 
 		public static function connect()
 		{
-			self::$link = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE . ";charset=utf8", DB_USER, DB_PASSWORD, array(
-				PDO::ATTR_EMULATE_PREPARES => false,
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			));
+			self::$link = new PDO(
+				"mysql:host=" . Config::get("database.host") . ";dbname=" . Config::get("database.name") . ";charset=utf8",
+				Config::get("database.user"),
+				Config::get("database.password"),
+				array(
+					PDO::ATTR_EMULATE_PREPARES => false,
+					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				)
+			);
 		}
 		
 		public static function prepare($sql, $params = array())
