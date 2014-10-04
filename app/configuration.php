@@ -29,3 +29,6 @@
 	
 	// Use custom template class
 	Config::set("view.template_class", "CustomTemplate");
+	
+	// Supported locales
+	Config::set("i18n.locales", array("en_US"));

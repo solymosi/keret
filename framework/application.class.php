@@ -28,6 +28,7 @@
 				{
 					DB::connect();
 					Session::initialize();
+					I18n::initialize();
 					
 					require self::root() . "/routes.php";
 					
@@ -100,6 +101,9 @@
 			
 			Config::setDefault("uploads.enabled", true);
 			Config::setDefault("uploads.max_file_size", 50 * 1024 * 1024);
+			
+			Config::setDefault("i18n.locales", array("en_US"));
+			Config::setDefault("i18n.default_locale", Config::get("i18n.locales")[0]);
 			
 			ini_set("display_errors", Config::get("debug") ? 1 : 0);
 			ini_set("error_reporting", E_ALL | E_STRICT);
