@@ -2,16 +2,22 @@
 
 	abstract class View
 	{
+		static protected $layout = DEFAULT_LAYOUT;
 		static protected $params = array();
+		
+		static public function get($key)
+		{
+			return isset(self::$params[$key]) ? self::$params[$key] : null;
+		}
 		
 		static public function set($key, $value)
 		{
 			self::$params[$key] = $value;
 		}
 		
-		static public function get($key)
+		static public function getParams()
 		{
-			return isset(self::$params[$key]) ? self::$params[$key] : null;
+			return self::$params;
 		}
 		
 		static public function setParams($params)
@@ -23,37 +29,50 @@
 			self::$params = $params;
 		}
 		
-		static public function getParams()
+		static public function addParams($params)
 		{
-			return self::$params;
+			if(!is_array($params))
+			{
+				throw new Exception("The variable passed to addParams() must be an array");
+			}
+			self::setParams(array_merge(self::$params, $params));
 		}
 		
-		static public function getContent($file, $params = array(), $layout = "layout")
+		static public function getLayout()
 		{
+			return self::$layout;
+		}
+		
+		static public function setLayout($layout)
+		{
+			self::$layout = $layout;
+		}
+		
+		static public function getContent($file, $params = array(), $layout = null)
+		{
+			if(!is_null($layout))
+			{
+				$layout = self::$layout;
+			}
+			
 			$template = new Template($file, array_merge(self::$params, $params));
 			$content = $template->getContent();
 			
-			if(is_null($layout))
+			if($layout === false)
 			{
 				return $content;
 			}
 			else
 			{
 				$params = $template->getParams();
-				
 				$layout = new Template($layout, array_merge($params, array("content" => $content)));
 				return $layout->getContent();
 			}
 		}
 		
-		static public function render($file, $params = array(), $layout = "layout")
+		static public function render($file, $params = array(), $layout = null)
 		{
 			print self::getContent($file, $params, $layout);
-		}
-		
-		static public function renderWithoutLayout($file, $params = array())
-		{
-			print self::getContent($file, $params, null);
 		}
 	}
 
