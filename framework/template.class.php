@@ -65,12 +65,13 @@
 			include(Application::root() . "/templates/" . $this->file . ".php");
 			$content = ob_get_contents();
 			ob_end_clean();
+			
 			return $content;
 		}
 		
 		public function insert($file, $params = array())
 		{
-			return View::getContent($file, array_merge($this->params, $params), null);
+			return View::getContent($file, array_merge($this->params, $params), false);
 		}
 	}
 
