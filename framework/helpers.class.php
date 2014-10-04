@@ -54,7 +54,7 @@
 		// Convert an internal URI to an absolute URL for links
 		public static function link($uri)
 		{
-			return self::getBaseUri() . Helpers::h($uri);
+			return self::getBaseUri() . Helpers::escapeHtml($uri);
 		}
 		
 		// Redirect the browser to a URI within this site
@@ -125,17 +125,17 @@
 		// Returns the full URL for an asset
 		public static function asset($name)
 		{
-			return Config::get("assets.url_prefix") . "/" . Helpers::h($name);
+			return Config::get("assets.url_prefix") . "/" . Helpers::escapeHtml($name);
 		}
 		
 		// Escape an HTML value to prevent XSS vulnerabilities
-		public static function h($content)
+		public static function escapeHtml($content)
 		{
 			return htmlentities($content, ENT_QUOTES, "UTF-8");
 		}
 		
 		// Escape a JS value to prevent XSS vulnerabilities
-		public static function escape_js($content)
+		public static function escapeJs($content)
 		{
 			if(!is_string($content))
 			{
@@ -162,7 +162,7 @@
 		}
 		
 		// Returns a value from an array, or a default value if it does not exist
-		public static function get($what, $from, $default = null)
+		public static function select($what, $from, $default = null)
 		{
 			return isset($from[$what]) ? $from[$what] : $default;
 		}
@@ -188,5 +188,30 @@
 	}
 	
 	class NotFoundException extends Exception { }
+	
+	function link_to($uri)
+	{
+		return Helpers::link($uri);
+	}
+	
+	function asset($name)
+	{
+		return Helpers::asset($name);
+	}
+	
+	function html($content)
+	{
+		return Helpers::escapeHtml($content);
+	}
+	
+	function js($content)
+	{
+		return Helpers::escapeJs($content);
+	}
+	
+	function select($what, $from, $default = null)
+	{
+		return Helpers::select($what, $from, $default);
+	}
 
 ?>

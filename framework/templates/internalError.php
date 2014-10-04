@@ -21,8 +21,8 @@
 		<?php if(ini_get("display_errors") == true): ?>
 			<p>
 				<small>
-					<strong><?= Helpers::h($e->getMessage()) ?></strong><br />
-					<?= nl2br(Helpers::h($e->getTraceAsString())) ?>
+					<strong><?= html($e->getMessage()) ?></strong><br />
+					<?= nl2br(html($e->getTraceAsString())) ?>
 				</small>
 			</p>
 		<?php endif; ?>
