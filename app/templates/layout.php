@@ -9,15 +9,14 @@
 		
 		<link rel="stylesheet" type="text/css" media="all" href="<?= Helpers::asset("css/all.css") ?>" />
 		<link rel="shortcut icon" href="<?= Helpers::asset("images/favicon.ico") ?>" />
-		<?= $this->templateStylesheets() ?>
 		
 		<script type="text/javascript" src="<?= Helpers::asset("js/all.js") ?>"></script>
 		
-		<title><?= $this->title() ?></title>
+		<title><?= Config::get("app.title") ?></title>
 		
 	</head>
 	
-	<body class="<?= $this->bodyClasses() ?>">
+	<body>
 		
 		<?= $this->content ?>
 		

@@ -26,3 +26,6 @@
 	
 	// Email address of site administrator
 	Config::set("mail.admin_email", "Administrator <admin@example.org>");
+	
+	// Use custom template class
+	Config::set("view.template_class", "CustomTemplate");

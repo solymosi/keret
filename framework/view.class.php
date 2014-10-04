@@ -55,12 +55,13 @@
 				self::$layout = Config::get("view.default_layout");
 			}
 			
-			if(!is_null($layout))
+			if(is_null($layout))
 			{
 				$layout = self::$layout;
 			}
 			
-			$template = new Template($file, array_merge(self::$params, $params));
+			$class = Config::get("view.template_class");
+			$template = new $class($file, array_merge(self::$params, $params));
 			$content = $template->getContent();
 			
 			if($layout === false)
@@ -70,7 +71,7 @@
 			else
 			{
 				$params = $template->getParams();
-				$layout = new Template($layout, array_merge($params, array("content" => $content)));
+				$layout = new $class($layout, array_merge($params, array("content" => $content)));
 				return $layout->getContent();
 			}
 		}
