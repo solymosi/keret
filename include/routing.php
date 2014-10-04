@@ -2,7 +2,6 @@
 
 	class Routing
 	{
-	
 		public static function match($pattern, $controller, $action)
 		{
 			if(preg_match("/^\/" . $pattern . "$/", Helpers::getUri(), $matches))

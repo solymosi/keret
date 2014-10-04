@@ -93,23 +93,25 @@
 			self::generateCSRFToken();
 		}
 		
-		public static function generateCSRFToken()
+		public static function generateCsrfToken()
 		{
 			self::set("csrf_token", sha1(uniqid(srand(), true)));
 		}
 		
-		public static function verifyCSRFToken($token)
+		public static function verifyCsrfToken($token)
 		{
-			if(self::CSRFToken() !== $token)
+			if(self::csrfToken() !== $token)
 			{
-				throw new Exception("Invalid CSRF token.");
+				throw new CsrfException("Invalid CSRF token.");
 			}
 		}
 		
-		public static function CSRFToken()
+		public static function csrfToken()
 		{
 			return self::get("csrf_token");
 		}
 	}
+	
+	class CsrfException extends Exception { }
 
 ?>

@@ -1,0 +1,5 @@
+# Force download regardless of file type
+
+<IfModule mod_headers.c> 
+	Header set Content-Disposition attachment
+</IfModule>

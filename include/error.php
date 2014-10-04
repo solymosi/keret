@@ -9,7 +9,7 @@
 			return;
 		}
 		
-		throw new Exception($errstr . " [" . $errfile . " @  line " . $errline . "]");
+		throw new Exception($errstr . " [" . $errfile . " @ line " . $errline . "]");
 		return true;
 	}
 

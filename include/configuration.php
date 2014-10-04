@@ -1,78 +1,79 @@
 <?php
+
+	// Root path of site
+	define("ROOT_PATH", dirname(__FILE__) . "/..");
 	
-	//=================
-	// PHP beállítások
-	//=================
+	// Disable PHP error messages
+	ini_set("display_errors", 1);
 	
-	// Biztonsági okok miatt letiltjuk a PHP hibaüzenetek megjelenítését a böngészőben
-	ini_set("display_errors", 0);
-	
-	// Beállítjuk, hogy minden létező hiba jelentésre kerüljön
+	// Report all errors
 	ini_set("error_reporting", E_ALL | E_STRICT);
 	
-	// Beállítjuk az oldal karakterkódolását
+	// Set proper character encoding
 	header("Content-Type: text/html; charset=UTF-8");
 	
-	// Beállítjuk a multibyte szövegfüggvények alapértelmezett nyelvét
+	// Set encoding of multibyte string functions
 	mb_internal_encoding("utf-8");
 	
-	// Beállítjuk az oldal időzónáját
-	date_default_timezone_set("Europe/Budapest");
+	// Set default time zone
+	date_default_timezone_set("Europe/Zurich");
 
-	//=======================
-	// Adatbázis beállításai
-	//=======================
+	//===================
+	// Database settings
+	//===================
 
 	define("DB_HOST", "localhost");
 	define("DB_USER", "");
 	define("DB_PASSWORD", "");
 	define("DB_DATABASE", "");
 	
-	//==========================
-	// Session süti beállításai
-	//==========================
+	//=========================
+	// Session cookie settings
+	//=========================
 	
-	// A süti neve a böngészőben
+	// Name of session cookie
 	define("SESSION_COOKIE_NAME", "app_session");
 	
-	// A süti ennyi másodpercig érvényes (0: a böngésző bezárásáig)
+	// Session cookie expiration in seconds (0: when the browser is closed)
 	define("SESSION_COOKIE_EXPIRES", 0);
 	
-	// A süti csak ezen a domain-en működik (biztonsági feature)
+	// Limit session cookie to this domain (security feature)
 	define("SESSION_COOKIE_DOMAIN", "");
 	
-	// A süti csak HTTPS kapcsolaton működik (biztonsági feature)
+	// Limit session cookie to secure connections (security feature)
 	define("SESSION_COOKIE_SECURE", false);
 	
-	//===================
-	// Email beállítások
-	//===================
+	//================
+	// Email settings
+	//================
 	
-	// Erről az email címről mennek az automatikus üzenetek
+	// From address for all emails
 	define("MAIL_FROM", "Application <application@example.org>");
 	
-	// Hibaüzenetek automatikus elküldése emailben
-	define("MAIL_EXCEPTIONS", true);
+	// Email address of site owner
+	define("OWNER_EMAIL", "Owner <owner@example.org>");
 	
-	// Az üzemeltető email címe
+	// Email address of site administrator
 	define("ADMIN_EMAIL", "Administrator <admin@example.org>");
 	
-	//================
-	// UI beállítások
-	//================
+	// Mail exceptions to site administrator
+	define("MAIL_EXCEPTIONS", false);
 	
-	// Ezt a Helpers::asset() függvény használja, hogy tudja, mit fűzzön a megadott útvonal elé.
-	// Példa az értékére: https://apro.kozgaz.net/assets
+	//===============
+	// View settings
+	//===============
+	
+	// Base URL of asset files, used for asset link generation (should not end with a slash)
 	define("ASSETS_URL", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 	
-	// Alkalmazás neve
-	define("APP_NAME", "Application");
+	//==============
+	// File uploads
+	//==============
 	
-	//==========================
-	// Fájlfeltöltés beállításai
-	//==========================
+	// Enable file uploads
+	ini_set("file_uploads", 1);
 	
-	// Maximális fájlméret, MB
-	define("MAX_FILE_SIZE", 10);
+	// Max. file size in kilobytes
+	define("MAX_FILE_SIZE", 10 * 1024);
 
 ?>
