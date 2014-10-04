@@ -93,7 +93,7 @@
 			$headers = array(
 				"MIME-Version" => "1.0",
 				"Content-Type" => "text/plain; charset=UTF-8",
-				"From" => MAIL_FROM,
+				"From" => Config::get("mail.default_from"),
 			);
 			
 			mail($to, "=?UTF-8?B?" . base64_encode($subject) . "?=", $body, self::buildHeaders(array_merge($headers, $additionalHeaders)));
@@ -125,7 +125,7 @@
 		// Returns the full URL for an asset
 		public static function asset($name)
 		{
-			return ASSETS_URL . "/" . Helpers::h($name);
+			return Config::get("assets.url_prefix") . "/" . Helpers::h($name);
 		}
 		
 		// Escape an HTML value to prevent XSS vulnerabilities

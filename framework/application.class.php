@@ -27,7 +27,6 @@
 				try
 				{
 					DB::connect();
-					
 					Session::initialize();
 					
 					require self::root() . "/routes.php";
@@ -82,6 +81,8 @@
 			Config::setDefault("session.cookie_secure", false);
 			
 			Config::setDefault("mail.default_from", Config::get("app.title") . " <system@" . Config::get("app.domain") . ">");
+			Config::setDefault("mail.smtp_server", "localhost");
+			Config::setDefault("mail.smtp_port", 25);
 			
 			Config::setDefault("exceptions.send_mail", !Config::get("debug"));
 			Config::setDefault("exceptions.mail_to", Config::get("mail.admin_email"));
@@ -93,6 +94,10 @@
 			
 			ini_set("display_errors", Config::get("debug") ? 1 : 0);
 			ini_set("error_reporting", E_ALL | E_STRICT);
+			
+			ini_set("SMTP", Config::get("mail.smtp_server"));
+			ini_set("smtp_port", Config::get("mail.smtp_port"));
+			
 			ini_set("file_uploads", Config::get("uploads.enabled") ? 1 : 0);
 			
 			header("Content-Type: text/html; charset=UTF-8");

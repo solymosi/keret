@@ -6,15 +6,12 @@
 		
 		public static function initialize()
 		{
-			ini_set("session.name", SESSION_COOKIE_NAME);
-			
-			ini_set("session.save_path", ROOT_PATH . "/session");
-			ini_set("session.gc_maxlifetime", SESSION_COOKIE_EXPIRES ? SESSION_COOKIE_EXPIRES : 3600);
-			
-			ini_set("session.cookie_lifetime", SESSION_COOKIE_EXPIRES);
-			ini_set("session.cookie_domain", SESSION_COOKIE_DOMAIN);
+			ini_set("session.name", Config::get("session.cookie_name"));
+			ini_set("session.cookie_lifetime", Config::get("session.cookie_expires"));
+			ini_set("session.gc_maxlifetime", Config::get("session.cookie_expires") ? Config::get("session.cookie_expires") : 24 * 3600);
+			ini_set("session.cookie_domain", Config::get("session.cookie_domain"));
+			ini_set("session.cookie_secure", Config::get("session.cookie_secure"));
 			ini_set("session.cookie_httponly", true);
-			ini_set("session.cookie_secure", SESSION_COOKIE_SECURE);
 			
 			session_start();
 			
@@ -25,9 +22,9 @@
 			
 			self::set("flash", array());
 			
-			if(is_null(self::CSRFToken()))
+			if(is_null(self::csrfToken()))
 			{
-				self::generateCSRFToken();
+				self::generateCsrfToken();
 			}
 		}
 		
@@ -90,7 +87,7 @@
 		public static function regenerate()
 		{
 			session_regenerate_id();
-			self::generateCSRFToken();
+			self::generateCsrfToken();
 		}
 		
 		public static function generateCsrfToken()

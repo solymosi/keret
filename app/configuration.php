@@ -21,5 +21,8 @@
 	Config::set("database.password", "");
 	Config::set("database.name", "");
 	
+	// Address of SMTP server for sending emails
+	Config::set("mail.smtp_server", "localhost");
+	
 	// Email address of site administrator
 	Config::set("mail.admin_email", "Administrator <admin@example.org>");
