@@ -62,7 +62,7 @@
 		public function getContent()
 		{
 			ob_start();
-			include("templates/" . $this->file . ".php");
+			include(Application::root() . "/templates/" . $this->file . ".php");
 			$content = ob_get_contents();
 			ob_end_clean();
 			return $content;

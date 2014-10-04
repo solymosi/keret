@@ -2,7 +2,7 @@
 
 	abstract class View
 	{
-		static protected $layout = DEFAULT_LAYOUT;
+		static protected $layout = null;
 		static protected $params = array();
 		
 		static public function get($key)
@@ -50,6 +50,11 @@
 		
 		static public function getContent($file, $params = array(), $layout = null)
 		{
+			if(is_null(self::$layout))
+			{
+				self::$layout = Config::get("view.default_layout");
+			}
+			
 			if(!is_null($layout))
 			{
 				$layout = self::$layout;

@@ -87,6 +87,8 @@
 			Config::setDefault("exceptions.send_mail", !Config::get("debug"));
 			Config::setDefault("exceptions.mail_to", Config::get("mail.admin_email"));
 			
+			Config::setDefault("view.default_layout", "layout");
+			
 			Config::setDefault("assets.url_prefix", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 			
 			Config::setDefault("uploads.enabled", true);
