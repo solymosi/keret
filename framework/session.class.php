@@ -42,13 +42,11 @@
 		public static function set($key, $value)
 		{
 			$_SESSION[$key] = $value;
-			return true;
 		}
 		
 		public static function delete($key)
 		{
 			unset($_SESSION[$key]);
-			return true;
 		}
 		
 		public static function hasFlash($key)
