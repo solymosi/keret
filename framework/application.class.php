@@ -40,6 +40,12 @@
 					Helpers::setStatusCode("404 Not Found");
 					View::render("notFound");
 				}
+				catch(CsrfException $e)
+				{
+					Helpers::clearOutput();
+					Helpers::setStatusCode("403 Forbidden");
+					View::render("invalidToken");
+				}
 			}
 			catch(Exception $e)
 			{
@@ -88,6 +94,7 @@
 			Config::setDefault("exceptions.mail_to", Config::get("mail.admin_email"));
 			
 			Config::setDefault("view.default_layout", "layout");
+			Config::setDefault("view.template_class", "Template");
 			
 			Config::setDefault("assets.url_prefix", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 			
