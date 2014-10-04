@@ -2,6 +2,7 @@
 
 	class Routing
 	{
+		static protected $filters = array();
 		static protected $params = array();
 		
 		static public function match($pattern, $controller, $action, $params = array())
@@ -10,10 +11,27 @@
 			
 			if(preg_match("/^\/" . $pattern . "$/", Helpers::getUri(), $matches))
 			{
+				self::set("_controller", $controller);
+				self::set("_action", $action);
 				self::addParams($matches);
-				call_user_func(array(ucfirst($controller) . "Controller", $action), self::getParams());
+				
+				foreach(self::$filters as $filter)
+				{
+					call_user_func($filter, self::getParams());
+				}
+				call_user_func(array(ucfirst(self::get("_controller")) . "Controller", self::get("_action")), self::getParams());
+				
 				throw new ProcessingFinished();
 			}
+		}
+		
+		static public function registerFilter($callback)
+		{
+			if(!is_callable($callback))
+			{
+				throw new Exception("Filter method must be callable.");
+			}
+			self::$filters[] = $callback;
 		}
 		
 		static public function get($key)
