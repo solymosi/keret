@@ -1,22 +1,11 @@
 <?php
 
-	// Root path of site
-	define("ROOT_PATH", dirname(__FILE__) . "/..");
+	Config::set("debug", true);
 	
-	// Disable PHP error messages
-	ini_set("display_errors", 1);
+	Config::set("app.internal_name", "application");
+	Config::set("app.domain", "localhost");
 	
-	// Report all errors
-	ini_set("error_reporting", E_ALL | E_STRICT);
-	
-	// Set proper character encoding
-	header("Content-Type: text/html; charset=UTF-8");
-	
-	// Set encoding of multibyte string functions
-	mb_internal_encoding("utf-8");
-	
-	// Set default time zone
-	date_default_timezone_set("Europe/Zurich");
+	Config::set("default_timezone", "Europe/Zurich");
 
 	//===================
 	// Database settings
