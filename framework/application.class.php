@@ -47,12 +47,13 @@
 				Helpers::clearOutput();
 				Helpers::setStatusCode("500 Internal Server Error");
 				
-				if(MAIL_EXCEPTIONS)
+				if(Config::get("exceptions.send_mail"))
 				{
-					Helpers::sendMail(ADMIN_EMAIL, "[ProUni] " . $e->getMessage(), "An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" . $e->getMessage() . "\r\nRequest URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" . print_r(@$_POST, true));
+					ErrorHandler::mailException($e);
 				}
 				
-				require_once("include/templates/errorMessage.php");
+				$customTemplate = self::root() . "/templates/internalError.php";
+				require_once(is_file($customTemplate) ? $customTemplate : dirname(__FILE__) . "/templates/internalError.php");
 			}
 
 			ob_end_flush();
@@ -69,16 +70,21 @@
 			
 			Config::setDefault("debug", false);
 			
+			Config::setDefault("app.long_title", Config::get("app.title"));
+			
 			Config::setDefault("database.host", "localhost");
+			Config::setDefault("database.name", Config::get("app.internal_name"));
 			
 			Config::setDefault("session.expires", 0);
 			Config::setDefault("session.cookie_name", Config::get("app.internal_name") . "_session");
 			Config::setDefault("session.cookie_expires", Config::get("session.expires"));
 			Config::setDefault("session.cookie_domain", Config::get("app.domain"));
-			Config::setDefault("session.cookie_secure", false, false);
+			Config::setDefault("session.cookie_secure", false);
 			
-			Config::setDefault("mail.default_from", "system@" . Config::get("app.domain"));
-			Config::setDefault("mail.send_exceptions", !Config::get("debug"));
+			Config::setDefault("mail.default_from", Config::get("app.title") . " <system@" . Config::get("app.domain") . ">");
+			
+			Config::setDefault("exceptions.send_mail", !Config::get("debug"));
+			Config::setDefault("exceptions.mail_to", Config::get("mail.admin_email"));
 			
 			Config::setDefault("assets.url_prefix", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 			
@@ -87,6 +93,7 @@
 			
 			ini_set("display_errors", Config::get("debug") ? 1 : 0);
 			ini_set("error_reporting", E_ALL | E_STRICT);
+			ini_set("file_uploads", Config::get("uploads.enabled") ? 1 : 0);
 			
 			header("Content-Type: text/html; charset=UTF-8");
 			mb_internal_encoding("utf-8");
