@@ -6,10 +6,7 @@
 		{
 			if(preg_match("/^\/" . $pattern . "$/", Helpers::getUri(), $matches))
 			{
-				include_once("include/controllers/" . $controller . "Controller.php");
-				
 				call_user_func(array(ucfirst($controller) . "Controller", $action), $matches);
-				
 				throw new ProcessingFinished();
 			}
 		}
