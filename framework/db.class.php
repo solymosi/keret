@@ -19,6 +19,11 @@
 		
 		public static function prepare($sql, $params = array())
 		{
+			if(!is_array($params))
+			{
+				throw new Exception("Query parameters must be passed in an array.");
+			}
+			
 			$stmt = self::$link->prepare($sql);
 			
 			foreach($params as $name => $value)
