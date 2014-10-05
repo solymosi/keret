@@ -2,20 +2,25 @@
 
 	class LocaleInstance
 	{
-		protected $locale;
+		protected $code;
 		
-		public function __construct($locale)
+		public function __construct($code)
 		{
-			if(!is_string($locale))
+			if(!is_string($code))
 			{
-				throw new Exception("Locale must be a string.");
+				throw new Exception("Locale code must be a string.");
 			}
 			
-			$this->locale = $locale;
+			$this->code = $code;
+		}
+		
+		public function getCode()
+		{
+			return $this->code;
 		}
 		
 		public function __call($name, $arguments)
 		{
-			return call_user_func_array(array("Locale", $name), array_merge(array($this->locale), $arguments));
+			return call_user_func_array(array("Locale", $name), array_merge(array($this->code), $arguments));
 		}
 	}
