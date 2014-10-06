@@ -3,15 +3,23 @@
 	abstract class I18n
 	{
 		static protected $currentLocale;
+		static protected $defaultLocale;
 		static protected $locales = array();
 		
 		static public function initialize()
 		{
-			foreach(Config::get("i18n.locales") as $locale)
+			$provider = Config::get("i18n.locale_provider_class");
+			foreach($provider::getLocales() as $locale)
 			{
 				self::$locales[$locale] = new LocaleInstance($locale);
 			}
-			self::setLocale(Config::get("i18n.default_locale"));
+			$default = $provider::getDefaultLocale();
+			if(!in_array($default, array_keys(self::$locales)))
+			{
+				throw new Exception("Default locale '" . $default . "' does not exist.");
+			}
+			self::$defaultLocale = self::$locales[$default];
+			self::setLocale(self::$defaultLocale);
 		}
 		
 		static public function locale()
@@ -43,7 +51,7 @@
 		
 		static public function defaultLocale()
 		{
-			return self::$locales[Config::get("i18n.default_locale")];
+			return self::$defaultLocale;
 		}
 		
 		static public function languages()
