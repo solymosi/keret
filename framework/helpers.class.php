@@ -199,6 +199,11 @@
 		return Helpers::asset($name);
 	}
 	
+	function __($id, $params = array(), $language = null)
+	{
+		return I18n::translate($id, $params, $language);
+	}
+	
 	function html($content)
 	{
 		return Helpers::escapeHtml($content);

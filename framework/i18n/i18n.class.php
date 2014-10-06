@@ -13,13 +13,39 @@
 			{
 				self::$locales[$locale] = new LocaleInstance($locale);
 			}
+			
 			$default = $provider::getDefaultLocale();
 			if(!in_array($default, array_keys(self::$locales)))
 			{
 				throw new Exception("Default locale '" . $default . "' does not exist.");
 			}
+			
 			self::$defaultLocale = self::$locales[$default];
 			self::setLocale(self::$defaultLocale);
+		}
+		
+		static public function translate($id, $params = array(), $language = null)
+		{
+			if(is_null($language))
+			{
+				$language = self::locale()->getPrimaryLanguage();
+			}
+			if(!preg_match('/^[a-z_]+(?:\.[a-z_]+)*$/i', $id))
+			{
+				throw new Exception("Invalid text identifier.");
+			}
+			
+			$provider = Config::get("i18n.translation_provider_class");
+			$text = $provider::getTranslation($id, strtolower($language));
+			
+			$find = $replace = array();
+			foreach($params as $name => $value)
+			{
+				$find[] = "/#{" . str_replace(".", "\.", $name) . "}/i";
+				$replace[] = $value;
+			}
+			
+			return preg_replace($find, $replace, $text);
 		}
 		
 		static public function locale()

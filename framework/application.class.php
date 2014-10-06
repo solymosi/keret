@@ -105,6 +105,7 @@
 			Config::setDefault("i18n.locales", array("en_US"));
 			Config::setDefault("i18n.default_locale", Config::get("i18n.locales")[0]);
 			Config::setDefault("i18n.locale_provider_class", "LocaleProvider");
+			Config::setDefault("i18n.translation_provider_class", "TranslationProvider");
 			
 			ini_set("display_errors", Config::get("debug") ? 1 : 0);
 			ini_set("error_reporting", E_ALL | E_STRICT);
