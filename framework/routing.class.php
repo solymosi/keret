@@ -55,6 +55,10 @@
 			{
 				throw new Exception("The variable passed to setParams() must be an array");
 			}
+			
+			// Remove elements with numeric keys
+			$params = array_intersect_key($params, array_flip(array_filter(array_keys($params), "is_string")));
+			
 			self::$params = $params;
 		}
 		
