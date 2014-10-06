@@ -61,7 +61,7 @@
 			return $stmt->fetch(PDO::FETCH_ASSOC);
 		}
 		
-		public static function fetchAll($result)
+		public static function fetchAll($stmt)
 		{
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}
