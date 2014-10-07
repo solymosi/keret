@@ -37,6 +37,10 @@
 			
 			$provider = Config::get("i18n.translation_provider_class");
 			$text = $provider::getTranslation($id, strtolower($language));
+			if(is_null($text))
+			{
+				return $id;
+			}
 			
 			$find = $replace = array();
 			foreach($params as $name => $value)
