@@ -8,13 +8,17 @@
 		
 		static public function initialize()
 		{
-			$provider = Config::get("i18n.locale_provider_class");
-			foreach($provider::getLocales() as $locale)
+			$class = Config::get("i18n.locale_class");
+			foreach($class::getLocales() as $locale)
 			{
-				self::$locales[$locale] = new LocaleInstance($locale);
+				if(!($locale instanceof LocaleInstance))
+				{
+					throw new Exception("Locale provider must return a locale instance.");
+				}
+				self::$locales[$locale->getCode()] = $locale;
 			}
 			
-			$default = $provider::getDefaultLocale();
+			$default = $class::getDefaultLocale();
 			if(!in_array($default, array_keys(self::$locales)))
 			{
 				throw new Exception("Default locale '" . $default . "' does not exist.");
