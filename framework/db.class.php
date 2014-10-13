@@ -3,6 +3,7 @@
 	class DB
 	{
 		public static $link;
+		public static $queries = array();
 
 		public static function connect()
 		{
@@ -50,6 +51,11 @@
 		
 		public static function query($sql, $params = array())
 		{
+			self::$queries[] = array(
+				"sql" => $sql,
+				"params" => $params
+			);
+			
 			$stmt = self::prepare($sql, $params);
 			$stmt->execute();
 			
