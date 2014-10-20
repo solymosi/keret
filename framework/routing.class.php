@@ -18,6 +18,8 @@
 			{
 				self::set("_controller", $controller);
 				self::set("_action", $action);
+				
+				$matches = array_filter($matches);
 				self::addParams($matches);
 				
 				foreach(self::$filters as $filter)
