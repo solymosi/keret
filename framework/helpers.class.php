@@ -167,6 +167,20 @@
 			return isset($from[$what]) ? $from[$what] : $default;
 		}
 		
+		// Returns one of the specified parameters (one, more or none) based on the plurality of the provided number
+		public static function pluralize($count, $one, $more, $none)
+		{
+			if($count == 0)
+			{
+				return $none;
+			}
+			if($count == 1)
+			{
+				return $one;
+			}
+			return $more;
+		}
+		
 		// Truncate text with ellipses
 		public static function truncateText($input, $length, $ellipses = true)
 		{
@@ -217,6 +231,11 @@
 	function select($what, $from, $default = null)
 	{
 		return Helpers::select($what, $from, $default);
+	}
+	
+	function pluralize($count, $one, $more, $none)
+	{
+		return Helpers::pluralize($count, $one, $more, $none);
 	}
 
 ?>
