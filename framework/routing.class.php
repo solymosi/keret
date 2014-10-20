@@ -5,8 +5,13 @@
 		static protected $filters = array();
 		static protected $params = array();
 		
-		static public function match($pattern, $controller, $action, $params = array())
+		static public function match($pattern, $controller, $action = null, $params = array())
 		{
+			if(!is_callable($controller) && is_null($action))
+			{
+				throw new Exception("No action has been specified.");
+			}
+			
 			self::addParams($params);
 			
 			if(preg_match("/^\/" . $pattern . "$/", Helpers::getUri(), $matches))
@@ -19,7 +24,15 @@
 				{
 					call_user_func($filter, self::getParams());
 				}
-				call_user_func(array(ucfirst(self::get("_controller")) . "Controller", self::get("_action")), self::getParams());
+				
+				if(is_callable($controller))
+				{
+					call_user_func($controller, self::getParams());
+				}
+				else
+				{
+					call_user_func(array(ucfirst(self::get("_controller")) . "Controller", self::get("_action")), self::getParams());
+				}
 				
 				throw new ProcessingFinished();
 			}
