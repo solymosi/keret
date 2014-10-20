@@ -56,6 +56,46 @@
 			return preg_replace($find, $replace, $text);
 		}
 		
+		static public function formatDateTime($date, $dateFormat = IntlDateFormatter::MEDIUM, $timeFormat = IntlDateFormatter::SHORT, $locale = null)
+		{
+			if(is_null($locale))
+			{
+				$locale = self::locale();
+			}
+			if($locale instanceof LocaleInstance)
+			{
+				$locale = $locale->getCode();
+			}
+			$formatter = IntlDateFormatter::create($locale, $dateFormat, $timeFormat);
+			return $formatter->format(strtotime($date));
+		}
+		
+		static public function formatDate($date, $format = IntlDateFormatter::MEDIUM,  $locale = null)
+		{
+			return self::formatDateTime($date, $format, IntlDateFormatter::NONE, $locale);
+		}
+		
+		static public function formatTime($date, $format = IntlDateFormatter::SHORT,  $locale = null)
+		{
+			return self::formatDateTime($date, IntlDateFormatter::NONE, $format, $locale);
+		}
+		
+		static public function formatNumber($number, $minDecimals = 0, $maxDecimals = 2, $locale = null)
+		{
+			if(is_null($locale))
+			{
+				$locale = self::locale();
+			}
+			if($locale instanceof LocaleInstance)
+			{
+				$locale = $locale->getCode();
+			}
+			$formatter = NumberFormatter::create($locale, NumberFormatter::DECIMAL);
+			$formatter->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $minDecimals);
+			$formatter->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, $maxDecimals);
+			return $formatter->format($number);
+		}
+		
 		static public function locale()
 		{
 			return self::$currentLocale;
