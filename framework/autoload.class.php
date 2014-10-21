@@ -18,11 +18,15 @@
 		{
 			foreach(self::$paths as $path)
 			{
-				$file = $path . "/" . lcfirst($class) . ".class.php";
-				
-				if(is_file($file))
+				foreach(array(lcfirst($class), strtolower($class), $class) as $current)
 				{
-					require $file;
+					$file = $path . "/" . $current . ".class.php";
+					
+					if(is_file($file))
+					{
+						require $file;
+						return;
+					}
 				}
 			}
 		}
