@@ -25,6 +25,10 @@
 					<?= nl2br(html($e->getTraceAsString())) ?>
 				</small>
 			</p>
+			
+			<!--
+				<?php print_r(DB::$queries); ?>
+			-->
 		<?php endif; ?>
 		
 	</body>
