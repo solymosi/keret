@@ -19,9 +19,15 @@
 		
 		<?= $this->content ?>
 		
-		<!--
-			<?php print_r(DB::$queries); ?>
-		-->
+		<?php if(ini_get("display_errors") == true): ?>
+			<!--
+				<?php foreach(DB::$preparedQueries as $query): ?>
+				
+					<?= $query ?>
+					
+				<?php endforeach; ?>
+			-->
+		<?php endif; ?>
 		
 	</body>
 </html>

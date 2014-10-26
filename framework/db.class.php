@@ -4,6 +4,7 @@
 	{
 		public static $link;
 		public static $queries = array();
+		public static $preparedQueries = array();
 
 		public static function connect()
 		{
@@ -55,6 +56,10 @@
 				"sql" => $sql,
 				"params" => $params
 			);
+			
+			self::$preparedQueries[] = array_reduce(array_keys($params), function($str, $param) use ($params) {
+				return str_replace(":" . $param, self::$link->quote($params[$param]), $str);
+			}, $sql);
 			
 			$stmt = self::prepare($sql, $params);
 			$stmt->execute();

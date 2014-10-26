@@ -27,7 +27,11 @@
 			</p>
 			
 			<!--
-				<?php print_r(DB::$queries); ?>
+				<?php foreach(DB::$preparedQueries as $query): ?>
+				
+					<?= $query ?>
+					
+				<?php endforeach; ?>
 			-->
 		<?php endif; ?>
 		
