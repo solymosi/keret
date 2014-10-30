@@ -168,8 +168,12 @@
 		}
 		
 		// Returns one of the specified parameters (one, more or none) based on the plurality of the provided number
-		public static function pluralize($count, $one, $more, $none)
+		public static function pluralize($count, $one, $more, $none = null)
 		{
+			if(is_null($none))
+			{
+				$none = $more;
+			}
 			if($count == 0)
 			{
 				return $none;
@@ -233,7 +237,7 @@
 		return Helpers::select($what, $from, $default);
 	}
 	
-	function pluralize($count, $one, $more, $none)
+	function pluralize($count, $one, $more, $none = null)
 	{
 		return Helpers::pluralize($count, $one, $more, $none);
 	}
