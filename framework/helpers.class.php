@@ -142,7 +142,7 @@
 				throw new Exception("The provided value is not a string.");
 			}
 			$result = json_encode($content);
-			return mb_strpos($result, 1, mb_strlen($result) - 2);
+			return mb_substr($result, 1, mb_strlen($result) - 2);
 		}
 		
 		// Clears all content from the output buffers and restarts output buffering
