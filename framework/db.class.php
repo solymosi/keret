@@ -58,7 +58,7 @@
 			);
 			
 			self::$preparedQueries[] = array_reduce(array_keys($params), function($str, $param) use ($params) {
-				return str_replace(":" . $param, self::$link->quote($params[$param]), $str);
+				return str_replace(":" . $param, self::quote($params[$param]), $str);
 			}, $sql);
 			
 			$stmt = self::prepare($sql, $params);
@@ -95,6 +95,11 @@
 		public static function getValue($sql, $params = array(), $column = 0)
 		{
 			return self::fetchValue(self::query($sql, $params), $column);
+		}
+		
+		public static function quote($str)
+		{
+			return self::$link->quote($str);
 		}
 		
 		public static function buildAssignment($data, $filter = null)
