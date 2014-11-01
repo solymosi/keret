@@ -49,9 +49,14 @@
 			self::$filters[] = $callback;
 		}
 		
+		static public function has($key)
+		{
+			return isset(self::$params[$key]);
+		}
+		
 		static public function get($key)
 		{
-			return isset(self::$params[$key]) ? self::$params[$key] : null;
+			return self::has($key) ? self::$params[$key] : null;
 		}
 		
 		static public function set($key, $value)
