@@ -46,14 +46,7 @@
 				return $id;
 			}
 			
-			$find = $replace = array();
-			foreach($params as $name => $value)
-			{
-				$find[] = "/#{" . str_replace(".", "\.", $name) . "}/i";
-				$replace[] = $value;
-			}
-			
-			return preg_replace($find, $replace, $text);
+			return Helpers::interpolate($text, $params);
 		}
 		
 		static public function formatDateTime($date, $dateFormat = IntlDateFormatter::MEDIUM, $timeFormat = IntlDateFormatter::SHORT, $locale = null)
