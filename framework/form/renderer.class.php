@@ -5,6 +5,9 @@
 		protected $field = null;
 		protected $parent = null;
 		protected $params = array();
+		protected $defaults = array(
+			"row" => true,
+		);
 		
 		public function __construct($field, $parent = null, $params = array())
 		{
@@ -17,6 +20,7 @@
 			}
 			
 			$this->setParams(array_merge(
+				$this->defaults,
 				$field->getParams(),
 				$params
 			));
