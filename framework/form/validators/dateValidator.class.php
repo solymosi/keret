@@ -2,26 +2,30 @@
 
 	class DateValidator extends Validator
 	{
-		protected $minimum = null;
-		protected $maximum = null;
+		protected $earliest = null;
+		protected $latest = null;
 		
-		public function __construct($minimum = null, $maximum = null, $messages = array())
+		const DATE = 1;
+		const TIME = 2;
+		const DATE_TIME = 3;
+		
+		public function __construct($type = self::DATE_TIME, $earliest = null, $latest = null, $messages = array())
 		{
-			if(is_string($minimum))
+			if(is_string($earliest))
 			{
-				$minimum = strtotime($minimum);
+				$earliest = strtotime($earliest);
 			}
 			
-			if(is_string($maximum))
+			if(is_string($latest))
 			{
-				$maximum = strtotime($maximum);
+				$latest = strtotime($latest);
 			}
 			
-			Helpers::whenNot(is_null($minimum) || is_int($minimum), "The minimum date must be a timestamp, well-formatted string or null.");
-			Helpers::whenNot(is_null($maximum) || is_int($maximum), "The maximum date must be a timestamp, well-formatted string or null.");
+			Helpers::whenNot(is_null($earliest) || is_int($earliest), "The earliest date must be a timestamp, well-formatted string or null.");
+			Helpers::whenNot(is_null($latest) || is_int($latest), "The latest date must be a timestamp, well-formatted string or null.");
 			
-			$this->minimum = $minimum;
-			$this->maximum = $maximum;
+			$this->earliest = $earliest;
+			$this->latest = $latest;
 			
 			parent::__construct($messages);
 		}
@@ -32,7 +36,7 @@
 			
 			if(!preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/", $value))
 			{
-				$field->addError($this->getMessage("format"));
+				$field->addError($this->getMessage("invalid_format"));
 			}
 			else
 			{
@@ -42,30 +46,30 @@
 				
 				if(!@checkdate($month, $day, $year))
 				{
-					$field->addError($this->getMessage("invalid"));
+					$field->addError($this->getMessage("invalid_date"));
 				}
 				else
 				{
 					$time = mktime(0, 0, 0, $month, $day, $year);
 					
-					if(!is_null($this->minimum) && $time < $this->minimum)
+					if(!is_null($this->earliest) && $time < $this->earliest)
 					{
-						$field->addError($this->getMessage("minimum"));
+						$field->addError($this->getMessage("too_early"));
 					}
 					
-					if(!is_null($this->maximum) && $time > $this->maximum)
+					if(!is_null($this->latest) && $time > $this->latest)
 					{
-						$field->addError($this->getMessage("maximum"));
+						$field->addError($this->getMessage("too_late"));
 					}
 				}
 			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array(
-				"minimum" => date("Y-m-d", $this->minimum),
-				"maximum" => date("Y-m-d", $this->maximum)
+				"earliest" => date("Y-m-d", $this->earliest),
+				"latest" => date("Y-m-d", $this->latest)
 			);
 		}
 	}

@@ -22,11 +22,6 @@
 				$field->addError($this->getMessage("invalid"));
 			}
 		}
-		
-		protected function initializeParams()
-		{
-			return array();
-		}
 	}
 
 ?>

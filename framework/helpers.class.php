@@ -185,6 +185,19 @@
 			return $more;
 		}
 		
+		// Interpolate parameters into text using markers in this format: #{name}
+		public static function interpolate($text, $params)
+		{
+			$find = $replace = array();
+			foreach($params as $name => $value)
+			{
+				$find[] = "/#{" . str_replace(".", "\.", $name) . "}/i";
+				$replace[] = $value;
+			}
+			
+			return preg_replace($find, $replace, $text);
+		}
+		
 		// Truncate text with ellipses
 		public static function truncateText($input, $length, $ellipses = true)
 		{

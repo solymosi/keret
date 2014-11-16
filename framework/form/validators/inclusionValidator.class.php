@@ -21,7 +21,7 @@
 			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array(
 				"list" => implode(", ", $this->list),

@@ -19,7 +19,7 @@
 			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array(
 				"target" => $this->target

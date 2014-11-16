@@ -42,7 +42,7 @@
 			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array(
 				"minimum" => round($this->minimum, 10),

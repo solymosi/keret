@@ -31,7 +31,7 @@
 			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array(
 				"minimum" => $this->minimum,

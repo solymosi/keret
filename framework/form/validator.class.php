@@ -22,17 +22,29 @@
 		{
 			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
 			
-			$params = array_merge($this->initializeParams(), $params);
-			$class = strtolower(preg_replace("/([a-z])([A-Z])/", "$1_$2", get_class($this)));
-			
-			return I18n::translate(
-				isset($this->messages[$id]) ?
-					$this->messages[$id] :
-					"errors." . $class . "." . $id, $params
+			$params = array_merge(
+				$this->getMessageParams(),
+				$params
 			);
+			
+			if(isset($this->messages[$id]))
+			{
+				return Helpers::interpolate($this->messages[$id], $params);
+			}
+			else
+			{
+				$class = strtolower(
+					preg_replace(
+						"/([a-z])([A-Z])/", "$1_$2",
+						str_replace("Validator", "", get_class($this))
+					)
+				);
+				
+				return I18n::translate("errors." . $class . "." . $id, $params);
+			}
 		}
 		
-		protected function initializeParams()
+		protected function getMessageParams()
 		{
 			return array();
 		}
