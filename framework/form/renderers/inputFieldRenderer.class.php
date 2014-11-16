@@ -2,6 +2,16 @@
 
 	class InputFieldRenderer extends Renderer
 	{
+		public function __construct($field, $parent = null, $params = array())
+		{
+			parent::__construct($field, $parent, $params);
+			
+			if($this->getType() == "hidden")
+			{
+				$this->setParam("row", false);
+			}
+		}
+		
 		public function render()
 		{
 			return $this->singleTag(
