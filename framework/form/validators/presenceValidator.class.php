@@ -11,13 +11,6 @@
 				$field->addError($this->getMessage("blank"));
 			}
 		}
-		
-		protected function initializeMessages()
-		{
-			return array(
-				"blank" => "This field is required."
-			);
-		}
 	}
 
 ?>

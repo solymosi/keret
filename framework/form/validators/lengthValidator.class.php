@@ -7,8 +7,8 @@
 		
 		public function __construct($minimum = null, $maximum = null, $messages = array())
 		{
-			Node::whenNot(is_null($minimum) || is_int($minimum), "The length minimum must be an integer or null.");
-			Node::whenNot(is_null($maximum) || is_int($maximum), "The length maximum must be an integer or null.");
+			Helpers::whenNot(is_null($minimum) || is_int($minimum), "The length minimum must be an integer or null.");
+			Helpers::whenNot(is_null($maximum) || is_int($maximum), "The length maximum must be an integer or null.");
 			
 			$this->minimum = $minimum;
 			$this->maximum = $maximum;
@@ -29,14 +29,6 @@
 			{
 				$field->addError($this->getMessage("maximum"));
 			}
-		}
-		
-		protected function initializeMessages()
-		{
-			return array(
-				"minimum" => "The specified value must have at least #{minimum} characters.",
-				"maximum" => "The specified value must be shorter than #{maximum} characters."
-			);
 		}
 		
 		protected function initializeParams()

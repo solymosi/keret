@@ -19,13 +19,6 @@
 			}
 		}
 		
-		protected function initializeMessages()
-		{
-			return array(
-				"invalid" => "The specified value is invalid."
-			);
-		}
-		
 		protected function initializeParams()
 		{
 			return array(

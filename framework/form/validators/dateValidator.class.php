@@ -17,8 +17,8 @@
 				$maximum = strtotime($maximum);
 			}
 			
-			Node::whenNot(is_null($minimum) || is_int($minimum), "The minimum date must be a timestamp, well-formatted string or null.");
-			Node::whenNot(is_null($maximum) || is_int($maximum), "The maximum date must be a timestamp, well-formatted string or null.");
+			Helpers::whenNot(is_null($minimum) || is_int($minimum), "The minimum date must be a timestamp, well-formatted string or null.");
+			Helpers::whenNot(is_null($maximum) || is_int($maximum), "The maximum date must be a timestamp, well-formatted string or null.");
 			
 			$this->minimum = $minimum;
 			$this->maximum = $maximum;
@@ -61,16 +61,6 @@
 			}
 		}
 		
-		protected function initializeMessages()
-		{
-			return array(
-				"minimum" => "The specified date cannot be earlier than #{minimum}.",
-				"maximum" => "The specified date cannot be later than #{maximum}.",
-				"format" => "The specified date is not in the required YYYY-MM-DD format.",
-				"invalid" => "The specified date is invalid."
-			);
-		}
-		
 		protected function initializeParams()
 		{
 			return array(
@@ -79,5 +69,3 @@
 			);
 		}
 	}
-
-?>

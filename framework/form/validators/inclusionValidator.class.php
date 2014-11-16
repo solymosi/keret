@@ -6,7 +6,7 @@
 		
 		public function __construct($list, $messages = array())
 		{
-			Node::whenNot(is_array($list), "The allowed values list for the inclusion validator must be an array.");
+			Helpers::whenNot(is_array($list), "The allowed values list for the inclusion validator must be an array.");
 			
 			$this->list = $list;
 			
@@ -19,13 +19,6 @@
 			{
 				$field->addError($this->getMessage("invalid"));
 			}
-		}
-		
-		protected function initializeMessages()
-		{
-			return array(
-				"invalid" => "The specified value is invalid."
-			);
 		}
 		
 		protected function initializeParams()

@@ -9,13 +9,4 @@
 				$field->addError($this->getMessage("invalid"));
 			}
 		}
-		
-		protected function initializeMessages()
-		{
-			return array(
-				"invalid" => "The specified email address is invalid."
-			);
-		}
 	}
-
-?>

@@ -6,7 +6,7 @@
 		
 		public function __construct($pattern, $messages = array())
 		{
-			Node::whenNot(is_string($pattern), "The regex pattern must be a string.");
+			Helpers::whenNot(is_string($pattern), "The regex pattern must be a string.");
 			
 			$this->pattern = $pattern;
 			
@@ -21,13 +21,6 @@
 			{
 				$field->addError($this->getMessage("invalid"));
 			}
-		}
-		
-		protected function initializeMessages()
-		{
-			return array(
-				"invalid" => "The specified value is invalid."
-			);
 		}
 		
 		protected function initializeParams()

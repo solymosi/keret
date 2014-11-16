@@ -6,7 +6,7 @@
 		
 		public function __construct($callback)
 		{
-			Node::whenNot(is_callable($callback), "The parameter passed to custom validator is not a valid callback.");
+			Helpers::whenNot(is_callable($callback), "The parameter passed to custom validator is not a valid callback.");
 			
 			$this->callback = $callback;
 			
@@ -18,5 +18,3 @@
 			call_user_func($this->callback, $field);
 		}
 	}
-
-?>
