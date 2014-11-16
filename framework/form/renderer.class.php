@@ -20,6 +20,7 @@
 			}
 			
 			$this->params = new ParameterBag($this->defaults);
+			$this->params->setMerger("html", array($this, "mergeHtmlParams"));
 			$this->params->merge($field->getParams());
 			$this->params->merge($params);
 		}
@@ -101,7 +102,7 @@
 		
 		abstract public function render();
 		
-		/* Naming */
+		/* HTML */
 		
 		protected function getName()
 		{
@@ -119,7 +120,7 @@
 		
 		protected function fieldParams($params = array(), $names = true)
 		{
-			return array_merge($this->defaultParams($names), $params);
+			return $this->mergeHtmlParams($this->defaultParams($names), $params);
 		}
 		
 		protected function defaultParams($names = true)
@@ -133,6 +134,52 @@
 					array(),
 				$this->hasParam("html") ?
 					$this->getParam("html") :
+					array()
+			);
+		}
+		
+		public function mergeHtmlParams($first, $second)
+		{
+			if(is_null($first))
+			{
+				$first = array();
+			}
+			
+			Helpers::whenNot(is_array($first), "The first HTML parameter list must be an array.");
+			Helpers::whenNot(is_array($second), "The second HTML parameter list must be an array.");
+			
+			$classes = array();
+			
+			foreach(array_merge(
+					isset($first["class"]) ?
+						explode(" ", $first["class"]) :
+						array(),
+					isset($second["class"]) ?
+						explode(" ", $second["class"]) :
+						array()
+			) as $class)
+			{
+				if(trim($class) != "")
+				{
+					if(substr($class, 0, 1) == "-")
+					{
+						$classes = array_diff($classes, array(substr($class, 1)));
+					}
+					elseif(!in_array($class, $classes))
+					{
+						$classes[] = substr($class, substr($class, 0, 1) == "+" ? 1 : 0);
+					}
+				}
+			}
+			
+			unset($first["class"]);
+			unset($second["class"]);
+			
+			return array_merge(
+				$first,
+				$second,
+				count($classes) > 0 ?
+					array("class" => implode(" ", $classes)) :
 					array()
 			);
 		}

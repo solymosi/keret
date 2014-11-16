@@ -79,12 +79,9 @@
 				array_keys($this->items + $items),
 				function($array, $name) use ($items) {
 					$merger = $this->getMerger($name);
-					$array[$name] = $this->has($name) ? (
-						isset($items[$name]) ?
-							$merger($this->get($name), $items[$name]) :
-							$this->get($name)
-						) :
-						$items[$name];
+					$array[$name] = isset($items[$name]) ?
+						$merger($this->get($name), $items[$name]) :
+						$this->get($name);
 					return $array;
 				},
 				array()
