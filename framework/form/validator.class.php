@@ -6,29 +6,30 @@
 		
 		public function __construct($messages = array())
 		{
-			$this->messages = array_merge($this->initializeMessages(), $messages);
+			$this->messages = $messages;
 		}
 		
 		public function validate($field)
 		{
-			Node::whenNot($field instanceof Field, "The field parameter must be a Field instance.");
+			Helpers::whenNot($field instanceof Field, "The field parameter must be a Field instance.");
 			
 			$this->perform($field);
 		}
 		
 		abstract protected function perform($field);
 		
-		protected function getMessage($id)
+		protected function getMessage($id, $params = array())
 		{
-			$params = $this->initializeParams();
-			return preg_replace_callback('/\#\{([a-zA-Z0-9]+)\}/', function($matches) use($params) {
-				return $params[$matches[1]];
-			}, $this->messages[$id]);
-		}
-		
-		protected function initializeMessages()
-		{
-			return array();
+			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
+			
+			$params = array_merge($this->initializeParams(), $params);
+			$class = strtolower(preg_replace("/([a-z])([A-Z])/", "$1_$2", get_class($this)));
+			
+			return I18n::translate(
+				isset($this->messages[$id]) ?
+					$this->messages[$id] :
+					"errors." . $class . "." . $id, $params
+			);
 		}
 		
 		protected function initializeParams()
@@ -36,5 +37,3 @@
 			return array();
 		}
 	}
-
-?>
