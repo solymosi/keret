@@ -6,8 +6,8 @@
 		protected $value = null;
 		protected $parent = null;
 		protected $errors = array();
+		protected $params = null;
 		protected $validators = array();
-		protected $params = array();
 		
 		public function __construct($name, $value = null, $params = array())
 		{
@@ -15,7 +15,7 @@
 			$this->name = $name;
 			
 			$this->setValue($value);
-			$this->addParams($params);
+			$this->params = new ParameterBag($params);
 		}
 		
 		/* Name */
@@ -142,65 +142,54 @@
 		
 		/* Parameters */
 		
-		public function setParam($name, $value)
+		public function hasParam($name)
 		{
-			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
-			
-			$this->params[$name] = $value;
-			
-			return $this;
+			return $this->params->has($name);
 		}
 		
 		public function getParam($name)
 		{
-			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
-			
-			return isset($this->params[$name]) ? $this->params[$name] : null;
+			return $this->params->get($name);
+		}
+		
+		public function setParam($name, $value)
+		{
+			$this->params->set($name, $value);
+			return $this;
+		}
+		
+		public function addParam($name, $value)
+		{
+			$this->params->add($name, $value);
+			return $this;
 		}
 		
 		public function clearParam($name)
 		{
-			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
-			
-			if(isset($this->params[$name]))
-			{
-				unset($this->params[$name]);
-			}
-			
-			return $this;
-		}
-		
-		public function addParams($params)
-		{
-			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
-			
-			$this->setParams(array_merge($this->params, $params));
-			
+			$this->params->delete($name);
 			return $this;
 		}
 		
 		public function getParams()
 		{
-			return $this->params;
+			return $this->params->all();
 		}
 		
 		public function setParams($params)
 		{
-			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
-			
-			$this->clearParams();
-			
-			foreach($params as $name => $value)
-			{
-				$this->setParam($name, $value);
-			}
-			
+			$this->params->replace($params);
+			return $this;
+		}
+		
+		public function addParams($params)
+		{
+			$this->params->merge($params);
 			return $this;
 		}
 		
 		public function clearParams()
 		{
-			$this->params = array();
+			$this->params->clear();
 			return $this;
 		}
 		

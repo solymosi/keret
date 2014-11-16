@@ -4,7 +4,7 @@
 	{
 		protected $field = null;
 		protected $parent = null;
-		protected $params = array();
+		protected $params = null;
 		protected $defaults = array(
 			"row" => true,
 		);
@@ -19,11 +19,9 @@
 				$this->setParent($parent);
 			}
 			
-			$this->setParams(array_merge(
-				$this->defaults,
-				$field->getParams(),
-				$params
-			));
+			$this->params = new ParameterBag($this->defaults);
+			$this->params->merge($field->getParams());
+			$this->params->merge($params);
 		}
 		
 		/* Field */
@@ -54,31 +52,49 @@
 		
 		/* Parameters */
 		
-		public function setParam($name, $value)
+		public function hasParam($name)
 		{
-			$this->params[$name] = $value;
+			return $this->params->has($name);
 		}
 		
 		public function getParam($name)
 		{
-			return $this->hasParam($name) ? $this->params[$name] : null;
+			return $this->params->get($name);
 		}
 		
-		public function hasParam($name)
+		public function setParam($name, $value)
 		{
-			return isset($this->params[$name]);
+			$this->params->set($name, $value);
+		}
+		
+		public function addParam($name, $value)
+		{
+			$this->params->add($name, $value);
+		}
+		
+		public function clearParam($name)
+		{
+			$this->params->delete($name);
 		}
 		
 		public function getParams()
 		{
-			return $this->params;
+			return $this->params->all();
 		}
 		
 		public function setParams($params)
 		{
-			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
-			
-			$this->params = $params;
+			$this->params->replace($params);
+		}
+		
+		public function addParams($params)
+		{
+			$this->params->merge($params);
+		}
+		
+		public function clearParams()
+		{
+			$this->params->clear();
 		}
 		
 		/* Render */
