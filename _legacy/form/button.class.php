@@ -1,15 +1,15 @@
 <?php
 	
-	class Button extends InputField
+	class Button extends Field
 	{
 		public function __construct($label, $name = null, $params = array())
 		{
 			if(is_null($name))
 			{
-				$name = "button" . rand(100000, 999999);
+				$name = "button_" . Helpers::randomToken();
 			}
 			
-			parent::__construct("button", $name, $label, $params);
+			parent::__construct($name, $label, $params);
 			
 			$this->addParams(array("class" => "button"));
 		}

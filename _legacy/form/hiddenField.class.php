@@ -7,5 +7,3 @@
 			parent::__construct("hidden", $name, $value, $params);
 		}
 	}
-	
-?>
