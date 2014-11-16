@@ -8,9 +8,11 @@
 				$this->tag(
 					"fieldset",
 					$this->renderLegend() .
+					$this->renderErrors($this) .
 					$this->renderFields(),
 					$this->fieldParams()
 				) :
+				$this->renderErrors($this) .
 				$this->renderFields();
 		}
 		
@@ -66,7 +68,6 @@
 		protected function renderErrors($renderer)
 		{
 			$errors = $renderer->getField()->getErrors();
-			
 			return count($errors) > 0 ?
 				$this->tag(
 					"div",
