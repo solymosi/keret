@@ -259,10 +259,15 @@
 		
 		/* Render */
 		
+		public function getRenderer($parent = null, $params = array())
+		{
+			$provider = Config::get("view.form_renderer_provider_class");
+			
+			return $provider::getRenderer($this, $parent, $params);
+		}
+		
 		public function render($parent = null, $params = array())
 		{
-			$renderer = Config::get("view.form_renderer_provider_class");
-			
-			return $renderer::getRenderer($this, $parent, $params)->render();
+			return $this->getRenderer($parent, $params)->render();
 		}
 	}
