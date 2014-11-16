@@ -96,6 +96,7 @@
 			
 			Config::setDefault("view.default_layout", "layout");
 			Config::setDefault("view.template_class", "Template");
+			Config::setDefault("view.form_renderer_provider_class", "FormRendererProvider");
 			
 			Config::setDefault("assets.url_prefix", str_replace("/index.php", "", Helpers::getBaseUri()) . "/assets");
 			
