@@ -203,6 +203,21 @@
 		{
 			return sha1(microtime(true) . mt_rand(10000, 90000));
 		}
+		
+		// Throw an exception when the specified expression is true
+		static public function when($expression, $message)
+		{
+			if($expression)
+			{
+				throw new Exception($message);
+			}
+		}
+		
+		// Throw an exception when the specified expression is false
+		static public function whenNot($expression, $message)
+		{
+			self::when(!$expression, $message);
+		}
 	}
 	
 	class NotFoundException extends Exception { }
