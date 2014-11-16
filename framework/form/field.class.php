@@ -1,28 +1,31 @@
 <?php
 	
-	abstract class Field extends Node
+	abstract class Field
 	{
 		protected $name = null;
 		protected $value = null;
-		protected $group = false;
-		protected $disabled = false;
+		protected $parent = null;
 		protected $errors = array();
 		protected $validators = array();
+		protected $params = array();
 		
-		public function __construct($tag, $name = null, $value = null, $params = array(), $children = array())
+		public function __construct($name, $value = null, $params = array())
 		{
-			self::whenNot(($this->group && is_null($name)) || is_string($name), "Name must be a string.");
+			Helpers::whenNot(is_string($name), "The field name must be a string.");
 			$this->name = $name;
 			
-			parent::__construct($tag, $params, $children);
-			
-			if(!$this->group)
-			{
-				$this->addParams(array("name" => $name, "class" => "field"));
-			}
-			
 			$this->setValue($value);
+			$this->addParams($params);
 		}
+		
+		/* Name */
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		/* Value */
 		
 		public function getValue()
 		{
@@ -43,13 +46,15 @@
 		public function clearValue()
 		{
 			$this->value = null;
+			
 			return $this;
 		}
 		
-		public function addError($message, $none = null)
+		/* Errors */
+		
+		public function addError($message)
 		{
-			self::whenNot(is_null($none), "The second parameter must not be used.");
-			self::whenNot(is_string($message), "Error message must be a string.");
+			Helpers::whenNot(is_string($message), "The error message must be a string.");
 			
 			$this->errors[] = $message;
 			
@@ -69,12 +74,15 @@
 		public function clearErrors()
 		{
 			$this->errors = array();
+			
 			return $this;
 		}
 		
+		/* Validators */
+		
 		public function addValidator($validator)
 		{
-			self::whenNot($validator instanceof Validator, "The validator must be a Validator instance.");
+			Helpers::whenNot($validator instanceof Validator, "The validator must be a Validator instance.");
 			
 			$this->validators[] = $validator;
 			
@@ -83,7 +91,7 @@
 		
 		public function addValidators($validators)
 		{
-			self::whenNot(is_array($validators), "The validator list must be an array.");
+			Helpers::whenNot(is_array($validators), "The validator list must be an array.");
 			
 			foreach($validators as $validator)
 			{
@@ -105,7 +113,7 @@
 		
 		public function setValidators($validators)
 		{
-			self::whenNot(is_array($validators), "The validator list must be an array.");
+			Helpers::whenNot(is_array($validators), "The validator list must be an array.");
 			
 			$this->clearValidators();
 			$this->addValidators($validators);
@@ -116,11 +124,14 @@
 		public function clearValidators()
 		{
 			$this->validators = array();
+			
 			return $this;
 		}
 		
 		public function isValid()
 		{
+			$this->clearErrors();
+			
 			foreach($this->getValidators() as $validator)
 			{
 				$validator->validate($this);
@@ -129,63 +140,129 @@
 			return !$this->hasErrors();
 		}
 		
-		public function setDisabled($disabled)
+		/* Parameters */
+		
+		public function setParam($name, $value)
 		{
-			$this->disabled = $disabled;
+			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			$this->params[$name] = $value;
+			
+			return $this;
 		}
 		
-		public function isDisabled()
+		public function getParam($name)
 		{
-			if($this->hasParent())
+			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			return isset($this->params[$name]) ? $this->params[$name] : null;
+		}
+		
+		public function clearParam($name)
+		{
+			Helpers::whenNot(is_string($name), "The parameter name must be a string.");
+			
+			if(isset($this->params[$name]))
 			{
-				$node = $this;
-				do
-				{
-					$node = $node->getParent();
-				} while(!($node instanceof Field) && $node->hasParent());
+				unset($this->params[$name]);
 			}
 			
-			return $this->disabled || (isset($node) && $node instanceof Field && $node->isDisabled());
+			return $this;
 		}
 		
-		public function getName()
+		public function addParams($params)
 		{
-			$path = $this->getPath();
-			return $path[0] . (count($path) > 1 ? ("[" . implode("][", array_slice($path, 1)) . "]") : "");
+			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
+			
+			$this->setParams(array_merge($this->params, $params));
+			
+			return $this;
 		}
 		
-		public function getID()
+		public function getParams()
 		{
-			return implode("_", $this->getPath());
+			return $this->params;
 		}
+		
+		public function setParams($params)
+		{
+			Helpers::whenNot(is_array($params), "The parameter list must be an array.");
+			
+			$this->clearParams();
+			
+			foreach($params as $name => $value)
+			{
+				$this->setParam($name, $value);
+			}
+			
+			return $this;
+		}
+		
+		public function clearParams()
+		{
+			$this->params = array();
+			return $this;
+		}
+		
+		/* Parent */
+		
+		public function getParent()
+		{
+			return $this->parent;
+		}
+		
+		public function hasParent()
+		{
+			return $this->parent != null;
+		}
+		
+		protected function setParent($parent)
+		{
+			Helpers::whenNot($parent instanceof FieldSet, "An instance of FieldSet is required.");
+			
+			foreach($parent->getChildren() as $child)
+			{
+				if($child === $this)
+				{
+					$this->parent = $parent;
+					return $this;
+				}
+			}
+			
+			throw new Exception("This field is not a child of the specified parent.");
+		}
+		
+		protected function clearParent()
+		{
+			foreach($this->getParent()->getChildren() as $child)
+			{
+				Helpers::when($child === $this, "This field is still a child of its parent.");
+			}
+			
+			$this->parent = null;
+			return $this;
+		}
+		
+		/* Form */
 		
 		public function getForm()
 		{
-			$node = $this;
-			while(!($node instanceof Form) && $node->hasParent())
+			if($this instanceof Form)
 			{
-				$node = $node->getParent();
+				return $this;
 			}
-			return $node;
+			else
+			{
+				return $this->hasParent() ? $this->getParent()->getForm() : null;
+			}
 		}
 		
-		public function render()
+		/* Render */
+		
+		public function render($parent = null, $params = array())
 		{
-			if(!$this->group)
-			{
-				$this->setParam("name", $this->getName());
-				$this->setParam("id", $this->getID());
-			}
+			$renderer = Config::get("view.form_renderer_provider_class");
 			
-			$this->addParams(array("class" => ($this->hasErrors() ? "+" : "-") . "has-error"));
-			
-			if($this->isDisabled())
-			{
-				$this->setParam("disabled", "disabled");
-			}
-			
-			return parent::render();
+			return $renderer::getRenderer($this, $parent, $params)->render();
 		}
 	}
-	
-?>
