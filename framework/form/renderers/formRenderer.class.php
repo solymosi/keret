@@ -1,7 +1,9 @@
 <?php
 
-	class FormRenderer extends FieldSetRenderer
+	class FormRenderer extends Renderer
 	{
+		use RenderableFields;
+		
 		public function render()
 		{
 			return $this->tag(
