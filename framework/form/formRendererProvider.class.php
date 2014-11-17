@@ -16,12 +16,12 @@
 		{
 			$class = get_class($field);
 			
-			if(!isset(self::$renderers[$class]))
+			if(!isset(static::$renderers[$class]))
 			{
 				throw new Exception("No renderer defined for " . $class . ".");
 			}
 			
-			$renderer = self::$renderers[$class] . "Renderer";
+			$renderer = static::$renderers[$class] . "Renderer";
 			return new $renderer($field, $parent, $params);
 		}
 	}
