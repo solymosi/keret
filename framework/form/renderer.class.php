@@ -134,6 +134,9 @@
 					array(),
 				$this->hasParam("html") ?
 					$this->getParam("html") :
+					array(),
+				$this->getField()->isDisabled() ?
+					array("disabled" => "disabled") :
 					array()
 			);
 		}

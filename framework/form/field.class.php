@@ -7,6 +7,7 @@
 		protected $parent = null;
 		protected $errors = array();
 		protected $params = null;
+		protected $disabled = false;
 		protected $validators = array();
 		
 		public function __construct($name, $value = null, $params = array())
@@ -258,5 +259,17 @@
 		public function render($parent = null, $params = array())
 		{
 			return $this->getRenderer($parent, $params)->render();
+		}
+		
+		/* Disabled */
+		
+		public function setDisabled($disabled = true)
+		{
+			$this->disabled = $disabled;
+		}
+		
+		public function isDisabled()
+		{
+			return $this->disabled || ($this->hasParent() && $this->getParent()->isDisabled());
 		}
 	}
