@@ -4,6 +4,13 @@
 	{
 		use RenderableFields;
 		
+		public function __construct($field, $parent = null, $params = array())
+		{
+			parent::__construct($field, $parent, $params);
+			
+			$this->setParam("row", false);
+		}
+		
 		public function render()
 		{
 			return $this->getParam("tag") ?
