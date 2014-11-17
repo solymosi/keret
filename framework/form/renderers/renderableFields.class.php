@@ -30,7 +30,8 @@
 			return
 				$this->renderLabel($renderer) .
 				$renderer->render() .
-				$this->renderErrors($renderer);
+				$this->renderErrors($renderer) .
+				$this->renderHelp($renderer);
 		}
 		
 		protected function renderLabel($renderer)
@@ -56,6 +57,17 @@
 						}, $errors)
 					),
 					array("class" => "errors")
+				) :
+				"";
+		}
+		
+		protected function renderHelp($renderer)
+		{
+			return $renderer->getParam("help") ?
+				$this->tag(
+					"div",
+					$renderer->getParam("help"),
+					array("class" => "help")
 				) :
 				"";
 		}
