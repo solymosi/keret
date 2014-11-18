@@ -18,6 +18,8 @@
 		
 		protected function perform($field)
 		{
+			Helpers::whenNot($field instanceof FieldSet, "Field equality validators can only be attached to field sets.");
+			
 			$first = $field->getChild($this->first);
 			$second = $field->getChild($this->second);
 			
