@@ -245,9 +245,7 @@
 		
 		public function isValid($recursive = true)
 		{
-			$this->clearErrors();
-			
-			return array_reduce(
+			$children = array_reduce(
 				$recursive ?
 					$this->getChildren() :
 					array(),
@@ -258,7 +256,8 @@
 					
 					return $valid && $result;
 				},
-				parent::isValid()
+				true
 			);
+			return parent::isValid() && $children;
 		}
 	}
