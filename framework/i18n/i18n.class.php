@@ -34,7 +34,7 @@
 			{
 				$language = self::locale()->getPrimaryLanguage();
 			}
-			if(!preg_match('/^[a-z_]+(?:\.[a-z_]+)*$/i', $id))
+			if(!preg_match('/^[a-z0-9_]+(?:\.[a-z0-9_]+)*$/i', $id))
 			{
 				throw new Exception("Invalid text identifier.");
 			}
