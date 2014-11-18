@@ -22,6 +22,11 @@
 		
 		protected function perform($field)
 		{
+			if($field->isBlank())
+			{
+				return;
+			}
+			
 			if(!preg_match($this->decimals ? "/^[+-]?[0-9]+(\.[0-9]{1," . $this->decimals . "})?$/" : "/^[+-]?[0-9]+$/", strval($field->getValue())))
 			{
 				$field->addError($this->getMessage("invalid"));

@@ -18,16 +18,21 @@
 		
 		protected function perform($field)
 		{
+			if($field->isBlank())
+			{
+				return;
+			}
+			
 			$value = strval($field->getValue());
 			
 			if(!is_null($this->minimum) && mb_strlen($value) < $this->minimum)
 			{
-				$field->addError($this->getMessage("minimum"));
+				$field->addError($this->getMessage("too_short"));
 			}
 			
 			if(!is_null($this->maximum) && mb_strlen($value) > $this->maximum)
 			{
-				$field->addError($this->getMessage("maximum"));
+				$field->addError($this->getMessage("too_long"));
 			}
 		}
 		

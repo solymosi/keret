@@ -15,6 +15,11 @@
 		
 		protected function perform($field)
 		{
+			if($field->isBlank())
+			{
+				return;
+			}
+			
 			$value = strval($field->getValue());
 			
 			if(!preg_match($this->pattern, $value))
