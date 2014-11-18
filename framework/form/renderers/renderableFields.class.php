@@ -27,11 +27,20 @@
 		
 		protected function renderField($renderer)
 		{
-			return
-				$this->renderLabel($renderer) .
-				$renderer->render() .
-				$this->renderErrors($renderer) .
-				$this->renderHelp($renderer);
+			if($renderer instanceof GroupRenderer)
+			{
+				return $this->renderLabel($renderer) .
+					$this->renderHelp($renderer) .
+					$this->renderErrors($renderer) .
+					$renderer->render();
+			}
+			else
+			{
+				return $this->renderLabel($renderer) .
+					$renderer->render() .
+					$this->renderErrors($renderer) .
+					$this->renderHelp($renderer);
+			}
 		}
 		
 		protected function renderLabel($renderer)

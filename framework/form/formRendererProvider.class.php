@@ -8,6 +8,8 @@
 			"TextField"     => "InputField",
 			"PasswordField" => "InputField",
 			"HiddenField"   => "InputField",
+			"Checkbox"      => "Checkbox",
+			"CheckboxGroup" => "Group",
 			"Button"        => "Button",
 			"SubmitButton"  => "Button",
 		);
