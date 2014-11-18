@@ -210,15 +210,22 @@
 		
 		public function getErrors($recursive = false)
 		{
-			return array_reduce(
+			return array_filter(array_reduce(
 				$recursive ?
 					$this->getChildren() :
 					array(),
 				function($errors, $child) {
-					return array_merge($errors, array($child->getName() => $child->getErrors()));
+					return array_merge(
+						$errors, 
+						array(
+							$child->getName() => $child instanceof FieldSet ?
+								$child->getErrors(true) :
+								$child->getErrors()
+						)
+					);
 				},
 				parent::getErrors()
-			);
+			));
 		}
 		
 		public function hasErrors($recursive = false)
@@ -245,19 +252,14 @@
 		
 		public function isValid($recursive = true)
 		{
-			$children = array_reduce(
-				$recursive ?
-					$this->getChildren() :
-					array(),
-				function($valid, $child) {
-					$result = $child instanceof FieldSet ?
-						$child->isValid(true) :
-						$child->isValid();
-					
-					return $valid && $result;
-				},
-				true
-			);
-			return parent::isValid() && $children;
+			if($recursive)
+			{
+				array_map(function($child) {
+					$child->isValid();
+				}, $this->getChildren());
+			}
+			parent::isValid();
+			
+			return !$this->hasErrors(true);
 		}
 	}
