@@ -51,6 +51,13 @@
 			return $this;
 		}
 		
+		public function isBlank()
+		{
+			$value = $this->getValue();
+			
+			return !$value || (is_string($value) && !trim($value));
+		}
+		
 		/* Errors */
 		
 		public function addError($message)
