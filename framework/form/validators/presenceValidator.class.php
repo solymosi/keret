@@ -4,9 +4,7 @@
 	{
 		protected function perform($field)
 		{
-			$value = $field->getValue();
-			
-			if(!$value || (is_string($value) && !trim($value)))
+			if($field->isBlank())
 			{
 				$field->addError($this->getMessage("blank"));
 			}
