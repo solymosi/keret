@@ -215,7 +215,9 @@
 		{
 			return implode("", array_map(
 				function($key) use ($params) {
-					return " " . strtolower($key) . '="' . Helpers::escapeHtml($params[$key]) . '"';
+					return !is_null($params[$key]) ?
+						" " . strtolower($key) . '="' . Helpers::escapeHtml($params[$key]) . '"' :
+						"";
 				},
 				array_keys($params)
 			));
