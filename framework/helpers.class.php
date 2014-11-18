@@ -52,15 +52,36 @@
 		}
 		
 		// Convert an internal URI to an absolute URL for links
-		public static function link($uri)
+		public static function link($uri, $query = array())
 		{
-			return self::getBaseUri() . Helpers::escapeHtml($uri);
+			return
+				self::getBaseUri() .
+				self::escapeHtml($uri) . 
+				(count($query) > 0 ?
+					"?" . implode("&",
+						array_map(function($key) use ($query) {
+							return $key . "=" . urlencode($query[$key]);
+						}, array_keys($query))
+					) :
+					""
+				);
 		}
 		
 		// Redirect the browser to a URI within this site
-		public static function redirect($uri, $permanent = false)
+		public static function redirect($uri, $query = array(), $permanent = false)
 		{
-			self::externalRedirect(self::link($uri), $permanent);
+			self::externalRedirect(self::link($uri, $query), $permanent);
+		}
+		
+		// Redirect the browser to a URL and terminate
+		public static function externalRedirect($url, $permanent = false)
+		{
+			Helpers::clearOutput();
+			Helpers::setStatusCode($permanent ? "301 Moved Permanently" : "302 Found");
+			header("Location: " . $url);
+			print('You are being redirected <a href="' . $url . '">here</a>.');
+			ob_end_flush();
+			exit;
 		}
 		
 		// Signal the browser that we are returning JavaScript content
@@ -74,17 +95,6 @@
 		public static function isAjaxRequest()
 		{
 			return !empty($_SERVER["HTTP_X_REQUESTED_WITH"])&& strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest";
-		}
-		
-		// Redirect the browser to a URL and terminate
-		public static function externalRedirect($url, $permanent = false)
-		{
-			Helpers::clearOutput();
-			Helpers::setStatusCode($permanent ? "301 Moved Permanently" : "302 Found");
-			header("Location: " . $url);
-			print('You are being redirected <a href="' . $url . '">here</a>.');
-			ob_end_flush();
-			exit;
 		}
 		
 		// Send an email from the default address
