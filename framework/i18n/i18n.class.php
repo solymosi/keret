@@ -99,6 +99,12 @@
 			return self::$locales;
 		}
 		
+		static public function getLocale($code)
+		{
+			Helpers::whenNot(isset(self::$locales[$code]), "Locale '" . $code . "' does not exist.");
+			return self::$locales[$code];
+		}
+		
 		static public function setLocale($locale)
 		{
 			if($locale instanceof LocaleInstance)
