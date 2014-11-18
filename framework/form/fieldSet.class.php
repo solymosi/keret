@@ -7,7 +7,7 @@
 		
 		public function __construct($name, $params = array(), $children = array())
 		{
-			parent::__construct($name, null, $params);
+			parent::__construct($name, array(), $params);
 			$this->addChildren($children);
 		}
 		
@@ -127,22 +127,22 @@
 		
 		public function getValue()
 		{
-			return null;
+			return $this->getValues();
 		}
 		
 		public function setValue($value)
 		{
-			Helpers::whenNot(is_null($value), "Setting the value of a FieldSet is not supported.");
+			return $this->setValues($value);
 		}
 		
 		public function hasValue()
 		{
-			return false;
+			return $this->hasValues();
 		}
 		
 		public function clearValue()
 		{
-			throw new Exception("Clearing the value of a FieldSet is not supported.");
+			return $this->clearValues();
 		}
 		
 		/* Values */
@@ -150,9 +150,7 @@
 		public function getValues()
 		{
 			return array_map(function($child) {
-				return $child instanceof FieldSet ?
-					$child->getValues() :
-					$child->getValue();
+				return $child->getValue();
 			}, $this->getChildren());
 		}
 		
@@ -164,23 +162,40 @@
 			{
 				if($this->hasChild($name))
 				{
-					$child = $this->getChild($name);
-					$child instanceof FieldSet ?
-						$child->setValues($value) :
-						$child->setValue($value);
+					$this->getChild($name)->setValue($value);
 				}
 			}
 			
 			return $this;
 		}
 		
+		public function hasValues()
+		{
+			return array_reduce(
+				$this->getChildren(),
+				function($value, $child) {
+					return $value || $child->hasValue();
+				},
+				false
+			);
+		}
+		
+		public function isBlank()
+		{
+			return array_reduce(
+				$this->getChildren(),
+				function($blank, $child) {
+					return $blank && $child->isBlank();
+				},
+				true
+			);
+		}
+		
 		public function clearValues()
 		{
 			foreach($this->getChildren() as $name => $child)
 			{
-				$child instanceof FieldSet ?
-					$child->clearValues() :
-					$child->clearValue();
+				$child->clearValue();
 			}
 			
 			return $this;
