@@ -90,6 +90,7 @@
 			Config::setDefault("mail.default_from", Config::get("app.title") . " <system@" . Config::get("app.domain") . ">");
 			Config::setDefault("mail.smtp_server", "localhost");
 			Config::setDefault("mail.smtp_port", 25);
+			Config::setDefault("mail.content_type", "text/plain; charset=UTF-8");
 			
 			Config::setDefault("exceptions.send_mail", !Config::get("debug"));
 			Config::setDefault("exceptions.mail_to", Config::get("mail.admin_email"));

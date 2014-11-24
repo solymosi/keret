@@ -27,6 +27,9 @@
 	// Email address of site administrator
 	Config::set("mail.admin_email", "Administrator <admin@example.org>");
 	
+	// Email content type
+	Config::set("mail.content_type", "text/html; charset=UTF-8");
+	
 	// Use custom template class
 	Config::set("view.template_class", "CustomTemplate");
 	

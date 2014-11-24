@@ -102,7 +102,7 @@
 		{
 			$headers = array(
 				"MIME-Version" => "1.0",
-				"Content-Type" => "text/plain; charset=UTF-8",
+				"Content-Type" => Config::get("mail.content_type"),
 				"From" => Config::get("mail.default_from"),
 			);
 			
