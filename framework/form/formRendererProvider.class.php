@@ -10,6 +10,7 @@
 			"HiddenField"   => "InputField",
 			"Checkbox"      => "Checkbox",
 			"CheckboxGroup" => "Group",
+			"SelectField"   => "SelectField",
 			"Button"        => "Button",
 			"SubmitButton"  => "Button",
 		);
