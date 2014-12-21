@@ -11,6 +11,7 @@
 			"Checkbox"      => "Checkbox",
 			"CheckboxGroup" => "Group",
 			"SelectField"   => "SelectField",
+			"RadioGroup"    => "RadioGroup",
 			"Button"        => "Button",
 			"SubmitButton"  => "Button",
 		);
