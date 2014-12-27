@@ -8,6 +8,7 @@
 			"TextField"     => "InputField",
 			"PasswordField" => "InputField",
 			"HiddenField"   => "InputField",
+			"Textarea"      => "Textarea",
 			"Checkbox"      => "Checkbox",
 			"CheckboxGroup" => "Group",
 			"SelectField"   => "SelectField",
