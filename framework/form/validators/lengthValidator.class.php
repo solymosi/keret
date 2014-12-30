@@ -24,15 +24,16 @@
 			}
 			
 			$value = strval($field->getValue());
+			$length = mb_strlen($value);
 			
-			if(!is_null($this->minimum) && mb_strlen($value) < $this->minimum)
+			if(!is_null($this->minimum) && $length < $this->minimum)
 			{
-				$field->addError($this->getMessage("too_short"));
+				$field->addError($this->getMessage("too_short", array("length" => $length)));
 			}
 			
-			if(!is_null($this->maximum) && mb_strlen($value) > $this->maximum)
+			if(!is_null($this->maximum) && $length > $this->maximum)
 			{
-				$field->addError($this->getMessage("too_long"));
+				$field->addError($this->getMessage("too_long", array("length" => $length)));
 			}
 		}
 		
