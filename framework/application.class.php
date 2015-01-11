@@ -15,6 +15,8 @@
 			Autoload::registerPath($root . "/lib");
 			Autoload::registerPath($root . "/vendor");
 			
+			require self::root() . "/autoload.php";
+			
 			self::configure();
 		}
 		
