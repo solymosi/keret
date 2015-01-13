@@ -33,6 +33,11 @@
 			return $this->value;
 		}
 		
+		public function getValueOrNull()
+		{
+			return $this->isBlank() ? null : $this->getValue();
+		}
+		
 		public function setValue($value)
 		{
 			$this->value = $value;

@@ -118,9 +118,39 @@
 			return implode(", ", $parts);
 		}
 		
-		public static function lastID()
+		public static function lastId()
 		{
 			return self::$link->lastInsertId();
+		}
+		
+		public static function beginTransaction()
+		{
+			self::$link->beginTransaction();
+		}
+		
+		public static function commit()
+		{
+			self::$link->commit();
+		}
+		
+		public static function rollback()
+		{
+			self::$link->rollBack();
+		}
+		
+		public static function transaction($callback)
+		{
+			self::beginTransaction();
+			try
+			{
+				call_user_func($callback);
+				self::commit();
+			}
+			catch(Exception $e)
+			{
+				self::rollback();
+				throw $e;
+			}
 		}
 	}
 

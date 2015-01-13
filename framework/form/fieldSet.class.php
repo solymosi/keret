@@ -130,6 +130,11 @@
 			return $this->getValues();
 		}
 		
+		public function getValueOrNull()
+		{
+			return $this->getValue();
+		}
+		
 		public function setValue($value)
 		{
 			return $this->setValues($value);
