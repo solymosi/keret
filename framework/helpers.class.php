@@ -241,6 +241,13 @@
 		{
 			self::when(!$expression, $message);
 		}
+		
+		// Return the provided value if it is truthy, otherwise return null
+		static public function nullify($value, $trim_strings = true)
+		{
+			$value = $trim_strings && is_string($value) ? trim($value) : $value;
+			return $value ? $value : null;
+		}
 	}
 	
 	class NotFoundException extends Exception { }
