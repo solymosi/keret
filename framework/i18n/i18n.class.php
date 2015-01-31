@@ -49,7 +49,7 @@
 			return Helpers::interpolate($text, $params);
 		}
 		
-		static public function formatDateTime($date, $dateFormat = IntlDateFormatter::MEDIUM, $timeFormat = IntlDateFormatter::SHORT, $locale = null)
+		static public function formatDateTime($date, $dateFormat = IntlDateFormatter::MEDIUM, $timeFormat = IntlDateFormatter::SHORT, $locale = null, $pattern = null)
 		{
 			if(is_null($locale))
 			{
@@ -59,8 +59,13 @@
 			{
 				$locale = $locale->getCode();
 			}
-			$formatter = IntlDateFormatter::create($locale, $dateFormat, $timeFormat);
-			return $formatter->format(strtotime($date));
+			$date = is_string($date) ? strtotime($date) : $date;
+			$formatter = IntlDateFormatter::create($locale, $dateFormat, $timeFormat, null, null, $pattern);
+			if(is_null($formatter))
+			{
+				throw new IntlException("Unable to initialize date formatter object.");
+			}
+			return $formatter->format($date);
 		}
 		
 		static public function formatDate($date, $format = IntlDateFormatter::MEDIUM,  $locale = null)
@@ -71,6 +76,11 @@
 		static public function formatTime($date, $format = IntlDateFormatter::SHORT,  $locale = null)
 		{
 			return self::formatDateTime($date, IntlDateFormatter::NONE, $format, $locale);
+		}
+		
+		static public function formatDateTimeUsingPattern($date, $pattern, $locale = null)
+		{
+			return self::formatDateTime($date, IntlDateFormatter::NONE, IntlDateFormatter::NONE, $locale, $pattern);
 		}
 		
 		static public function formatNumber($number, $minDecimals = 0, $maxDecimals = 2, $locale = null)
