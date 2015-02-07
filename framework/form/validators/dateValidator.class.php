@@ -11,15 +11,15 @@
 		const DATE_TIME = 3;
 		
 		protected static $patterns = array(
-			self::DATE = "(?P<year>[0-9]{4})\-(?P<month>[0-9]{2})\-(?P<day>[0-9]{2})",
-			self::TIME = "(?P<hour>[0-9]{2})\:(?P<minute>[0-9]{2})(?:\:(?P<second>[0-9]{2}))?",
-			self::DATE_TIME = "(?P<year>[0-9]{4})\-(?P<month>[0-9]{2})\-(?P<day>[0-9]{2}) (?P<hour>[0-9]{2})\:(?P<minute>[0-9]{2})(?:\:(?P<second>[0-9]{2}))?",
+			self::DATE => "(?P<year>[0-9]{4})\-(?P<month>[0-9]{2})\-(?P<day>[0-9]{2})",
+			self::TIME => "(?P<hour>[0-9]{2})\:(?P<minute>[0-9]{2})(?:\:(?P<second>[0-9]{2}))?",
+			self::DATE_TIME => "(?P<year>[0-9]{4})\-(?P<month>[0-9]{2})\-(?P<day>[0-9]{2}) (?P<hour>[0-9]{2})\:(?P<minute>[0-9]{2})(?:\:(?P<second>[0-9]{2}))?",
 		);
 		
 		protected static $formats = array(
-			self::DATE = "Y-m-d",
-			self::TIME = "H:i:s",
-			self::DATE_TIME = "Y-m-d H:i:s",
+			self::DATE => "Y-m-d",
+			self::TIME => "H:i:s",
+			self::DATE_TIME => "Y-m-d H:i:s",
 		);
 		
 		public function __construct($type = self::DATE, $earliest = null, $latest = null, $messages = array())
