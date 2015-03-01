@@ -30,6 +30,10 @@
 		
 		static public function translate($id, $params = array(), $language = null)
 		{
+			if(is_null($params))
+			{
+				$params = array();
+			}
 			if(is_null($language))
 			{
 				$language = self::locale()->getPrimaryLanguage();
