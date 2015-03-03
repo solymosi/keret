@@ -53,8 +53,16 @@
 			return Helpers::interpolate($text, $params);
 		}
 		
-		static public function formatDateTime($date, $dateFormat = IntlDateFormatter::MEDIUM, $timeFormat = IntlDateFormatter::SHORT, $locale = null, $pattern = null)
+		static public function formatDateTime($date, $dateFormat = null, $timeFormat = null, $locale = null, $pattern = null)
 		{
+			if(is_null($dateFormat))
+			{
+				$dateFormat = IntlDateFormatter::MEDIUM;
+			}
+			if(is_null($timeFormat))
+			{
+				$timeFormat = IntlDateFormatter::SHORT;
+			}
 			if(is_null($locale))
 			{
 				$locale = self::locale();
@@ -72,12 +80,12 @@
 			return $formatter->format($date);
 		}
 		
-		static public function formatDate($date, $format = IntlDateFormatter::MEDIUM,  $locale = null)
+		static public function formatDate($date, $format = null,  $locale = null)
 		{
 			return self::formatDateTime($date, $format, IntlDateFormatter::NONE, $locale);
 		}
 		
-		static public function formatTime($date, $format = IntlDateFormatter::SHORT,  $locale = null)
+		static public function formatTime($date, $format = null,  $locale = null)
 		{
 			return self::formatDateTime($date, IntlDateFormatter::NONE, $format, $locale);
 		}
