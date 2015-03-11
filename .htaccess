@@ -8,6 +8,7 @@ RewriteBase /
 # Access index.php and assets folder directly
 RewriteRule ^index\.php(\/.*)?$ - [L]
 RewriteRule ^app\/assets\/.*$ - [L]
+RewriteRule ^robots\.txt$ - [L]
 
 # Rewrite asset URLs
 RewriteRule ^assets\/(.*)$ app/assets/$1 [QSA,L]
