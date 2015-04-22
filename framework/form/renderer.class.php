@@ -104,26 +104,26 @@
 		
 		/* HTML */
 		
-		protected function getName()
+		public function getName()
 		{
 			return $this->hasParent() ?
 				$this->getParent()->getName() . "[" . $this->getField()->getName() . "]" :
 				$this->getField()->getName();
 		}
 		
-		protected function getId()
+		public function getId()
 		{
 			return $this->hasParent() ?
 				$this->getParent()->getId() . "_" . $this->getField()->getName() :
 				$this->getField()->getName();
 		}
 		
-		protected function fieldParams($params = array(), $names = true)
+		public function fieldParams($params = array(), $names = true)
 		{
 			return $this->mergeHtmlParams($this->defaultParams($names), $params);
 		}
 		
-		protected function defaultParams($names = true)
+		public function defaultParams($names = true)
 		{
 			return array_merge(
 				$names ?
@@ -189,24 +189,24 @@
 		
 		/* Tags */
 		
-		protected function tag($name, $content = null, $params = array())
+		public function tag($name, $content = null, $params = array())
 		{
 			return $content === false ?
 				$this->singleTag($name, $params) :
 				$this->openTag($name, $params) . $content . $this->closeTag($name);
 		}
 		
-		protected function openTag($name, $params = array())
+		public function openTag($name, $params = array())
 		{
 			return "<" . strtolower($name) . $this->parameterList($params) . ">";
 		}
 		
-		protected function closeTag($name)
+		public function closeTag($name)
 		{
 			return "</" . strtolower($name) . ">";
 		}
 		
-		protected function singleTag($name, $params = array())
+		public function singleTag($name, $params = array())
 		{
 			return "<" . strtolower($name) . $this->parameterList($params) . " />";
 		}
