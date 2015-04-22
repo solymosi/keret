@@ -19,28 +19,52 @@
 		
 		static public function getRenderer($field, $parent = null, $params = array())
 		{
-			$class = get_class($field);
+			$renderer = $field->getParam("renderer");
 			
-			$renderers = array_merge(
-				self::$defaults,
-				static::getRenderers()
-			);
-			if(!isset($renderers[$class]))
+			if(is_callable($renderer))
 			{
-				throw new Exception("No renderer defined for " . $class . ".");
+				return new CustomRenderer($field, $parent, array_merge($params, array("renderer" => $renderer)));
 			}
+			elseif(is_string($renderer))
+			{
+				$class = self::getRendererClass($renderer);
+				return new $class($field, $parent, $params);
+			}
+			else
+			{
+				return self::getDefaultRenderer($field, $parent, $params);
+			}
+		}
+		
+		static public function getDefaultRenderer($field, $parent = null, $params = array())
+		{
+			$renderer = Helpers::select(
+				get_class($field),
+				array_merge(
+					self::$defaults,
+					static::getRenderers()
+				)
+			);
 			
-			$renderer = $renderers[$class] . "Renderer";
+			Helpers::when(is_null($renderer), "No default renderer defined for " . get_class($field) . ".");
+			
+			$class = self::getRendererClass($renderer);
+			return new $class($field, $parent, $params);
+		}
+		
+		static protected function getRendererClass($renderer)
+		{
+			$class = $renderer . "Renderer";
+			
 			foreach(static::getPrefixes() as $prefix)
 			{
-				if(class_exists($prefix . $renderer))
+				if(class_exists($prefix . $class))
 				{
-					$renderer = $prefix . $renderer;
-					break;
+					return $prefix . $class;
 				}
 			}
 			
-			return new $renderer($field, $parent, $params);
+			return $class;
 		}
 		
 		static protected function getPrefixes()

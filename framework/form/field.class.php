@@ -268,6 +268,12 @@
 			return $provider::getRenderer($this, $parent, $params);
 		}
 		
+		public function setRenderer($renderer)
+		{
+			$this->setParam("renderer", $renderer);
+			return $this;
+		}
+		
 		public function render($parent = null, $params = array())
 		{
 			return $this->getRenderer($parent, $params)->render();
