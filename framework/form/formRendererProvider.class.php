@@ -19,7 +19,9 @@
 		
 		static public function getRenderer($field, $parent = null, $params = array())
 		{
-			$renderer = $field->getParam("renderer");
+			$renderer = isset($params["renderer"]) ?
+				$params["renderer"] :
+				$field->getParam("renderer");
 			
 			if(is_callable($renderer))
 			{
