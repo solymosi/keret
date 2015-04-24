@@ -60,7 +60,10 @@
 		{
 			$value = $this->getValue();
 			
-			return !$value || (is_string($value) && !trim($value));
+			return
+				$value === false ||
+				(is_string($value) && trim($value) === "") ||
+				(is_array($value) && count($value) === 0);
 		}
 		
 		/* Errors */
