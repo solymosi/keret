@@ -10,6 +10,15 @@
 			{
 				$this->setParam("row", false);
 			}
+			
+			if($this->getType() == "number")
+			{
+				$this->addParam("html", array(
+					"min"  => $this->getParam("minimum"),
+					"max"  => $this->getParam("maximum"),
+					"step" => $this->getParam("decimals") ? pow(0.1, $this->getParam("decimals")) : 1,
+				));
+			}
 		}
 		
 		public function render()
@@ -30,6 +39,7 @@
 			if($field instanceof HiddenField)   { return "hidden";   }
 			if($field instanceof PasswordField) { return "password"; }
 			if($field instanceof TextField)     { return "text";     }
+			if($field instanceof NumberField)   { return "number";   }
 			
 			throw new Exception("Cannot determine input type parameter for " . get_class($field));
 		}

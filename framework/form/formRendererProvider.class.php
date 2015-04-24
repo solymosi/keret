@@ -6,6 +6,7 @@
 			"FieldSet"      => "FieldSet",
 			"Form"          => "Form",
 			"TextField"     => "InputField",
+			"NumberField"   => "InputField",
 			"PasswordField" => "InputField",
 			"HiddenField"   => "InputField",
 			"Textarea"      => "Textarea",
