@@ -27,7 +27,7 @@
 				return;
 			}
 			
-			if(!preg_match($this->decimals ? "/^[+-]?[0-9]+(\.[0-9]{1," . $this->decimals . "})?$/" : "/^[+-]?[0-9]+$/", strval($field->getValue())))
+			if(!preg_match("/^[+-]?[0-9]+(\.[0-9]+)?$/", strval($field->getValue())))
 			{
 				$field->addError($this->getMessage("invalid"));
 			}
@@ -35,14 +35,19 @@
 			{
 				$value = floatval($field->getValue());
 				
+				if($value != round($value, $this->decimals))
+				{
+					$field->addError($this->getMessage("invalid"));
+				}
+				
 				if(!is_null($this->minimum) && $value < $this->minimum)
 				{
-					$field->addError($this->getMessage("minimum"));
+					$field->addError($this->getMessage("too_small"));
 				}
 				
 				if(!is_null($this->maximum) && $value > $this->maximum)
 				{
-					$field->addError($this->getMessage("maximum"));
+					$field->addError($this->getMessage("too_large"));
 				}
 			}
 		}
