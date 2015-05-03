@@ -12,6 +12,7 @@
 			ErrorHandler::install();
 			
 			Autoload::registerPath($root . "/controllers");
+			Autoload::registerPath($root . "/models");
 			Autoload::registerPath($root . "/lib");
 			Autoload::registerPath($root . "/vendor");
 			
