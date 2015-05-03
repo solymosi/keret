@@ -25,7 +25,7 @@
 	Config::set("mail.smtp_server", "localhost");
 	
 	// Email address of site administrator
-	Config::set("mail.admin_email", "Administrator <admin@example.org>");
+	Config::set("mail.admin_email", "Administrator <administrator@example.org>");
 	
 	// Email content type
 	Config::set("mail.content_type", "text/html; charset=UTF-8");
