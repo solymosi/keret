@@ -177,6 +177,22 @@
 			return isset($from[$what]) ? $from[$what] : $default;
 		}
 		
+		// Turns a regular array of arrays into an associative array using the specified subkey
+		public static function toAssociative($array, $key, $removeKey = false)
+		{
+			$result = array();
+			foreach($array as $item)
+			{
+				$k = $item[$key];
+				if($removeKey)
+				{
+					unset($item[$key]);
+				}
+				$result[$k] = $item;
+			}
+			return $result;
+		}
+		
 		// Returns one of the specified parameters (one, more or none) based on the plurality of the provided number
 		public static function pluralize($count, $one, $more, $none = null)
 		{
