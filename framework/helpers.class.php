@@ -91,6 +91,13 @@
 			header("Content-Type: text/javascript");
 		}
 		
+		// Signal the browser that we are returning JSON content
+		public static function returnsJson()
+		{
+			View::setLayout(false);
+			header("Content-Type: application/json");
+		}
+		
 		// Check whether this is an ajax request
 		public static function isAjaxRequest()
 		{
