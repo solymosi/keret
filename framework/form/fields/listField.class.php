@@ -10,7 +10,9 @@
 			
 			$this->setItems($items);
 			
-			$this->addValidator(new InclusionValidator($this->getItems()));
+			$this->addValidator(
+				new InclusionValidator($this->getItems(), array("invalid" => $this->getParam("invalid")))
+			);
 		}
 		
 		public function getItems()
