@@ -271,6 +271,13 @@
 			return $provider::getRenderer($this, $parent, $params);
 		}
 		
+		public function getDefaultRenderer($parent = null, $params = array())
+		{
+			$provider = Config::get("view.form_renderer_provider_class");
+			
+			return $provider::getDefaultRenderer($this, $parent, $params);
+		}
+		
 		public function setRenderer($renderer)
 		{
 			$this->setParam("renderer", $renderer);
