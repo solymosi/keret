@@ -175,7 +175,7 @@
 		// Returns whether the parameter is an associative array
 		public static function isAssoc($array)
 		{
-			return is_array($array) && count(array_filter(array_keys($array), "is_string")) > 0;
+			return is_array($array) && array_keys($array) !== range(0, count($array) - 1);
 		}
 		
 		// Returns a value from an array, or a default value if it does not exist
