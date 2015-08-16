@@ -1,17 +1,33 @@
-# General settings
+# Enable the rewrite engine
+# If this fails, check whether mod_rewrite is loaded in
+# the Apache configuration.
 RewriteEngine On
+
+# Only use index.php as the directory index file
 DirectoryIndex index.php
 
-# Set RewriteBase to the relative URL path of the current folder
+# Base path for rewriting internal URLs
+# This default ('/') only works if the application is published directly at the
+# root of a domain. Otherwise, change this to the proper base path. Examples:
+# [Location of index.php]                [RewriteBase]
+# http://example.org                 =>  /
+# http://example.org/app             =>  /app
+# http://example.org/apps/keret-app  =>  /apps/keret-app
+# The symptoms of setting this incorrectly are weird 404 errors.
 RewriteBase /
 
-# Access index.php and assets folder directly
+# Access index.php, the assets folder and robots.txt directly
+# Direct access to any other file or folder from the browser will be denied.
 RewriteRule ^index\.php(\/.*)?$ - [L]
 RewriteRule ^app\/assets\/.*$ - [L]
 RewriteRule ^robots\.txt$ - [L]
 
 # Rewrite asset URLs
+# This allows the use of /assets instead of /app/assets.
 RewriteRule ^assets\/(.*)$ app/assets/$1 [QSA,L]
 
 # Redirect all other requests to index.php
+# For example, if RewriteBase is '/', a request to http://example.org/one/two
+# will go to http://example.org/index.php/one/two. Within index.php, the
+# trailing path '/one/two' is made available in $_SERVER["PATH_INFO"]. 
 RewriteRule ^(.*)$ index.php/$1 [QSA,L]

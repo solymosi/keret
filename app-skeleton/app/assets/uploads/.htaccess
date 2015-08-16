@@ -1,4 +1,6 @@
 # Force download regardless of file type
+# This prevents inline file types (txt, pdf, html, etc.) from opening within
+# the browser window.
 
 <IfModule mod_headers.c> 
 	Header set Content-Disposition attachment

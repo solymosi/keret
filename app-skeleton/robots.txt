@@ -1,2 +1,4 @@
+# Allow all robots to crawl any resource
+# If you want to disallow all robots, change 'Allow' to 'Disallow' below.
 User-agent: *
 Allow: /
