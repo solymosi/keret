@@ -26,7 +26,7 @@
 				"An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" .
 					$e->getMessage() . "\r\n" .
 					"Request URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" .
-					print_r(@$_POST, true)
+					print_r(@$_REQUEST, true)
 			);
 		}
 	}
