@@ -5,9 +5,6 @@
 		/* Holds the path of the 'app' folder of the application */
 		static protected $root;
 		
-		/* Holds the application configuration */
-		static protected $configuration = array();
-		
 		/*
 			Initializes the application and loads its configuration
 			This function must be called before Application::run.
