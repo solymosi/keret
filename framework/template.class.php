@@ -8,8 +8,8 @@
 			are the main way for passing in dynamic data for the template to display.
 			
 			You will probably not instantiate and use this class directly, since the
-			View provides methods ('render' and 'getContent') which make that easier
-			for you. Nevertheless, it is useful to know that regular templates,
+			View class provides methods ('render' and 'getContent') which make that
+			easier for you. Nevertheless, it is useful to know that regular templates,
 			layouts and partials are all rendered using this class behind the scenes.
 			
 			Since all template files are rendered by this class, the $this variable
