@@ -130,7 +130,7 @@
 		/* Regenerates the session ID and the CSRF token */
 		public static function regenerate()
 		{
-			session_regenerate_id();
+			session_regenerate_id(true);
 			self::generateCsrfToken();
 		}
 		
