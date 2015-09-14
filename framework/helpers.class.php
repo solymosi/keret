@@ -415,9 +415,9 @@
 	class NotFoundException extends Exception { }
 	
 	/* Shorthand for Helpers::link */
-	function link_to($uri)
+	function link_to($uri, $query = array())
 	{
-		return Helpers::link($uri);
+		return Helpers::link($uri, $query);
 	}
 	
 	/* Shorthand for Helpers::asset */
