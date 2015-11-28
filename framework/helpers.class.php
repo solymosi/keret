@@ -305,6 +305,41 @@
 		}
 		
 		/*
+			Flattens a multi-dimensional array into a one-dimensional array. Uses a
+			custom method for merging arrays instead of array_merge because of the
+			differences in what array_merge considers as a numeric array and what
+			the correct behavior should be in most cases.
+		*/
+		public static function flatten($array)
+		{
+			$mergers = array(
+				"value" => function($array, $key, $value) {
+					$array[$key] = $value;
+					return $array;
+				},
+				"numeric" => function($array, $key, $value) {
+					return array_reduce($value, function($result, $item) {
+						$result[] = $item;
+						return $result;
+					}, $array);
+				},
+				"associative" => function($array, $key, $value) {
+					return array_reduce(array_keys($value), function($result, $key) use($value) {
+						$result[$key] = $value[$key];
+						return $result;
+					}, $array);
+				},
+			);
+			
+			return array_reduce(array_keys($array), function($result, $key) use($array, $mergers) {
+				$value = $array[$key];
+				return call_user_func($mergers[
+					is_array($value) ? (self::isAssoc($value) ? "associative" : "numeric") : "value"
+				], $result, $key, $value);
+			}, array());
+		}
+		
+		/*
 			Returns one of the specified parameters (one, more or none) based on the
 			plurality of the provided number. Examples for pluralization:
 			
