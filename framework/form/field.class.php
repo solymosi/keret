@@ -61,7 +61,7 @@
 			$value = $this->getValue();
 			
 			return
-				$value === false ||
+				$value === false || is_null($value) ||
 				(is_string($value) && trim($value) === "") ||
 				(is_array($value) && count($value) === 0);
 		}
