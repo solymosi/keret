@@ -1,4 +1,4 @@
 .sass-cache
 /assets/**/*.map
-/assets/uploads/*/
+/assets/uploads/**/*
 /sessions/*
