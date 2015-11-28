@@ -195,6 +195,7 @@
 			
 			/* Default session settings */
 			Config::setDefault("session.expires", 0);
+			Config::setDefault("session.save_path", Application::root() . "/sessions");
 			Config::setDefault("session.cookie_name", Config::get("app.internal_name") . "_session");
 			Config::setDefault("session.cookie_expires", Config::get("session.expires"));
 			Config::setDefault("session.cookie_domain", Config::get("app.domain"));
