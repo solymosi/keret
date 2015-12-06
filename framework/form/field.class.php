@@ -294,6 +294,7 @@
 		public function setDisabled($disabled = true)
 		{
 			$this->disabled = $disabled;
+			return $this;
 		}
 		
 		public function isDisabled()
