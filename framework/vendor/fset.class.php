@@ -14,7 +14,7 @@ class Fset {
 	 * @return array
 	 */
 	static function get(array &$data, $path){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		foreach($keys as $k){
 			if(isset($data[$k])){
 				$data =& $data[$k];
@@ -32,7 +32,7 @@ class Fset {
 	 * @param mixed $value the value
 	 */
 	static function set(array &$data, $path, $value){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		$last = array_pop($keys);
 		foreach($keys as $k){
 			if(isset($data[$k]) && is_array($data[$k])){
@@ -55,7 +55,7 @@ class Fset {
 	 * @return int number of items or null if the key not exists.
 	 */
 	static function count(array &$data, $path){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		$last = array_pop($keys);
 		foreach($keys as $k){
 			if(isset($data[$k]) && is_array($data[$k])){
@@ -74,7 +74,7 @@ class Fset {
 	 * @return void
 	 */
 	static function del(array &$data, $path){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		$last = array_pop($keys);
 		foreach($keys as $k){
 			if(isset($data[$k]) && is_array($data[$k])){
@@ -93,7 +93,7 @@ class Fset {
 	 * @return boolean true if the key isset, false if not, null if the key not exists
 	 */
 	static function is_set(array &$data, $path){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		$last = array_pop($keys);
 		foreach($keys as $k){
 			if(isset($data[$k]) && is_array($data[$k])){
@@ -112,7 +112,7 @@ class Fset {
 	 * @return boolean true if the key is empty or not exists, false if exists and is not empty.
 	 */
 	static function is_empty(array &$data, $path){
-		$keys = explode('.', $path);
+		$keys = is_array($path) ? $path : explode('.', $path);
 		$last = array_pop($keys);
 		foreach($keys as $k){
 			if(isset($data[$k]) && is_array($data[$k])){
