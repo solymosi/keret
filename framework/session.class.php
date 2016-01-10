@@ -63,8 +63,8 @@
 		/* Returns true if the specified session variable exists and is not null */
 		public static function has($key)
 		{
-			/* Let's make sure we have a valid variable name */
-			self::validateKey($key);
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
 			
 			/* Fset::get returns null if the specified variable does not exist */
 			$value = Fset::get($_SESSION, $key);
@@ -74,6 +74,9 @@
 		/* Returns the value of the specified session variable */
 		public static function get($key)
 		{
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
+			
 			/* Fetch and return the value of the variable */
 			return Fset::get($_SESSION, $key);
 		}
@@ -87,20 +90,20 @@
 		/* Sets the value of the specified session variable */
 		public static function set($key, $value)
 		{
-			/* First we make sure we have a valid variable name */
-			self::validateKey($key);
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
 			
-			/* Then we set the value */
+			/* Then set the value */
 			Fset::set($_SESSION, $key, $value);
 		}
 		
 		/* Deletes the specified session variable */
 		public static function delete($key)
 		{
-			/* First we make sure we have a valid variable name */
-			self::validateKey($key);
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
 			
-			/* Then we set the value */
+			/* Then set the value */
 			Fset::del($_SESSION, $key);
 		}
 		
@@ -176,19 +179,6 @@
 		public static function csrfToken()
 		{
 			return self::get("csrf_token");
-		}
-		
-		/* Throws an exception if the specified variable name is not valid */
-		static protected function validateKey($key)
-		{
-			/*
-				The variable name must be a string and has to consist of one or more
-				groups of lowercase alphanumeric characters, separated by a dot.
-			*/
-			if(!is_string($key) || !preg_match("/^([a-z0-9_]+\.)*[a-z0-9_]+$/", $key))
-			{
-				throw new Exception("Invalid session key");
-			}
 		}
 	}
 	
