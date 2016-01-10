@@ -60,28 +60,48 @@
 			}
 		}
 		
-		/* Returns true if the specified session variable exists */
+		/* Returns true if the specified session variable exists and is not null */
 		public static function has($key)
 		{
-			return isset($_SESSION[$key]);
+			/* Let's make sure we have a valid variable name */
+			self::validateKey($key);
+			
+			/* Fset::get returns null if the specified variable does not exist */
+			$value = Fset::get($_SESSION, $key);
+			return !is_null($value);
 		}
 		
 		/* Returns the value of the specified session variable */
 		public static function get($key)
 		{
-			return self::has($key) ? $_SESSION[$key] : null;
+			/* Fetch and return the value of the variable */
+			return Fset::get($_SESSION, $key);
+		}
+		
+		/* Returns the contents of the entire session in an array */
+		static public function getAll()
+		{
+			return $_SESSION;
 		}
 		
 		/* Sets the value of the specified session variable */
 		public static function set($key, $value)
 		{
-			$_SESSION[$key] = $value;
+			/* First we make sure we have a valid variable name */
+			self::validateKey($key);
+			
+			/* Then we set the value */
+			Fset::set($_SESSION, $key, $value);
 		}
 		
 		/* Deletes the specified session variable */
 		public static function delete($key)
 		{
-			unset($_SESSION[$key]);
+			/* First we make sure we have a valid variable name */
+			self::validateKey($key);
+			
+			/* Then we set the value */
+			Fset::del($_SESSION, $key);
 		}
 		
 		/* Returns true if the specified flash variable exists */
@@ -156,6 +176,19 @@
 		public static function csrfToken()
 		{
 			return self::get("csrf_token");
+		}
+		
+		/* Throws an exception if the specified variable name is not valid */
+		static protected function validateKey($key)
+		{
+			/*
+				The variable name must be a string and has to consist of one or more
+				groups of lowercase alphanumeric characters, separated by a dot.
+			*/
+			if(!is_string($key) || !preg_match("/^([a-z0-9_]+\.)*[a-z0-9_]+$/", $key))
+			{
+				throw new Exception("Invalid session key");
+			}
 		}
 	}
 	
