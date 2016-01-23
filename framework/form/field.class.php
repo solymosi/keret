@@ -12,9 +12,7 @@
 		
 		public function __construct($name, $value = null, $params = array())
 		{
-			Helpers::whenNot(is_string($name), "The field name must be a string.");
-			$this->name = $name;
-			
+			$this->setName($name);
 			$this->setValue($value);
 			$this->params = new ParameterBag($params);
 		}
@@ -24,6 +22,12 @@
 		public function getName()
 		{
 			return $this->name;
+		}
+		
+		public function setName($name)
+		{
+			Helpers::whenNot(is_string($name), "The field name must be a string.");
+			$this->name = $name;
 		}
 		
 		/* Value */
