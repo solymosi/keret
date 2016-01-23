@@ -60,28 +60,51 @@
 			}
 		}
 		
-		/* Returns true if the specified session variable exists */
+		/* Returns true if the specified session variable exists and is not null */
 		public static function has($key)
 		{
-			return isset($_SESSION[$key]);
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
+			
+			/* Fset::get returns null if the specified variable does not exist */
+			$value = Fset::get($_SESSION, $key);
+			return !is_null($value);
 		}
 		
 		/* Returns the value of the specified session variable */
 		public static function get($key)
 		{
-			return self::has($key) ? $_SESSION[$key] : null;
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
+			
+			/* Fetch and return the value of the variable */
+			return Fset::get($_SESSION, $key);
+		}
+		
+		/* Returns the contents of the entire session in an array */
+		static public function getAll()
+		{
+			return $_SESSION;
 		}
 		
 		/* Sets the value of the specified session variable */
 		public static function set($key, $value)
 		{
-			$_SESSION[$key] = $value;
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
+			
+			/* Then set the value */
+			Fset::set($_SESSION, $key, $value);
 		}
 		
 		/* Deletes the specified session variable */
 		public static function delete($key)
 		{
-			unset($_SESSION[$key]);
+			/* Turn key into array format */
+			$key = is_array($key) ? $key : array($key);
+			
+			/* Then set the value */
+			Fset::del($_SESSION, $key);
 		}
 		
 		/* Returns true if the specified flash variable exists */
