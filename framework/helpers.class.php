@@ -284,18 +284,23 @@
     }
 
     /*
-      Turns a regular array of arrays into an associative array using the
-      specified subkey. For example, this is useful if you have a regular array
-      of database rows and you want to turn that into an associative array
-      where the keys are the database IDs of their respective rows.
+      Turns a regular array of arrays or ParameterBag instances into an
+      associative array using the specified subkey. For example, this is useful
+      if you have an array of database rows and you want to turn that into an
+      associative array where the keys are the IDs of their respective rows.
     */
     public static function toAssociative($array, $key, $removeKey = false)
     {
       $result = array();
       foreach($array as $item)
       {
-        $k = $item[$key];
-        if($removeKey)
+        $k = $item instanceof ParameterBag ?
+          $item->get($key) : $item[$key];
+        if($removeKey && $item instanceof ParameterBag)
+        {
+          $item->delete($key);
+        }
+        elseif($removeKey)
         {
           unset($item[$key]);
         }

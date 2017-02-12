@@ -67,10 +67,20 @@
         /* Subject line */
         "[" . Config::get("app.internal_name") . "] " . $e->getMessage(),
         /* Contents of the email */
-        "An unhandled " . get_class($e) . " occured on " . date("l, j F Y H:i:s A") . ":\r\n\r\n" .
-          $e->getMessage() . "\r\n" .
-          "Request URI: " . $_SERVER["REQUEST_URI"] . "\r\n\r\n" .
-          print_r(@$_REQUEST, true)
+        '<p>' . 'An unhandled ' . get_class($e) . ' occured on ' . date("l, j F Y H:i:s A") . ':</p>' .
+        '<p><strong>' . Helpers::escapeHtml($e->getMessage()) . '</strong></p>' .
+        '<p>Request URI</p>' .
+        '<p><code style="background: #eee">' . Helpers::escapeHtml($_SERVER["REQUEST_URI"]) . '</code></p>' .
+        '<p>GET</p>' .
+        '<pre style="background: #eee">' . Helpers::escapeHtml(print_r(@$_GET, true)) . '</pre>' .
+        '<p>POST</p>' .
+        '<pre style="background: #eee">' . Helpers::escapeHtml(print_r(@$_POST, true)) . '</pre>' .
+        '<p>Session</p>' .
+        '<pre style="background: #eee">' . Helpers::escapeHtml(print_r(@$_SESSION, true)) . '</pre>' .
+        '<p>Cookies</p>' .
+        '<pre style="background: #eee">' . Helpers::escapeHtml(print_r(@$_COOKIE, true)) . '</pre>',
+        /* Additional headers */
+        array("Content-Type" => "text/html")
       );
     }
   }
