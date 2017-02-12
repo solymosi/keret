@@ -29,5 +29,5 @@ RewriteRule ^assets\/(.*)$ app/assets/$1 [QSA,L]
 # Redirect all other requests to index.php
 # For example, if RewriteBase is '/', a request to http://example.org/one/two
 # will go to http://example.org/index.php/one/two. Within index.php, the
-# trailing path '/one/two' is made available in $_SERVER["PATH_INFO"]. 
+# trailing path '/one/two' is made available in $_SERVER["PATH_INFO"].
 RewriteRule ^(.*)$ index.php/$1 [QSA,L]
