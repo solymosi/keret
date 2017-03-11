@@ -322,10 +322,13 @@
       try
       {
         /* Execute the callback function */
-        call_user_func($callback);
+        $result = call_user_func($callback);
 
         /* There were no exceptions, so let's commit the transaction */
         self::commit();
+
+        /* Return the result of the callback function */
+        return $result;
       }
       catch(Exception $e)
       {
