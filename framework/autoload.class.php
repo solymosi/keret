@@ -26,6 +26,9 @@
     */
     static public function load($class)
     {
+      /* Normalize load path for namespaced classes */
+      $class = str_replace("\\", "/", $class);
+
       foreach(self::$paths as $path)
       {
         /*
