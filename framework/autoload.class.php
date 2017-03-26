@@ -36,10 +36,17 @@
           would not result in the correct file name ('dB.class.php' would be
           incorrect, 'db.class.php' is the actual file name).
         */
-        foreach(array(lcfirst($class), strtolower($class), $class) as $current)
+        $files = array(
+          lcfirst($class) . ".class.php",
+          strtolower($class) . ".class.php",
+          $class . ".class.php",
+          $class . ".php"
+        );
+
+        foreach($files as $current)
         {
           /* Build the file path to check */
-          $file = $path . "/" . $current . ".class.php";
+          $file = $path . "/" . $current;
 
           /* Include it and exit if a file exists at that location */
           if(is_file($file))
