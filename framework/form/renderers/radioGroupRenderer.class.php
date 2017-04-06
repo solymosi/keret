@@ -11,12 +11,26 @@
     {
       $field = $this->getField();
 
-      return implode("", array_map(
-        function($name) use ($field) {
-          return $this->renderRow($name);
-        },
-        array_keys($field->getItems())
-      ));
+      return
+        $this->renderHidden() .
+        implode("", array_map(
+          function($name) use ($field) {
+            return $this->renderRow($name);
+          },
+          array_keys($field->getItems())
+        ));
+    }
+
+    protected function renderHidden()
+    {
+      return $this->singleTag(
+        "input",
+        array(
+          "name" => $this->getName(),
+          "type" => "hidden",
+          "value" => "",
+        )
+      );
     }
 
     public function renderRow($name)
