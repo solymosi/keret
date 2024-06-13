@@ -55,7 +55,6 @@
 
       /* Throw an exception with the error details */
       throw new Exception($errstr . " [" . $errfile . " @ line " . $errline . "]");
-      return true;
     }
 
     /* Assembles and sends an exception notification email to the technical contact */

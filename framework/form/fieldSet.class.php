@@ -27,9 +27,9 @@
     {
       Helpers::whenNot(is_array($children), "The child list must be an array.");
 
-      foreach($children as $name => $child)
+      foreach($children as $child)
       {
-        $this->addChild($name, $child);
+        $this->addChild($child);
       }
 
       return $this;

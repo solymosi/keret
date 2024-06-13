@@ -160,7 +160,7 @@
     }
 
     /* Returns an iterator which can be used to iterate over the parameters */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
       return new ArrayIterator($this->items);
     }
