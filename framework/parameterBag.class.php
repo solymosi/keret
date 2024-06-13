@@ -94,7 +94,7 @@
     /* Collection */
 
     /* Returns the number of parameters stored in the bag */
-    public function count()
+    public function count(): int
     {
       return count($this->items);
     }
