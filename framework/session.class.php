@@ -160,7 +160,7 @@
     /* Generates a new unique CSRF token and saves it into the session */
     public static function generateCsrfToken()
     {
-      self::set("csrf_token", sha1(uniqid(srand(), true)));
+      self::set("csrf_token", sha1(random_bytes(64));
     }
 
     /*
